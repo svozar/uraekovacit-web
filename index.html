@@ -3,55 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ura e Kovaçit - Spa & Hotel</title>
+    <title>Ura e Kovaçit - Spa, Hotel & Restaurant</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" xintegrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" xintegrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         :root {
             --brand-primary: #E0A070; /* Earthy Orange/Terracotta */
             --brand-primary-hover: #D39060; /* Slightly darker for hover */
             --brand-secondary: #8D6E63; /* Darker Brown for accents/text */
+            --brand-header-name-blue: #3A506B; /* New blue for header name */
             --brand-text-light: #FFFFFF; /* White text on primary */
             --brand-text-dark: #4E423D; /* Dark brown/grey text on light backgrounds */
             --brand-bg-light: #FBF5EF; /* Light beige/cream background */
             --brand-bg-section: #F5EDE4; /* Slightly darker beige for alternate sections */
             --brand-hero-overlay: rgba(46, 37, 33, 0.6); /* Dark brown overlay for hero */
+            
+            --font-heading: 'Cormorant Garamond', serif;
+            --font-body: 'Lato', sans-serif;
         }
 
         body {
-            font-family: 'Lato', sans-serif;
+            font-family: var(--font-body);
             scroll-behavior: smooth;
             background-color: var(--brand-bg-light);
             color: var(--brand-text-dark);
-            h1, h2, .section-title, .card h3, #hero h1, #contact h3, #reservationModal h3 { /* Target all relevant heading elements */
-                font-family: 'Cormorant Garamond', serif; /* New heading font */
-                /* You might need to adjust font-weight here if the default isn't what you want */
-            }
-
-            /* Example: Ensure brand name also uses a specific font if desired, or let it inherit */
-            /* If you added the logo and kept the text name as a fallback or alongside: */
-            .header-logo + .text-2xl.font-bold { /* Targets the span next to the logo if it's displayed */
-                font-family: 'Cormorant Garamond', serif; /* Or your chosen heading font */
-            }
+            line-height: 1.6; 
         }
+
+        h1, h2, h3, h4, h5, h6, .section-title, 
+        .card h3, #hero h1, #contact h3, #reservationModal h3, #restaurant h2,
+        .header-brand-name, 
+        label[for]
+         {
+            font-family: var(--font-heading);
+            font-weight: 600; 
+        }
+        
+        #hero h1 {
+            font-weight: 700; 
+        }
+
+        .section-title {
+            font-size: 2.8rem; 
+            font-weight: 700; 
+            margin-bottom: 2.5rem; 
+            text-align: center;
+            color: var(--brand-secondary);
+        }
+        .card h3 {
+             font-size: 1.75rem; 
+        }
+
         .hero-bg {
-            background-image: url('https://i.imgur.com/VwnC0N3.jpeg'); /* Placeholder image */
+            background-image: url('https://i.imgur.com/VwnC0N3.jpeg'); 
             background-size: cover;
             background-position: center;
         }
         .hero-overlay {
             background-color: var(--brand-hero-overlay);
         }
-        .section-title {
-            font-size: 2.5rem; /* 40px */
-            font-weight: 700;
-            margin-bottom: 2rem; /* 32px */
-            text-align: center;
-            color: var(--brand-secondary);
-        }
         .card {
-            background-color: white; /* Or var(--brand-bg-light) if preferred */
-            border-radius: 0.75rem; /* 12px */
+            background-color: white; 
+            border-radius: 0.75rem; 
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
             overflow: hidden;
             transition: transform 0.3s ease;
@@ -62,9 +76,14 @@
         .nav-link {
             transition: color 0.3s ease;
             color: var(--brand-text-dark);
+            font-family: var(--font-body); 
+            font-weight: 700; 
         }
         .nav-link:hover, .lang-switcher button:hover {
             color: var(--brand-primary);
+        }
+        .lang-switcher button {
+             font-family: var(--font-body);
         }
         .active-lang {
             color: var(--brand-primary) !important;
@@ -105,7 +124,7 @@
         }
         .contact-icon {
             color: var(--brand-primary);
-            margin-right: 0.75rem; /* 12px */
+            margin-right: 0.75rem; 
         }
         .map-container {
             position: relative;
@@ -124,7 +143,6 @@
             border: 0;
         }
 
-        /* Custom utility classes for new color scheme */
         .bg-brand-primary { background-color: var(--brand-primary); }
         .hover\:bg-brand-primary-hover:hover { background-color: var(--brand-primary-hover); }
         .text-brand-primary { color: var(--brand-primary); }
@@ -148,16 +166,31 @@
             border-color: var(--brand-primary);
         }
         .header-logo {
-            height: 50px; /* Adjust as needed */
+            height: 40px; 
             width: auto;
+            margin-right: 0.5rem; 
         }
-
+        .header-brand-name {
+            font-size: 1.75rem; 
+            color: var(--brand-header-name-blue); /* Updated to new blue variable */
+            font-weight: 700; 
+        }
+        button, .button, input[type="submit"], input[type="button"] {
+            font-family: var(--font-body);
+            font-weight: 700; 
+        }
+        input, select, textarea {
+             font-family: var(--font-body);
+        }
     </style>
 </head>
 <body class="text-brand-text-dark"> 
     <header class="bg-brand-bg-light shadow-md sticky top-0 z-50"> 
-        <nav class="container mx-auto px-6 py-3 flex justify-between items-center"> <a href="#" class="flex items-center"> <img src="https://uraekovacit.com/wp-content/uploads/2024/07/cropped-cropped-Logobigger.png" alt="Ura e Kovaçit Logo" class="header-logo" onerror="this.style.display='none'; this.nextSibling.style.display='inline'">
-                <span class="text-2xl font-bold text-brand-primary ml-2 hidden" data-translate="nav_brand_fallback">Ura e Kovaçit</span> </a>
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="#" class="flex items-center"> 
+                <img src="http://i.imgur.com/xd31bcF.png" alt="Ura e Kovaçit Logo" class="header-logo" onerror="this.style.display='none'; document.querySelector('.header-brand-name').classList.remove('ml-2')">
+                <span class="header-brand-name" data-translate="nav_brand_fallback">Ura e Kovaçit</span> 
+            </a>
             <div class="flex items-center space-x-4">
                 <ul class="hidden md:flex space-x-6">
                     <li><a href="#hero" class="nav-link" data-translate="nav_home">Home</a></li>
@@ -165,6 +198,7 @@
                     <li><a href="#reservations" class="nav-link" data-translate="nav_reservations">Reservations</a></li>
                     <li><a href="#spa" class="nav-link" data-translate="nav_spa">Spa</a></li>
                     <li><a href="#activities" class="nav-link" data-translate="nav_activities">Activities</a></li>
+                    <li><a href="#restaurant" class="nav-link" data-translate="nav_restaurant">Restaurant</a></li> 
                     <li><a href="#contact" class="nav-link" data-translate="nav_contact">Contact</a></li>
                 </ul> 
                 <div class="lang-switcher space-x-2 text-sm">
@@ -185,6 +219,7 @@
                 <li><a href="#reservations" class="nav-link mobile-nav-link" data-translate="nav_reservations_mobile">Reservations</a></li>
                 <li><a href="#spa" class="nav-link mobile-nav-link" data-translate="nav_spa_mobile">Spa</a></li>
                 <li><a href="#activities" class="nav-link mobile-nav-link" data-translate="nav_activities_mobile">Activities</a></li>
+                <li><a href="#restaurant" class="nav-link mobile-nav-link" data-translate="nav_restaurant_mobile">Restaurant</a></li> 
                 <li><a href="#contact" class="nav-link mobile-nav-link" data-translate="nav_contact_mobile">Contact</a></li>
             </ul> 
         </div>
@@ -205,7 +240,7 @@
                 <div class="card">
                     <img src="https://placehold.co/600x400/d1d5db/374151?text=Comfort+Room" alt="Comfort Room" class="w-full h-64 object-cover" onerror="this.src='https://placehold.co/600x400/d1d5db/374151?text=Image+Not+Found'">
                     <div class="p-6">
-                        <h3 class="text-2xl font-semibold mb-2 text-brand-secondary" data-translate="room1_name">Comfort Room</h3>
+                        <h3 data-translate="room1_name">Comfort Room</h3>
                         <p class="text-brand-text-dark mb-4" data-translate="room1_desc">A cozy room with all essential amenities for a relaxing stay.</p>
                         <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium" data-translate="room_book_btn">Book Now →</a>
                     </div>
@@ -213,7 +248,7 @@
                 <div class="card">
                     <img src="https://placehold.co/600x400/e5e7eb/374151?text=Deluxe+Suite" alt="Deluxe Suite" class="w-full h-64 object-cover" onerror="this.src='https://placehold.co/600x400/e5e7eb/374151?text=Image+Not+Found'">
                     <div class="p-6">
-                        <h3 class="text-2xl font-semibold mb-2 text-brand-secondary" data-translate="room2_name">Deluxe Suite</h3>
+                        <h3 data-translate="room2_name">Deluxe Suite</h3>
                         <p class="text-brand-text-dark mb-4" data-translate="room2_desc">Spacious suite with a private balcony and stunning views.</p>
                         <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium" data-translate="room_book_btn">Book Now →</a>
                     </div>
@@ -221,7 +256,7 @@
                 <div class="card">
                     <img src="https://placehold.co/600x400/9ca3af/374151?text=Family+Apartment" alt="Family Apartment" class="w-full h-64 object-cover" onerror="this.src='https://placehold.co/600x400/9ca3af/374151?text=Image+Not+Found'">
                     <div class="p-6">
-                        <h3 class="text-2xl font-semibold mb-2 text-brand-secondary" data-translate="room3_name">Family Apartment</h3>
+                        <h3 data-translate="room3_name">Family Apartment</h3>
                         <p class="text-brand-text-dark mb-4" data-translate="room3_desc">Perfect for families, offering multiple beds and ample space.</p>
                         <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium" data-translate="room_book_btn">Book Now →</a>
                     </div>
@@ -278,7 +313,7 @@
             <h2 class="section-title" data-translate="spa_title">Relax & Rejuvenate</h2>
             <div class="grid md:grid-cols-2 gap-8 items-center">
                 <div>
-                    <img src="https://placehold.co/600x400/bbf7d0/166534?text=Spa+Interior" alt="Spa" class="rounded-lg shadow-xl w-full h-auto object-cover" onerror="this.src='https://placehold.co/600x400/bbf7d0/166534?text=Image+Not+Found'">
+                    <img src="https://placehold.co/600x400/bbf7d0/166534?text=Spa+Ambiance" alt="Spa Ambiance" class="rounded-lg shadow-xl w-full h-auto object-cover" onerror="this.src='https://placehold.co/600x400/bbf7d0/166534?text=Image+Not+Found'">
                 </div>
                 <div>
                     <p class="text-lg text-brand-text-dark mb-4" data-translate="spa_desc1">Indulge in a world of tranquility at our exclusive spa. We offer a range of treatments designed to soothe your body and mind.</p>
@@ -300,23 +335,23 @@
             <h2 class="section-title" data-translate="activities_title">Explore Voskopojë</h2>
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="card">
-                    <img src="https://placehold.co/600x400/c4b5fd/4c1d95?text=Yoga+Retreat" alt="Yoga" class="w-full h-64 object-cover" onerror="this.src='https://placehold.co/600x400/c4b5fd/4c1d95?text=Image+Not+Found'">
+                    <img src="https://placehold.co/600x400/c4b5fd/4c1d95?text=Yoga+Session" alt="Yoga Session" class="w-full h-64 object-cover" onerror="this.src='https://placehold.co/600x400/c4b5fd/4c1d95?text=Image+Not+Found'">
                     <div class="p-6">
-                        <h3 class="text-2xl font-semibold mb-2 text-brand-secondary" data-translate="activity1_name">Yoga & Meditation</h3>
+                        <h3 data-translate="activity1_name">Yoga & Meditation</h3>
                         <p class="text-brand-text-dark" data-translate="activity1_desc">Find your inner peace with our guided yoga and meditation sessions amidst nature.</p>
                     </div>
                 </div>
                 <div class="card">
-                    <img src="https://placehold.co/600x400/fdba74/7c2d12?text=Hiking+Trails" alt="Hiking" class="w-full h-64 object-cover" onerror="this.src='https://placehold.co/600x400/fdba74/7c2d12?text=Image+Not+Found'">
+                    <img src="https://placehold.co/600x400/fdba74/7c2d12?text=Hiking+Trail" alt="Hiking Trail" class="w-full h-64 object-cover" onerror="this.src='https://placehold.co/600x400/fdba74/7c2d12?text=Image+Not+Found'">
                     <div class="p-6">
-                        <h3 class="text-2xl font-semibold mb-2 text-brand-secondary" data-translate="activity2_name">Hiking Adventures</h3>
+                        <h3 data-translate="activity2_name">Hiking Adventures</h3>
                         <p class="text-brand-text-dark" data-translate="activity2_desc">Discover breathtaking trails and historical sites surrounding Voskopojë.</p>
                     </div>
                 </div>
                 <div class="card">
-                    <img src="https://placehold.co/600x400/86efac/14532d?text=Local+Farm" alt="Agrotourism" class="w-full h-64 object-cover" onerror="this.src='https://placehold.co/600x400/86efac/14532d?text=Image+Not+Found'">
+                    <img src="https://placehold.co/600x400/86efac/14532d?text=Local+Produce" alt="Agrotourism Farm" class="w-full h-64 object-cover" onerror="this.src='https://placehold.co/600x400/86efac/14532d?text=Image+Not+Found'">
                     <div class="p-6">
-                        <h3 class="text-2xl font-semibold mb-2 text-brand-secondary" data-translate="activity3_name">Agrotourism Experience</h3>
+                        <h3 data-translate="activity3_name">Agrotourism Experience</h3>
                         <p class="text-brand-text-dark" data-translate="activity3_desc">Engage with local culture, visit farms, and taste traditional products.</p>
                     </div>
                 </div>
@@ -324,31 +359,56 @@
         </div>
     </section>
 
-    <section id="contact" class="py-16 bg-brand-bg-section"> 
+    <section id="restaurant" class="py-16 bg-brand-bg-section">
+        <div class="container mx-auto px-6">
+            <h2 class="section-title" data-translate="restaurant_title">Savor Authentic Flavors</h2>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <img src="https://placehold.co/600x450/E0A070/4E423D?text=Traditional+Albanian+Dish" alt="Delicious traditional food" class="rounded-lg shadow-xl w-full h-auto object-cover" onerror="this.src='https://placehold.co/600x450/E0A070/4E423D?text=Image+Not+Found'">
+                </div>
+                <div class="text-brand-text-dark">
+                    <p class="text-lg mb-4" data-translate="restaurant_desc1">
+                        Experience the heart of Albanian culinary tradition at Ura e Kovaçit. Our restaurant offers a delightful journey through local flavors, prepared with the freshest ingredients sourced from Voskopojë's rich surroundings.
+                    </p>
+                    <p class="text-lg mb-6" data-translate="restaurant_desc2">
+                        Enjoy a warm and inviting atmosphere, perfect for a memorable dining experience, whether it's a hearty breakfast, a leisurely lunch, or an intimate dinner.
+                    </p>
+                    <ul class="list-none space-y-2 mb-6 text-lg">
+                         <li><i class="fas fa-leaf contact-icon"></i> <span data-translate="restaurant_feature1">Fresh, Locally Sourced Ingredients</span></li>
+                         <li><i class="fas fa-concierge-bell contact-icon"></i> <span data-translate="restaurant_feature2">Authentic Voskopojë Recipes</span></li>
+                         <li><i class="fas fa-wine-glass contact-icon"></i> <span data-translate="restaurant_feature3">Cozy & Welcoming Ambiance</span></li>
+                    </ul>
+                    <a href="#" class="bg-brand-primary hover:bg-brand-primary-hover text-brand-text-light font-bold py-3 px-6 rounded-lg transition duration-300 inline-block" data-translate="restaurant_menu_cta">Discover Our Menu</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-16 bg-brand-bg-light"> 
         <div class="container mx-auto px-6">
             <h2 class="section-title" data-translate="contact_title">Contact Us</h2>
             <div class="grid md:grid-cols-2 gap-12 items-start">
-                <div class="bg-brand-bg-light p-8 rounded-lg shadow-lg"> 
-                    <h3 class="text-2xl font-semibold mb-6 text-brand-secondary" data-translate="contact_get_in_touch">Get in Touch</h3>
+                <div class="bg-brand-bg-section p-8 rounded-lg shadow-lg"> 
+                    <h3 data-translate="contact_get_in_touch">Get in Touch</h3>
                     <div class="space-y-6">
                         <div class="flex items-start">
                             <i class="fas fa-map-marker-alt contact-icon fa-fw text-2xl mt-1"></i>
                             <div>
-                                <h4 class="font-semibold text-lg text-brand-secondary" data-translate="contact_address_label">Address</h4>
+                                <h4 data-translate="contact_address_label">Address</h4>
                                 <p class="text-brand-text-dark">Ura e Kovaçeve, Korçë, Albania 7007</p>
                             </div>
                         </div>
                         <div class="flex items-start">
                             <i class="fas fa-phone contact-icon fa-fw text-2xl mt-1"></i>
                             <div>
-                                <h4 class="font-semibold text-lg text-brand-secondary" data-translate="contact_phone_label">Phone</h4>
+                                <h4 data-translate="contact_phone_label">Phone</h4>
                                 <a href="tel:+355689098589" class="text-brand-text-dark hover:text-brand-primary transition duration-300">+355 68 909 8589</a>
                             </div>
                         </div>
                         <div class="flex items-start">
                             <i class="fas fa-envelope contact-icon fa-fw text-2xl mt-1"></i>
                             <div>
-                                <h4 class="font-semibold text-lg text-brand-secondary" data-translate="contact_email_label">Email</h4>
+                                <h4 data-translate="contact_email_label">Email</h4>
                                 <a href="mailto:info@uraekovacit.com" class="text-brand-text-dark hover:text-brand-primary transition duration-300">info@uraekovacit.com</a>
                             </div>
                         </div>
@@ -382,28 +442,29 @@
     <div id="reservationModal" class="modal">
         <div class="modal-content">
             <span class="modal-close" id="closeModalButton">×</span>
-            <h3 class="text-2xl font-semibold mb-4 text-brand-secondary" data-translate="modal_title">Booking Request Sent!</h3>
+            <h3 data-translate="modal_title">Booking Request Sent!</h3>
             <p class="text-brand-text-dark" data-translate="modal_message">Thank you for your interest. We will contact you shortly to confirm your reservation.</p>
             <button id="modalOkButton" class="mt-6 bg-brand-primary hover:bg-brand-primary-hover text-brand-text-light font-bold py-2 px-6 rounded-lg" data-translate="modal_ok_btn">OK</button>
         </div>
     </div>
 
     <script>
-        // Language content (translations remain the same, only visual styles changed)
         const translations = {
             en: {
-                nav_brand_fallback: "Ura e Kovaçit", // Fallback if logo fails
+                nav_brand_fallback: "Ura e Kovaçit", 
                 nav_home: "Home",
                 nav_rooms: "Rooms",
                 nav_reservations: "Reservations",
                 nav_spa: "Spa",
                 nav_activities: "Activities",
+                nav_restaurant: "Restaurant", 
                 nav_contact: "Contact", 
                 nav_home_mobile: "Home",
                 nav_rooms_mobile: "Rooms",
                 nav_reservations_mobile: "Reservations",
                 nav_spa_mobile: "Spa",
                 nav_activities_mobile: "Activities",
+                nav_restaurant_mobile: "Restaurant", 
                 nav_contact_mobile: "Contact", 
                 hero_title: "Welcome to Ura e Kovaçit",
                 hero_subtitle: "Your serene getaway in the heart of Voskopojë.",
@@ -443,6 +504,13 @@
                 activity2_desc: "Discover breathtaking trails and historical sites surrounding Voskopojë.",
                 activity3_name: "Agrotourism Experience",
                 activity3_desc: "Engage with local culture, visit farms, and taste traditional products.",
+                restaurant_title: "Savor Authentic Flavors", 
+                restaurant_desc1: "Experience the heart of Albanian culinary tradition at Ura e Kovaçit. Our restaurant offers a delightful journey through local flavors, prepared with the freshest ingredients sourced from Voskopojë's rich surroundings.", 
+                restaurant_desc2: "Enjoy a warm and inviting atmosphere, perfect for a memorable dining experience, whether it's a hearty breakfast, a leisurely lunch, or an intimate dinner.", 
+                restaurant_feature1: "Fresh, Locally Sourced Ingredients", 
+                restaurant_feature2: "Authentic Voskopojë Recipes", 
+                restaurant_feature3: "Cozy & Welcoming Ambiance", 
+                restaurant_menu_cta: "Discover Our Menu", 
                 contact_title: "Contact Us", 
                 contact_get_in_touch: "Get in Touch", 
                 contact_address_label: "Address", 
@@ -462,12 +530,14 @@
                 nav_reservations: "Rezervimet",
                 nav_spa: "Spa",
                 nav_activities: "Aktivitetet",
+                nav_restaurant: "Restoranti", 
                 nav_contact: "Kontakt", 
                 nav_home_mobile: "Kreu",
                 nav_rooms_mobile: "Dhomat",
                 nav_reservations_mobile: "Rezervimet",
                 nav_spa_mobile: "Spa",
                 nav_activities_mobile: "Aktivitetet",
+                nav_restaurant_mobile: "Restoranti", 
                 nav_contact_mobile: "Kontakt", 
                 hero_title: "Mirësevini në Urën e Kovaçit",
                 hero_subtitle: "Arratija juaj e qetë në zemër të Voskopojës.",
@@ -507,6 +577,13 @@
                 activity2_desc: "Zbuloni shtigje mahnitëse dhe site historike që rrethojnë Voskopojën.",
                 activity3_name: "Përvojë Agroturizmi",
                 activity3_desc: "Angazhohuni me kulturën lokale, vizitoni ferma dhe shijoni produkte tradicionale.",
+                restaurant_title: "Shijoni Shijet Autentike", 
+                restaurant_desc1: "Përjetoni zemrën e traditës kulinarisë shqiptare në Urën e Kovaçit. Restoranti ynë ofron një udhëtim të këndshëm përmes shijeve lokale, të përgatitura me përbërësit më të freskët të marra nga rrethinat e pasura të Voskopojës.", 
+                restaurant_desc2: "Gëzoni një atmosferë të ngrohtë dhe mikpritëse, perfekte për një përvojë të paharrueshme ngrënieje, qoftë një mëngjes i bollshëm, një drekë e qetë, apo një darkë intime.", 
+                restaurant_feature1: "Përbërës të Freskët, Nga Zona", 
+                restaurant_feature2: "Receta Autentike Voskopojare", 
+                restaurant_feature3: "Atmosferë e Ngrohtë & Mikpritëse", 
+                restaurant_menu_cta: "Zbuloni Menunë Tonë", 
                 contact_title: "Na Kontaktoni", 
                 contact_get_in_touch: "Na Kontaktoni", 
                 contact_address_label: "Adresa", 
@@ -526,12 +603,14 @@
                 nav_reservations: "Reservierungen",
                 nav_spa: "Spa",
                 nav_activities: "Aktivitäten",
+                nav_restaurant: "Restaurant", 
                 nav_contact: "Kontakt", 
                 nav_home_mobile: "Startseite",
                 nav_rooms_mobile: "Zimmer",
                 nav_reservations_mobile: "Reservierungen",
                 nav_spa_mobile: "Spa",
                 nav_activities_mobile: "Aktivitäten",
+                nav_restaurant_mobile: "Restaurant", 
                 nav_contact_mobile: "Kontakt", 
                 hero_title: "Willkommen bei Ura e Kovaçit",
                 hero_subtitle: "Ihr ruhiger Zufluchtsort im Herzen von Voskopojë.",
@@ -571,6 +650,13 @@
                 activity2_desc: "Entdecken Sie atemberaubende Wanderwege und historische Stätten rund um Voskopojë.",
                 activity3_name: "Agrotourismus-Erlebnis",
                 activity3_desc: "Lernen Sie die lokale Kultur kennen, besuchen Sie Bauernhöfe und probieren Sie traditionelle Produkte.",
+                restaurant_title: "Genießen Sie Authentische Aromen", 
+                restaurant_desc1: "Erleben Sie das Herz der albanischen kulinarischen Tradition im Ura e Kovaçit. Unser Restaurant bietet eine reizvolle Reise durch lokale Geschmäcker, zubereitet mit den frischesten Zutaten aus der reichen Umgebung von Voskopojë.", 
+                restaurant_desc2: "Genießen Sie eine warme und einladende Atmosphäre, perfekt für ein unvergessliches kulinarisches Erlebnis, sei es ein herzhaftes Frühstück, ein gemütliches Mittagessen oder ein intimes Abendessen.", 
+                restaurant_feature1: "Frische, Regional Bezogene Zutaten", 
+                restaurant_feature2: "Authentische Rezepte aus Voskopojë", 
+                restaurant_feature3: "Gemütliches & Einladendes Ambiente", 
+                restaurant_menu_cta: "Entdecken Sie Unsere Speisekarte", 
                 contact_title: "Kontaktieren Sie Uns", 
                 contact_get_in_touch: "Kontaktieren Sie Uns", 
                 contact_address_label: "Adresse", 
@@ -590,12 +676,14 @@
                 nav_reservations: "Réservations",
                 nav_spa: "Spa",
                 nav_activities: "Activités",
+                nav_restaurant: "Restaurant", 
                 nav_contact: "Contact", 
                 nav_home_mobile: "Accueil",
                 nav_rooms_mobile: "Chambres",
                 nav_reservations_mobile: "Réservations",
                 nav_spa_mobile: "Spa",
                 nav_activities_mobile: "Activités",
+                nav_restaurant_mobile: "Restaurant", 
                 nav_contact_mobile: "Contact", 
                 hero_title: "Bienvenue à Ura e Kovaçit",
                 hero_subtitle: "Votre escapade sereine au cœur de Voskopojë.",
@@ -635,6 +723,13 @@
                 activity2_desc: "Découvrez des sentiers à couper le souffle et des sites historiques autour de Voskopojë.",
                 activity3_name: "Expérience Agrotouristique",
                 activity3_desc: "Participez à la culture locale, visitez des fermes et dégustez des produits traditionnels.",
+                restaurant_title: "Savourez des Saveurs Authentiques", 
+                restaurant_desc1: "Découvrez le cœur de la tradition culinaire albanaise à Ura e Kovaçit. Notre restaurant propose un délicieux voyage à travers les saveurs locales, préparées avec les ingrédients les plus frais provenant des riches environs de Voskopojë.", 
+                restaurant_desc2: "Profitez d'une atmosphère chaleureuse et accueillante, parfaite pour une expérience culinaire mémorable, que ce soit pour un petit-déjeuner copieux, un déjeuner tranquille ou un dîner intime.", 
+                restaurant_feature1: "Ingrédients Frais et Locaux", 
+                restaurant_feature2: "Recettes Authentiques de Voskopojë", 
+                restaurant_feature3: "Ambiance Chaleureuse et Accueillante", 
+                restaurant_menu_cta: "Découvrez Notre Menu", 
                 contact_title: "Nous Contacter", 
                 contact_get_in_touch: "Nous Contacter", 
                 contact_address_label: "Adresse", 
@@ -675,11 +770,7 @@
                 if (translations[lang][key]) {
                     el.innerHTML = translations[lang][key]; 
                 } else {
-                    // For elements that might not have a translation (like the logo fallback), don't log a warning if the key isn't present
-                    // This avoids console noise for intentionally untranslated dynamic elements.
-                    // However, if it's a key that *should* exist, a warning is useful.
-                    // For now, we'll keep the warning for general debugging.
-                    if (!key.includes("nav_brand_fallback")) { // Example: suppress warning for specific keys
+                    if (!key.includes("nav_brand_fallback")) { 
                          console.warn(`Translation key "${key}" not found for language "${lang}".`);
                     }
                 }
@@ -741,7 +832,7 @@
                 if (!name || !email || !checkin || !checkout) {
                     const submitButton = reservationForm.querySelector('button[type="submit"]');
                     let errorMsg = document.createElement('p');
-                    errorMsg.classList.add('text-red-500', 'text-sm', 'mt-2', 'error-message'); // Kept red for error emphasis
+                    errorMsg.classList.add('text-red-500', 'text-sm', 'mt-2', 'error-message'); 
                     errorMsg.textContent = translations[currentLang].form_fill_all_fields || "Please fill all required fields.";
                     submitButton.parentNode.insertBefore(errorMsg, submitButton.nextSibling);
                     return;
