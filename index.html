@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ura e Kovaçit - Spa & Hotel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" xintegrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        :root {
+            --brand-primary: #E0A070; /* Earthy Orange/Terracotta */
+            --brand-primary-hover: #D39060; /* Slightly darker for hover */
+            --brand-secondary: #8D6E63; /* Darker Brown for accents/text */
+            --brand-text-light: #FFFFFF; /* White text on primary */
+            --brand-text-dark: #4E423D; /* Dark brown/grey text on light backgrounds */
+            --brand-bg-light: #FBF5EF; /* Light beige/cream background */
+            --brand-bg-section: #F5EDE4; /* Slightly darker beige for alternate sections */
+            --brand-hero-overlay: rgba(46, 37, 33, 0.6); /* Dark brown overlay for hero */
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            scroll-behavior: smooth;
+            background-color: var(--brand-bg-light);
+            color: var(--brand-text-dark);
+            h1, h2, .section-title, .card h3, #hero h1, #contact h3, #reservationModal h3 { /* Target all relevant heading elements */
+                font-family: 'Cormorant Garamond', serif; /* New heading font */
+                /* You might need to adjust font-weight here if the default isn't what you want */
+            }
+
+            /* Example: Ensure brand name also uses a specific font if desired, or let it inherit */
+            /* If you added the logo and kept the text name as a fallback or alongside: */
+            .header-logo + .text-2xl.font-bold { /* Targets the span next to the logo if it's displayed */
+                font-family: 'Cormorant Garamond', serif; /* Or your chosen heading font */
+            }
+        }
+        .hero-bg {
+            background-image: url('https://i.imgur.com/VwnC0N3.jpeg'); /* Placeholder image */
+            background-size: cover;
+            background-position: center;
+        }
+        .hero-overlay {
+            background-color: var(--brand-hero-overlay);
+        }
+        .section-title {
+            font-size: 2.5rem; /* 40px */
+            font-weight: 700;
+            margin-bottom: 2rem; /* 32px */
+            text-align: center;
+            color: var(--brand-secondary);
+        }
+        .card {
+            background-color: white; /* Or var(--brand-bg-light) if preferred */
+            border-radius: 0.75rem; /* 12px */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .nav-link {
+            transition: color 0.3s ease;
+            color: var(--brand-text-dark);
+        }
+        .nav-link:hover, .lang-switcher button:hover {
+            color: var(--brand-primary);
+        }
+        .active-lang {
+            color: var(--brand-primary) !important;
+            font-weight: 700;
+        }
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.4); 
+        }
+        .modal-content {
+            background-color: var(--brand-bg-light);
+            margin: 10% auto; 
+            padding: 20px;
+            border: 1px solid var(--brand-secondary);
+            width: 80%; 
+            max-width: 500px;
+            border-radius: 0.5rem;
+            text-align: center;
+        }
+        .modal-close {
+            color: var(--brand-secondary);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .modal-close:hover,
+        .modal-close:focus {
+            color: var(--brand-primary);
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .contact-icon {
+            color: var(--brand-primary);
+            margin-right: 0.75rem; /* 12px */
+        }
+        .map-container {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            padding-top: 75%; 
+            border-radius: 0.75rem; 
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+        }
+        .map-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Custom utility classes for new color scheme */
+        .bg-brand-primary { background-color: var(--brand-primary); }
+        .hover\:bg-brand-primary-hover:hover { background-color: var(--brand-primary-hover); }
+        .text-brand-primary { color: var(--brand-primary); }
+        .hover\:text-brand-primary-hover:hover { color: var(--brand-primary-hover); }
+        .text-brand-secondary { color: var(--brand-secondary); }
+        .text-brand-text-light { color: var(--brand-text-light); }
+        .text-brand-text-dark { color: var(--brand-text-dark); }
+        .bg-brand-bg-light { background-color: var(--brand-bg-light); }
+        .bg-brand-bg-section { background-color: var(--brand-bg-section); }
+        .border-brand-primary { border-color: var(--brand-primary); }
+        
+        .focus\:ring-brand-primary:focus {
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+            --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+            --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--brand-primary);
+            box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+            border-color: var(--brand-primary);
+        }
+         .focus\:border-brand-primary:focus {
+            border-color: var(--brand-primary);
+        }
+        .header-logo {
+            height: 50px; /* Adjust as needed */
+            width: auto;
+        }
+
+    </style>
+</head>
+<body class="text-brand-text-dark"> 
+    <header class="bg-brand-bg-light shadow-md sticky top-0 z-50"> 
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center"> <a href="#" class="flex items-center"> <img src="https://uraekovacit.com/wp-content/uploads/2024/07/cropped-cropped-Logobigger.png" alt="Ura e Kovaçit Logo" class="header-logo" onerror="this.style.display='none'; this.nextSibling.style.display='inline'">
+                <span class="text-2xl font-bold text-brand-primary ml-2 hidden" data-translate="nav_brand_fallback">Ura e Kovaçit</span> </a>
+            <div class="flex items-center space-x-4">
+                <ul class="hidden md:flex space-x-6">
+                    <li><a href="#hero" class="nav-link" data-translate="nav_home">Home</a></li>
+                    <li><a href="#rooms" class="nav-link" data-translate="nav_rooms">Rooms</a></li>
+                    <li><a href="#reservations" class="nav-link" data-translate="nav_reservations">Reservations</a></li>
+                    <li><a href="#spa" class="nav-link" data-translate="nav_spa">Spa</a></li>
+                    <li><a href="#activities" class="nav-link" data-translate="nav_activities">Activities</a></li>
+                    <li><a href="#contact" class="nav-link" data-translate="nav_contact">Contact</a></li>
+                </ul> 
+                <div class="lang-switcher space-x-2 text-sm">
+                    <button data-lang="en" class="font-medium active-lang">EN</button>
+                    <button data-lang="sq" class="font-medium">SQ</button>
+                    <button data-lang="de" class="font-medium">DE</button>
+                    <button data-lang="fr" class="font-medium">FR</button>
+                </div>
+                <button id="mobileMenuButton" class="md:hidden focus:outline-none text-brand-secondary">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+        <div id="mobileMenu" class="hidden md:hidden bg-brand-bg-light shadow-lg"> 
+            <ul class="flex flex-col items-center py-4 space-y-2">
+                <li><a href="#hero" class="nav-link mobile-nav-link" data-translate="nav_home_mobile">Home</a></li>
+                <li><a href="#rooms" class="nav-link mobile-nav-link" data-translate="nav_rooms_mobile">Rooms</a></li>
+                <li><a href="#reservations" class="nav-link mobile-nav-link" data-translate="nav_reservations_mobile">Reservations</a></li>
+                <li><a href="#spa" class="nav-link mobile-nav-link" data-translate="nav_spa_mobile">Spa</a></li>
+                <li><a href="#activities" class="nav-link mobile-nav-link" data-translate="nav_activities_mobile">Activities</a></li>
+                <li><a href="#contact" class="nav-link mobile-nav-link" data-translate="nav_contact_mobile">Contact</a></li>
+            </ul> 
+        </div>
+    </header>
+
+    <section id="hero" class="hero-bg h-screen flex items-center justify-center text-brand-text-light">
+        <div class="text-center hero-overlay p-10 rounded-lg w-full h-full flex flex-col justify-center items-center"> 
+            <h1 class="text-5xl md:text-7xl font-bold mb-4" data-translate="hero_title">Welcome to Ura e Kovaçit</h1>
+            <p class="text-xl md:text-2xl mb-8" data-translate="hero_subtitle">Your serene getaway in the heart of Voskopojë.</p>
+            <a href="#reservations" class="bg-brand-primary hover:bg-brand-primary-hover text-brand-text-light font-bold py-3 px-8 rounded-lg text-lg transition duration-300" data-translate="hero_cta">Book Your Stay</a>
+        </div>
+    </section>
+
+    <section id="rooms" class="py-16 bg-brand-bg-section"> 
+        <div class="container mx-auto px-6">
+            <h2 class="section-title" data-translate="rooms_title">Our Rooms</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card">
+                    <img src="https://placehold.co/600x400/d1d5db/374151?text=Comfort+Room" alt="Comfort Room" class="w-full h-64 object-cover" onerror="this.src='https://placehold.co/600x400/d1d5db/374151?text=Image+Not+Found'">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold mb-2 text-brand-secondary" data-translate="room1_name">Comfort Room</h3>
+                        <p class="text-brand-text-dark mb-4" data-translate="room1_desc">A cozy room with all essential amenities for a relaxing stay.</p>
+                        <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium" data-translate="room_book_btn">Book Now →</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://placehold.co/600x400/e5e7eb/374151?text=Deluxe+Suite" alt="Deluxe Suite" class="w-full h-64 object-cover" onerror="this.src='https://placehold.co/600x400/e5e7eb/374151?text=Image+Not+Found'">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold mb-2 text-brand-secondary" data-translate="room2_name">Deluxe Suite</h3>
+                        <p class="text-brand-text-dark mb-4" data-translate="room2_desc">Spacious suite with a private balcony and stunning views.</p>
+                        <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium" data-translate="room_book_btn">Book Now →</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://placehold.co/600x400/9ca3af/374151?text=Family+Apartment" alt="Family Apartment" class="w-full h-64 object-cover" onerror="this.src='https://placehold.co/600x400/9ca3af/374151?text=Image+Not+Found'">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold mb-2 text-brand-secondary" data-translate="room3_name">Family Apartment</h3>
+                        <p class="text-brand-text-dark mb-4" data-translate="room3_desc">Perfect for families, offering multiple beds and ample space.</p>
+                        <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium" data-translate="room_book_btn">Book Now →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="reservations" class="py-16 bg-brand-bg-light"> 
+        <div class="container mx-auto px-6">
+            <h2 class="section-title" data-translate="reservations_title">Make a Reservation</h2>
+            <form id="reservationForm" class="max-w-2xl mx-auto bg-brand-bg-section p-8 rounded-lg shadow-lg"> 
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="name" class="block text-brand-secondary font-medium mb-2" data-translate="form_name">Full Name</label>
+                        <input type="text" id="name" name="name" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-brand-primary focus:border-brand-primary bg-white text-brand-text-dark" required>
+                    </div>
+                    <div>
+                        <label for="email" class="block text-brand-secondary font-medium mb-2" data-translate="form_email">Email Address</label>
+                        <input type="email" id="email" name="email" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-brand-primary focus:border-brand-primary bg-white text-brand-text-dark" required>
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="checkin" class="block text-brand-secondary font-medium mb-2" data-translate="form_checkin">Check-in Date</label>
+                        <input type="date" id="checkin" name="checkin" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-brand-primary focus:border-brand-primary bg-white text-brand-text-dark" required>
+                    </div>
+                    <div>
+                        <label for="checkout" class="block text-brand-secondary font-medium mb-2" data-translate="form_checkout">Check-out Date</label>
+                        <input type="date" id="checkout" name="checkout" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-brand-primary focus:border-brand-primary bg-white text-brand-text-dark" required>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label for="room_type" class="block text-brand-secondary font-medium mb-2" data-translate="form_room_type">Room Type</label>
+                    <select id="room_type" name="room_type" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-brand-primary focus:border-brand-primary bg-white text-brand-text-dark">
+                        <option value="comfort" data-translate="form_room_comfort">Comfort Room</option>
+                        <option value="deluxe" data-translate="form_room_deluxe">Deluxe Suite</option>
+                        <option value="family" data-translate="form_room_family">Family Apartment</option>
+                    </select>
+                </div>
+                <div class="mb-6">
+                    <label for="guests" class="block text-brand-secondary font-medium mb-2" data-translate="form_guests">Number of Guests</label>
+                    <input type="number" id="guests" name="guests" min="1" value="1" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-brand-primary focus:border-brand-primary bg-white text-brand-text-dark" required>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="bg-brand-primary hover:bg-brand-primary-hover text-brand-text-light font-bold py-3 px-8 rounded-lg text-lg transition duration-300" data-translate="form_submit_btn">Request Booking</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <section id="spa" class="py-16 bg-brand-bg-section"> 
+        <div class="container mx-auto px-6">
+            <h2 class="section-title" data-translate="spa_title">Relax & Rejuvenate</h2>
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <img src="https://placehold.co/600x400/bbf7d0/166534?text=Spa+Interior" alt="Spa" class="rounded-lg shadow-xl w-full h-auto object-cover" onerror="this.src='https://placehold.co/600x400/bbf7d0/166534?text=Image+Not+Found'">
+                </div>
+                <div>
+                    <p class="text-lg text-brand-text-dark mb-4" data-translate="spa_desc1">Indulge in a world of tranquility at our exclusive spa. We offer a range of treatments designed to soothe your body and mind.</p>
+                    <p class="text-lg text-brand-text-dark mb-6" data-translate="spa_desc2">From therapeutic massages to revitalizing facials, our experienced therapists will ensure you leave feeling refreshed and renewed.</p>
+                    <ul class="list-disc list-inside text-brand-text-dark space-y-2 mb-6">
+                        <li data-translate="spa_service1">Traditional Albanian Massage</li>
+                        <li data-translate="spa_service2">Aromatherapy</li>
+                        <li data-translate="spa_service3">Sauna & Steam Room</li>
+                        <li data-translate="spa_service4">Beauty Treatments</li>
+                    </ul>
+                    <a href="#reservations" class="bg-brand-primary hover:bg-brand-primary-hover text-brand-text-light font-bold py-3 px-6 rounded-lg transition duration-300" data-translate="spa_book_btn">Book a Treatment</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="activities" class="py-16 bg-brand-bg-light"> 
+        <div class="container mx-auto px-6">
+            <h2 class="section-title" data-translate="activities_title">Explore Voskopojë</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="card">
+                    <img src="https://placehold.co/600x400/c4b5fd/4c1d95?text=Yoga+Retreat" alt="Yoga" class="w-full h-64 object-cover" onerror="this.src='https://placehold.co/600x400/c4b5fd/4c1d95?text=Image+Not+Found'">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold mb-2 text-brand-secondary" data-translate="activity1_name">Yoga & Meditation</h3>
+                        <p class="text-brand-text-dark" data-translate="activity1_desc">Find your inner peace with our guided yoga and meditation sessions amidst nature.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://placehold.co/600x400/fdba74/7c2d12?text=Hiking+Trails" alt="Hiking" class="w-full h-64 object-cover" onerror="this.src='https://placehold.co/600x400/fdba74/7c2d12?text=Image+Not+Found'">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold mb-2 text-brand-secondary" data-translate="activity2_name">Hiking Adventures</h3>
+                        <p class="text-brand-text-dark" data-translate="activity2_desc">Discover breathtaking trails and historical sites surrounding Voskopojë.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://placehold.co/600x400/86efac/14532d?text=Local+Farm" alt="Agrotourism" class="w-full h-64 object-cover" onerror="this.src='https://placehold.co/600x400/86efac/14532d?text=Image+Not+Found'">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold mb-2 text-brand-secondary" data-translate="activity3_name">Agrotourism Experience</h3>
+                        <p class="text-brand-text-dark" data-translate="activity3_desc">Engage with local culture, visit farms, and taste traditional products.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-16 bg-brand-bg-section"> 
+        <div class="container mx-auto px-6">
+            <h2 class="section-title" data-translate="contact_title">Contact Us</h2>
+            <div class="grid md:grid-cols-2 gap-12 items-start">
+                <div class="bg-brand-bg-light p-8 rounded-lg shadow-lg"> 
+                    <h3 class="text-2xl font-semibold mb-6 text-brand-secondary" data-translate="contact_get_in_touch">Get in Touch</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <i class="fas fa-map-marker-alt contact-icon fa-fw text-2xl mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-lg text-brand-secondary" data-translate="contact_address_label">Address</h4>
+                                <p class="text-brand-text-dark">Ura e Kovaçeve, Korçë, Albania 7007</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-phone contact-icon fa-fw text-2xl mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-lg text-brand-secondary" data-translate="contact_phone_label">Phone</h4>
+                                <a href="tel:+355689098589" class="text-brand-text-dark hover:text-brand-primary transition duration-300">+355 68 909 8589</a>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-envelope contact-icon fa-fw text-2xl mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-lg text-brand-secondary" data-translate="contact_email_label">Email</h4>
+                                <a href="mailto:info@uraekovacit.com" class="text-brand-text-dark hover:text-brand-primary transition duration-300">info@uraekovacit.com</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="map-container">
+                    <iframe 
+                        src="https://maps.google.com/maps?q=Voskopoj%C3%AB%2C%20Albania&t=&z=13&ie=UTF8&iwloc=&output=embed" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-brand-secondary text-brand-bg-light py-12"> 
+        <div class="container mx-auto px-6 text-center">
+            <div class="mb-6">
+                <a href="https://www.instagram.com/ura_e_kovacit_voskopoje/?igsh=NjN0c3g3N28xNHJn" target="_blank" rel="noopener noreferrer" class="text-brand-bg-light hover:text-brand-primary mx-2 text-2xl">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+            <p data-translate="footer_address_title">Ura e Kovaçit</p>
+            <p class="text-sm" data-translate="footer_address_detail">Voskopojë, Korçë, Albania</p>
+            <p class="text-sm mt-4" data-translate="footer_copyright">© 2024 Ura e Kovaçit. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div id="reservationModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" id="closeModalButton">×</span>
+            <h3 class="text-2xl font-semibold mb-4 text-brand-secondary" data-translate="modal_title">Booking Request Sent!</h3>
+            <p class="text-brand-text-dark" data-translate="modal_message">Thank you for your interest. We will contact you shortly to confirm your reservation.</p>
+            <button id="modalOkButton" class="mt-6 bg-brand-primary hover:bg-brand-primary-hover text-brand-text-light font-bold py-2 px-6 rounded-lg" data-translate="modal_ok_btn">OK</button>
+        </div>
+    </div>
+
+    <script>
+        // Language content (translations remain the same, only visual styles changed)
+        const translations = {
+            en: {
+                nav_brand_fallback: "Ura e Kovaçit", // Fallback if logo fails
+                nav_home: "Home",
+                nav_rooms: "Rooms",
+                nav_reservations: "Reservations",
+                nav_spa: "Spa",
+                nav_activities: "Activities",
+                nav_contact: "Contact", 
+                nav_home_mobile: "Home",
+                nav_rooms_mobile: "Rooms",
+                nav_reservations_mobile: "Reservations",
+                nav_spa_mobile: "Spa",
+                nav_activities_mobile: "Activities",
+                nav_contact_mobile: "Contact", 
+                hero_title: "Welcome to Ura e Kovaçit",
+                hero_subtitle: "Your serene getaway in the heart of Voskopojë.",
+                hero_cta: "Book Your Stay",
+                rooms_title: "Our Rooms",
+                room1_name: "Comfort Room",
+                room1_desc: "A cozy room with all essential amenities for a relaxing stay.",
+                room2_name: "Deluxe Suite",
+                room2_desc: "Spacious suite with a private balcony and stunning views.",
+                room3_name: "Family Apartment",
+                room3_desc: "Perfect for families, offering multiple beds and ample space.",
+                room_book_btn: "Book Now →",
+                reservations_title: "Make a Reservation",
+                form_name: "Full Name",
+                form_email: "Email Address",
+                form_checkin: "Check-in Date",
+                form_checkout: "Check-out Date",
+                form_room_type: "Room Type",
+                form_room_comfort: "Comfort Room",
+                form_room_deluxe: "Deluxe Suite",
+                form_room_family: "Family Apartment",
+                form_guests: "Number of Guests",
+                form_submit_btn: "Request Booking",
+                form_fill_all_fields: "Please fill all required fields.", 
+                spa_title: "Relax & Rejuvenate",
+                spa_desc1: "Indulge in a world of tranquility at our exclusive spa. We offer a range of treatments designed to soothe your body and mind.",
+                spa_desc2: "From therapeutic massages to revitalizing facials, our experienced therapists will ensure you leave feeling refreshed and renewed.",
+                spa_service1: "Traditional Albanian Massage",
+                spa_service2: "Aromatherapy",
+                spa_service3: "Sauna & Steam Room",
+                spa_service4: "Beauty Treatments",
+                spa_book_btn: "Book a Treatment",
+                activities_title: "Explore Voskopojë",
+                activity1_name: "Yoga & Meditation",
+                activity1_desc: "Find your inner peace with our guided yoga and meditation sessions amidst nature.",
+                activity2_name: "Hiking Adventures",
+                activity2_desc: "Discover breathtaking trails and historical sites surrounding Voskopojë.",
+                activity3_name: "Agrotourism Experience",
+                activity3_desc: "Engage with local culture, visit farms, and taste traditional products.",
+                contact_title: "Contact Us", 
+                contact_get_in_touch: "Get in Touch", 
+                contact_address_label: "Address", 
+                contact_phone_label: "Phone", 
+                contact_email_label: "Email", 
+                footer_address_title: "Ura e Kovaçit",
+                footer_address_detail: "Voskopojë, Korçë, Albania",
+                footer_copyright: "© 2024 Ura e Kovaçit. All rights reserved.",
+                modal_title: "Booking Request Sent!",
+                modal_message: "Thank you for your interest. We will contact you shortly to confirm your reservation.",
+                modal_ok_btn: "OK",
+            },
+            sq: {
+                nav_brand_fallback: "Ura e Kovaçit",
+                nav_home: "Kreu",
+                nav_rooms: "Dhomat",
+                nav_reservations: "Rezervimet",
+                nav_spa: "Spa",
+                nav_activities: "Aktivitetet",
+                nav_contact: "Kontakt", 
+                nav_home_mobile: "Kreu",
+                nav_rooms_mobile: "Dhomat",
+                nav_reservations_mobile: "Rezervimet",
+                nav_spa_mobile: "Spa",
+                nav_activities_mobile: "Aktivitetet",
+                nav_contact_mobile: "Kontakt", 
+                hero_title: "Mirësevini në Urën e Kovaçit",
+                hero_subtitle: "Arratija juaj e qetë në zemër të Voskopojës.",
+                hero_cta: "Rezervoni Qëndrimin",
+                rooms_title: "Dhomat Tona",
+                room1_name: "Dhomë Komfort",
+                room1_desc: "Një dhomë komode me të gjitha pajisjet thelbësore për një qëndrim relaksues.",
+                room2_name: "Suitë Deluxe",
+                room2_desc: "Suitë e bollshme me ballkon privat dhe pamje mahnitëse.",
+                room3_name: "Apartament Familjar",
+                room3_desc: "Ideale për familjet, ofron shtretër të shumtë dhe hapësirë të bollshme.",
+                room_book_btn: "Rezervo Tani →",
+                reservations_title: "Bëni një Rezervim",
+                form_name: "Emri i Plotë",
+                form_email: "Adresa Email",
+                form_checkin: "Data e Hyrjes",
+                form_checkout: "Data e Daljes",
+                form_room_type: "Tipi i Dhomës",
+                form_room_comfort: "Dhomë Komfort",
+                form_room_deluxe: "Suitë Deluxe",
+                form_room_family: "Apartament Familjar",
+                form_guests: "Numri i Vizitorëve",
+                form_submit_btn: "Kërko Rezervim",
+                form_fill_all_fields: "Ju lutemi plotësoni të gjitha fushat e kërkuara.",
+                spa_title: "Relaksohuni & Rigjenerohuni",
+                spa_desc1: "Zhytuni në një botë qetësie në spa-në tonë ekskluzive. Ne ofrojmë një sërë trajtimesh të dizajnuara për të qetësuar trupin dhe mendjen tuaj.",
+                spa_desc2: "Nga masazhet terapeutike te trajtimet rigjallëruese të fytyrës, terapistët tanë me përvojë do të sigurojnë që të largoheni të freskët dhe të përtërirë.",
+                spa_service1: "Masazh Tradicional Shqiptar",
+                spa_service2: "Aromaterapi",
+                spa_service3: "Sauna & Banjo me Avull",
+                spa_service4: "Trajtime Bukurie",
+                spa_book_btn: "Rezervoni një Trajtim",
+                activities_title: "Eksploroni Voskopojën",
+                activity1_name: "Joga & Meditim",
+                activity1_desc: "Gjeni paqen tuaj të brendshme me seancat tona të drejtuara të jogës dhe meditimit mes natyrës.",
+                activity2_name: "Aventura Hiking",
+                activity2_desc: "Zbuloni shtigje mahnitëse dhe site historike që rrethojnë Voskopojën.",
+                activity3_name: "Përvojë Agroturizmi",
+                activity3_desc: "Angazhohuni me kulturën lokale, vizitoni ferma dhe shijoni produkte tradicionale.",
+                contact_title: "Na Kontaktoni", 
+                contact_get_in_touch: "Na Kontaktoni", 
+                contact_address_label: "Adresa", 
+                contact_phone_label: "Telefoni", 
+                contact_email_label: "Email", 
+                footer_address_title: "Ura e Kovaçit",
+                footer_address_detail: "Voskopojë, Korçë, Shqipëri",
+                footer_copyright: "© 2024 Ura e Kovaçit. Të gjitha të drejtat e rezervuara.",
+                modal_title: "Kërkesa për Rezervim u Dërgua!",
+                modal_message: "Faleminderit për interesimin tuaj. Do t'ju kontaktojmë së shpejti për të konfirmuar rezervimin tuaj.",
+                modal_ok_btn: "OK",
+            },
+            de: {
+                nav_brand_fallback: "Ura e Kovaçit",
+                nav_home: "Startseite",
+                nav_rooms: "Zimmer",
+                nav_reservations: "Reservierungen",
+                nav_spa: "Spa",
+                nav_activities: "Aktivitäten",
+                nav_contact: "Kontakt", 
+                nav_home_mobile: "Startseite",
+                nav_rooms_mobile: "Zimmer",
+                nav_reservations_mobile: "Reservierungen",
+                nav_spa_mobile: "Spa",
+                nav_activities_mobile: "Aktivitäten",
+                nav_contact_mobile: "Kontakt", 
+                hero_title: "Willkommen bei Ura e Kovaçit",
+                hero_subtitle: "Ihr ruhiger Zufluchtsort im Herzen von Voskopojë.",
+                hero_cta: "Buchen Sie Ihren Aufenthalt",
+                rooms_title: "Unsere Zimmer",
+                room1_name: "Komfortzimmer",
+                room1_desc: "Ein gemütliches Zimmer mit allen wesentlichen Annehmlichkeiten für einen erholsamen Aufenthalt.",
+                room2_name: "Deluxe Suite",
+                room2_desc: "Geräumige Suite mit privatem Balkon und atemberaubender Aussicht.",
+                room3_name: "Familienapartment",
+                room3_desc: "Perfekt für Familien, bietet mehrere Betten und viel Platz.",
+                room_book_btn: "Jetzt Buchen →",
+                reservations_title: "Eine Reservierung Machen",
+                form_name: "Vollständiger Name",
+                form_email: "Email Adresse",
+                form_checkin: "Check-in Datum",
+                form_checkout: "Check-out Datum",
+                form_room_type: "Zimmertyp",
+                form_room_comfort: "Komfortzimmer",
+                form_room_deluxe: "Deluxe Suite",
+                form_room_family: "Familienapartment",
+                form_guests: "Anzahl der Gäste",
+                form_submit_btn: "Buchungsanfrage",
+                form_fill_all_fields: "Bitte füllen Sie alle Pflichtfelder aus.",
+                spa_title: "Entspannen & Verjüngen",
+                spa_desc1: "Tauchen Sie ein in eine Welt der Ruhe in unserem exklusiven Spa. Wir bieten eine Reihe von Behandlungen, die Körper und Geist beruhigen.",
+                spa_desc2: "Von therapeutischen Massagen bis hin zu revitalisierenden Gesichtsbehandlungen sorgen unsere erfahrenen Therapeuten dafür, dass Sie sich erfrischt und erneuert fühlen.",
+                spa_service1: "Traditionelle Albanische Massage",
+                spa_service2: "Aromatherapie",
+                spa_service3: "Sauna & Dampfbad",
+                spa_service4: "Schönheitsbehandlungen",
+                spa_book_btn: "Behandlung Buchen",
+                activities_title: "Entdecken Sie Voskopojë",
+                activity1_name: "Yoga & Meditation",
+                activity1_desc: "Finden Sie Ihre innere Ruhe bei unseren geführten Yoga- und Meditationssitzungen inmitten der Natur.",
+                activity2_name: "Wanderabenteuer",
+                activity2_desc: "Entdecken Sie atemberaubende Wanderwege und historische Stätten rund um Voskopojë.",
+                activity3_name: "Agrotourismus-Erlebnis",
+                activity3_desc: "Lernen Sie die lokale Kultur kennen, besuchen Sie Bauernhöfe und probieren Sie traditionelle Produkte.",
+                contact_title: "Kontaktieren Sie Uns", 
+                contact_get_in_touch: "Kontaktieren Sie Uns", 
+                contact_address_label: "Adresse", 
+                contact_phone_label: "Telefon", 
+                contact_email_label: "Email", 
+                footer_address_title: "Ura e Kovaçit",
+                footer_address_detail: "Voskopojë, Korçë, Albanien",
+                footer_copyright: "© 2024 Ura e Kovaçit. Alle Rechte vorbehalten.",
+                modal_title: "Buchungsanfrage Gesendet!",
+                modal_message: "Vielen Dank für Ihr Interesse. Wir werden Sie in Kürze kontaktieren, um Ihre Reservierung zu bestätigen.",
+                modal_ok_btn: "OK",
+            },
+            fr: {
+                nav_brand_fallback: "Ura e Kovaçit",
+                nav_home: "Accueil",
+                nav_rooms: "Chambres",
+                nav_reservations: "Réservations",
+                nav_spa: "Spa",
+                nav_activities: "Activités",
+                nav_contact: "Contact", 
+                nav_home_mobile: "Accueil",
+                nav_rooms_mobile: "Chambres",
+                nav_reservations_mobile: "Réservations",
+                nav_spa_mobile: "Spa",
+                nav_activities_mobile: "Activités",
+                nav_contact_mobile: "Contact", 
+                hero_title: "Bienvenue à Ura e Kovaçit",
+                hero_subtitle: "Votre escapade sereine au cœur de Voskopojë.",
+                hero_cta: "Réservez Votre Séjour",
+                rooms_title: "Nos Chambres",
+                room1_name: "Chambre Confort",
+                room1_desc: "Une chambre confortable avec toutes les commodités essentielles pour un séjour relaxant.",
+                room2_name: "Suite Deluxe",
+                room2_desc: "Suite spacieuse avec balcon privé et vues imprenables.",
+                room3_name: "Appartement Familial",
+                room3_desc: "Parfait pour les familles, offrant plusieurs lits et beaucoup d'espace.",
+                room_book_btn: "Réserver →",
+                reservations_title: "Faire une Réservation",
+                form_name: "Nom Complet",
+                form_email: "Adresse E-mail",
+                form_checkin: "Date d'Arrivée",
+                form_checkout: "Date de Départ",
+                form_room_type: "Type de Chambre",
+                form_room_comfort: "Chambre Confort",
+                form_room_deluxe: "Suite Deluxe",
+                form_room_family: "Appartement Familial",
+                form_guests: "Nombre de Personnes",
+                form_submit_btn: "Demande de Réservation",
+                form_fill_all_fields: "Veuillez remplir tous les champs obligatoires.",
+                spa_title: "Détendez-vous & Rajeunissez",
+                spa_desc1: "Plongez dans un monde de tranquillité dans notre spa exclusif. Nous proposons une gamme de soins conçus pour apaiser votre corps et votre esprit.",
+                spa_desc2: "Des massages thérapeutiques aux soins du visage revitalisants, nos thérapeutes expérimentés veilleront à ce que vous repartiez rafraîchi et renouvelé.",
+                spa_service1: "Massage Traditionnel Albanais",
+                spa_service2: "Aromathérapie",
+                spa_service3: "Sauna & Hammam",
+                spa_service4: "Soins de Beauté",
+                spa_book_btn: "Réserver un Soin",
+                activities_title: "Découvrez Voskopojë",
+                activity1_name: "Yoga & Méditation",
+                activity1_desc: "Trouvez votre paix intérieure avec nos séances guidées de yoga et de méditation en pleine nature.",
+                activity2_name: "Aventures de Randonnée",
+                activity2_desc: "Découvrez des sentiers à couper le souffle et des sites historiques autour de Voskopojë.",
+                activity3_name: "Expérience Agrotouristique",
+                activity3_desc: "Participez à la culture locale, visitez des fermes et dégustez des produits traditionnels.",
+                contact_title: "Nous Contacter", 
+                contact_get_in_touch: "Nous Contacter", 
+                contact_address_label: "Adresse", 
+                contact_phone_label: "Téléphone", 
+                contact_email_label: "Email", 
+                footer_address_title: "Ura e Kovaçit",
+                footer_address_detail: "Voskopojë, Korçë, Albanie",
+                footer_copyright: "© 2024 Ura e Kovaçit. Tous droits réservés.",
+                modal_title: "Demande de Réservation Envoyée !",
+                modal_message: "Merci de votre intérêt. Nous vous contacterons sous peu pour confirmer votre réservation.",
+                modal_ok_btn: "OK",
+            }
+        };
+
+        let currentLang = 'en'; 
+
+        const langSwitchers = document.querySelectorAll('.lang-switcher button');
+        const translatableElements = document.querySelectorAll('[data-translate]');
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+        const reservationForm = document.getElementById('reservationForm');
+        const reservationModal = document.getElementById('reservationModal');
+        const closeModalButton = document.getElementById('closeModalButton');
+        const modalOkButton = document.getElementById('modalOkButton');
+
+
+        function setLanguage(lang) {
+            if (!translations[lang]) {
+                console.error(`Language ${lang} not found in translations.`);
+                return;
+            }
+            currentLang = lang;
+            document.documentElement.lang = lang; 
+
+            translatableElements.forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[lang][key]) {
+                    el.innerHTML = translations[lang][key]; 
+                } else {
+                    // For elements that might not have a translation (like the logo fallback), don't log a warning if the key isn't present
+                    // This avoids console noise for intentionally untranslated dynamic elements.
+                    // However, if it's a key that *should* exist, a warning is useful.
+                    // For now, we'll keep the warning for general debugging.
+                    if (!key.includes("nav_brand_fallback")) { // Example: suppress warning for specific keys
+                         console.warn(`Translation key "${key}" not found for language "${lang}".`);
+                    }
+                }
+            });
+
+            langSwitchers.forEach(switcher => {
+                if (switcher.getAttribute('data-lang') === lang) {
+                    switcher.classList.add('active-lang');
+                } else {
+                    switcher.classList.remove('active-lang');
+                }
+            });
+        }
+
+        langSwitchers.forEach(switcher => {
+            switcher.addEventListener('click', (e) => {
+                const lang = e.target.getAttribute('data-lang');
+                setLanguage(lang);
+            });
+        });
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        if (reservationForm) {
+            reservationForm.addEventListener('submit', function(event) {
+                event.preventDefault(); 
+                
+                const name = document.getElementById('name').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const checkin = document.getElementById('checkin').value;
+                const checkout = document.getElementById('checkout').value;
+
+                const existingErrorMsg = reservationForm.querySelector('.error-message');
+                if (existingErrorMsg) {
+                    existingErrorMsg.remove();
+                }
+
+                if (!name || !email || !checkin || !checkout) {
+                    const submitButton = reservationForm.querySelector('button[type="submit"]');
+                    let errorMsg = document.createElement('p');
+                    errorMsg.classList.add('text-red-500', 'text-sm', 'mt-2', 'error-message'); // Kept red for error emphasis
+                    errorMsg.textContent = translations[currentLang].form_fill_all_fields || "Please fill all required fields.";
+                    submitButton.parentNode.insertBefore(errorMsg, submitButton.nextSibling);
+                    return;
+                }
+                
+                reservationModal.style.display = "block";
+                reservationForm.reset(); 
+            });
+        }
+
+        if (closeModalButton) {
+            closeModalButton.onclick = function() {
+                reservationModal.style.display = "none";
+            }
+        }
+        if (modalOkButton) {
+            modalOkButton.onclick = function() {
+                reservationModal.style.display = "none";
+            }
+        }
+
+        window.onclick = function(event) {
+            if (event.target == reservationModal) {
+                reservationModal.style.display = "none";
+            }
+        }
+
+        setLanguage('en'); 
+
+    </script>
+</body>
+</html>
