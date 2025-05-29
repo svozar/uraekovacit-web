@@ -79,16 +79,24 @@
             font-family: var(--font-body); 
             font-weight: 700; 
         }
-        .nav-link:hover, .lang-switcher button:hover {
+        .nav-link:hover {
             color: var(--brand-primary);
         }
-        .lang-switcher button {
-             font-family: var(--font-body);
+        
+        /* Language Dropdown Styles */
+        .lang-dropdown-button:hover {
+            background-color: #F0EBE6; /* Slightly darker beige for hover */
         }
-        .active-lang {
+        .lang-option.active-lang {
             color: var(--brand-primary) !important;
             font-weight: 700;
+            background-color: #F0EBE6;
         }
+         .lang-option:hover {
+            background-color: #EAE5E0;
+            color: var(--brand-primary);
+        }
+
         .modal {
             display: none; 
             position: fixed; 
@@ -169,12 +177,24 @@
             height: 40px; 
             width: auto;
             margin-right: 0.5rem; 
+            flex-shrink: 0; /* Prevent logo from shrinking */
         }
         .header-brand-name {
-            font-size: 1.75rem; 
-            color: var(--brand-header-name-blue); /* Updated to new blue variable */
+            font-size: 1.25rem; /* Base size for smaller screens */
+            color: var(--brand-header-name-blue); 
             font-weight: 700; 
+            white-space: nowrap; /* Prevent the name text from wrapping */
+            overflow: hidden;      /* Hide overflow if name is too long */
+            text-overflow: ellipsis; /* Show ... if text is cut */
+            flex-shrink: 1; /* Allow name to shrink if needed, but not wrap */
         }
+
+        @media (min-width: 768px) { /* md breakpoint in Tailwind */
+            .header-brand-name {
+                font-size: 1.75rem; /* Larger font size for medium screens and up */
+            }
+        }
+
         button, .button, input[type="submit"], input[type="button"] {
             font-family: var(--font-body);
             font-weight: 700; 
@@ -187,7 +207,7 @@
 <body class="text-brand-text-dark"> 
     <header class="bg-brand-bg-light shadow-md sticky top-0 z-50"> 
         <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <a href="#" class="flex items-center"> 
+            <a href="#" class="flex items-center flex-nowrap overflow-hidden"> 
                 <img src="http://i.imgur.com/xd31bcF.png" alt="Ura e Kovaçit Logo" class="header-logo" onerror="this.style.display='none'; document.querySelector('.header-brand-name').classList.remove('ml-2')">
                 <span class="header-brand-name" data-translate="nav_brand_fallback">Ura e Kovaçit</span> 
             </a>
@@ -201,11 +221,23 @@
                     <li><a href="#restaurant" class="nav-link" data-translate="nav_restaurant">Restaurant</a></li> 
                     <li><a href="#contact" class="nav-link" data-translate="nav_contact">Contact</a></li>
                 </ul> 
-                <div class="lang-switcher space-x-2 text-sm">
-                    <button data-lang="en" class="font-medium active-lang">EN</button>
-                    <button data-lang="sq" class="font-medium">SQ</button>
-                    <button data-lang="de" class="font-medium">DE</button>
-                    <button data-lang="fr" class="font-medium">FR</button>
+                <div class="relative inline-block text-left" id="languageDropdownContainer">
+                    <div>
+                        <button type="button" class="lang-dropdown-button inline-flex items-center justify-center w-full rounded-md border border-gray-300 shadow-sm px-3 py-2 bg-brand-bg-light text-sm font-bold text-brand-secondary focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-offset-brand-bg-light focus:ring-brand-primary" id="languageDropdownButton" aria-haspopup="true" aria-expanded="false">
+                            <span id="currentLanguageLabel" class="mr-1">EN</span>
+                            <svg class="h-5 w-5 text-brand-secondary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div id="languageDropdownMenu" class="origin-top-right absolute right-0 mt-2 w-32 rounded-md shadow-lg bg-brand-bg-light ring-1 ring-black ring-opacity-5 focus:outline-none hidden z-10" role="menu" aria-orientation="vertical" aria-labelledby="languageDropdownButton">
+                        <div class="py-1" role="none">
+                            <button data-lang="en" data-lang-full="English" class="lang-option block w-full text-left px-4 py-2 text-sm text-brand-text-dark" role="menuitem">English</button>
+                            <button data-lang="sq" data-lang-full="Shqip" class="lang-option block w-full text-left px-4 py-2 text-sm text-brand-text-dark" role="menuitem">Shqip</button>
+                            <button data-lang="de" data-lang-full="Deutsch" class="lang-option block w-full text-left px-4 py-2 text-sm text-brand-text-dark" role="menuitem">Deutsch</button>
+                            <button data-lang="fr" data-lang-full="Français" class="lang-option block w-full text-left px-4 py-2 text-sm text-brand-text-dark" role="menuitem">Français</button>
+                        </div>
+                    </div>
                 </div>
                 <button id="mobileMenuButton" class="md:hidden focus:outline-none text-brand-secondary">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
@@ -746,7 +778,11 @@
 
         let currentLang = 'en'; 
 
-        const langSwitchers = document.querySelectorAll('.lang-switcher button');
+        const languageDropdownButton = document.getElementById('languageDropdownButton');
+        const languageDropdownMenu = document.getElementById('languageDropdownMenu');
+        const currentLanguageLabel = document.getElementById('currentLanguageLabel');
+        const langOptions = document.querySelectorAll('.lang-option');
+
         const translatableElements = document.querySelectorAll('[data-translate]');
         const mobileMenuButton = document.getElementById('mobileMenuButton');
         const mobileMenu = document.getElementById('mobileMenu');
@@ -776,21 +812,47 @@
                 }
             });
 
-            langSwitchers.forEach(switcher => {
-                if (switcher.getAttribute('data-lang') === lang) {
-                    switcher.classList.add('active-lang');
+            // Update dropdown button label
+            currentLanguageLabel.textContent = lang.toUpperCase();
+
+            // Update active class in dropdown options
+            langOptions.forEach(option => {
+                if (option.getAttribute('data-lang') === lang) {
+                    option.classList.add('active-lang');
                 } else {
-                    switcher.classList.remove('active-lang');
+                    option.classList.remove('active-lang');
                 }
             });
         }
 
-        langSwitchers.forEach(switcher => {
-            switcher.addEventListener('click', (e) => {
+        // Language Dropdown Toggle
+        if (languageDropdownButton) {
+            languageDropdownButton.addEventListener('click', () => {
+                const isExpanded = languageDropdownButton.getAttribute('aria-expanded') === 'true' || false;
+                languageDropdownButton.setAttribute('aria-expanded', !isExpanded);
+                languageDropdownMenu.classList.toggle('hidden');
+            });
+        }
+
+        // Language Selection from Dropdown
+        langOptions.forEach(option => {
+            option.addEventListener('click', (e) => {
                 const lang = e.target.getAttribute('data-lang');
                 setLanguage(lang);
+                languageDropdownMenu.classList.add('hidden'); // Hide dropdown after selection
+                languageDropdownButton.setAttribute('aria-expanded', 'false');
             });
         });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdownContainer = document.getElementById('languageDropdownContainer');
+            if (dropdownContainer && !dropdownContainer.contains(event.target) && !languageDropdownMenu.classList.contains('hidden')) {
+                languageDropdownMenu.classList.add('hidden');
+                languageDropdownButton.setAttribute('aria-expanded', 'false');
+            }
+        });
+
 
         mobileMenuButton.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
@@ -855,12 +917,18 @@
         }
 
         window.onclick = function(event) {
+            // Close modal if user clicks outside of it
             if (event.target == reservationModal) {
                 reservationModal.style.display = "none";
             }
         }
 
-        setLanguage('en'); 
+        // Set initial language and active state in dropdown
+        const initialLang = 'en'; // Or detect from browser/storage
+        setLanguage(initialLang); 
+        // Ensure the initially active button in dropdown also has the active-lang class
+        document.querySelector(`.lang-option[data-lang="${initialLang}"]`).classList.add('active-lang');
+
 
     </script>
 </body>
