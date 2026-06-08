@@ -297,6 +297,61 @@
                 width: 100%;
             }
         }
+        
+        /* Privacy Modal Styles */
+        .privacy-modal-content {
+            background-color: var(--brand-bg-light);
+            margin: 5% auto; 
+            padding: 2rem;
+            border: 1px solid var(--brand-secondary);
+            width: 90%; 
+            max-width: 800px;
+            border-radius: 0.5rem;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+        .privacy-modal-close {
+            color: var(--brand-secondary);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .privacy-modal-close:hover,
+        .privacy-modal-close:focus {
+            color: var(--brand-primary);
+        }
+        .privacy-modal-content h2 {
+            color: var(--brand-secondary);
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 1.5rem;
+        }
+        .privacy-modal-content h2:first-child {
+            margin-top: 0;
+        }
+        .privacy-modal-content p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            color: var(--brand-text-dark);
+        }
+        .privacy-modal-content ul {
+            margin-bottom: 1rem;
+            margin-left: 1.5rem;
+        }
+        .privacy-modal-content li {
+            margin-bottom: 0.5rem;
+            color: var(--brand-text-dark);
+        }
+        .privacy-modal-content a {
+            color: var(--brand-primary);
+            text-decoration: underline;
+        }
+        .privacy-modal-content a:hover {
+            text-decoration: none;
+        }
     </style>
 </head>
 <!-- Google Consent Mode -->
@@ -1326,11 +1381,58 @@
             }
         }
 
-        // Initialize banner on page load
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initConsentBanner);
-        } else {
+        // Privacy Modal Initialization
+        function initPrivacyModal() {
+            const privacyModal = document.getElementById('privacyModal');
+            const privacyLink = document.getElementById('privacyLink');
+            const privacyModalClose = document.getElementById('privacyModalClose');
+
+            // Open modal when privacy link is clicked
+            if (privacyLink) {
+                privacyLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    privacyModal.style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+
+            // Close modal when close button is clicked
+            if (privacyModalClose) {
+                privacyModalClose.addEventListener('click', function() {
+                    privacyModal.style.display = 'none';
+                    document.body.style.overflow = '';
+                });
+            }
+
+            // Close modal when clicking outside of modal content
+            if (privacyModal) {
+                privacyModal.addEventListener('click', function(e) {
+                    if (e.target === privacyModal) {
+                        privacyModal.style.display = 'none';
+                        document.body.style.overflow = '';
+                    }
+                });
+            }
+
+            // Close modal when pressing Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && privacyModal && privacyModal.style.display === 'block') {
+                    privacyModal.style.display = 'none';
+                    document.body.style.overflow = '';
+                }
+            });
+        }
+
+        // Initialize modals on page load
+        function initializeModals() {
             initConsentBanner();
+            initPrivacyModal();
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeModals);
+        } else {
+            initializeModals();
         }
 
     </script>
@@ -1339,12 +1441,78 @@
     <div id="consentBanner" class="consent-banner">
         <div class="consent-content">
             <div class="consent-text">
-                <strong>Privacy & Analytics:</strong> We use Google Analytics to understand how you use our site and improve your experience. By continuing, you consent to our use of analytics. You can change your preferences anytime. <a href="#privacy">Learn more about our privacy practices</a>.
+                <strong>Privacy & Analytics:</strong> We use Google Analytics to understand how you use our site and improve your experience. By continuing, you consent to our use of analytics. You can change your preferences anytime. <a id="privacyLink" style="cursor: pointer;">Learn more about our privacy practices</a>.
             </div>
             <div class="consent-buttons">
                 <button class="consent-btn consent-btn-reject" id="consentReject">Reject</button>
                 <button class="consent-btn consent-btn-accept" id="consentAccept">Accept Analytics</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacyModal" class="modal">
+        <div class="privacy-modal-content">
+            <span class="privacy-modal-close" id="privacyModalClose">×</span>
+            <h2>Privacy Policy & Analytics</h2>
+            
+            <h2>Overview</h2>
+            <p>At Ura e Kovaçit, we are committed to protecting your privacy and ensuring you have a positive experience on our website. This privacy policy explains our data practices and how we use analytics to improve our services.</p>
+            
+            <h2>Google Analytics</h2>
+            <p>We use Google Analytics, a web analytics service provided by Google, Inc. ("Google"). Google Analytics uses cookies to help us analyze how visitors use our site. The information generated by the cookie about your use of the website (including your IP address) will be transmitted to and stored by Google on servers in the United States.</p>
+            <p>Google will use this information for the purpose of evaluating your use of the website, compiling reports on website activity for website operators, and providing other services relating to website activity and internet usage. Google may also transfer this information to third parties where required to do so by law, or where such third parties process the information on Google's behalf.</p>
+            
+            <h2>How We Use Your Data</h2>
+            <ul>
+                <li><strong>Understand User Behavior:</strong> We track how visitors navigate our site, which pages are most popular, and how long visitors stay on each page.</li>
+                <li><strong>Improve User Experience:</strong> This data helps us optimize our website design, content, and functionality for better user experience.</li>
+                <li><strong>Track Performance:</strong> We monitor website performance, traffic patterns, and conversion metrics.</li>
+                <li><strong>Enhance Services:</strong> Analytics insights help us identify areas for improvement and develop new features.</li>
+            </ul>
+            
+            <h2>Data We Collect</h2>
+            <p>Through Google Analytics, we collect the following types of information:</p>
+            <ul>
+                <li>Pages you visit and the time spent on each page</li>
+                <li>Referring website or search terms that brought you to our site</li>
+                <li>Device information (browser type, operating system, device type)</li>
+                <li>Geographic location (country and city level)</li>
+                <li>General engagement metrics (scrolling, interactions)</li>
+            </ul>
+            <p>We do <strong>not</strong> collect personal information such as your name, email address, or payment details through Google Analytics. Your IP address is anonymized by Google.</p>
+            
+            <h2>Your Choices</h2>
+            <p>You can control your privacy preferences by:</p>
+            <ul>
+                <li><strong>Opting Out:</strong> You can reject analytics tracking by selecting "Reject" when prompted with our consent banner.</li>
+                <li><strong>Browser Settings:</strong> You can disable cookies in your browser settings or use private/incognito mode.</li>
+                <li><strong>Google Opt-out:</strong> Install the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank">Google Analytics Opt-Out Browser Add-on</a> to prevent Google from collecting your data.</li>
+                <li><strong>Changing Preferences:</strong> You can update your consent preferences at any time. Clear your browser cache and reload the page to reset the consent banner.</li>
+            </ul>
+            
+            <h2>Data Retention</h2>
+            <p>Google Analytics typically retains your data for 14 months from the date of collection. Your consent preference (accepted or rejected) is stored locally on your device for one year.</p>
+            
+            <h2>Third-Party Sharing</h2>
+            <p>We do not sell, trade, or rent your personal information to third parties. Google Analytics data is governed by Google's terms of service. For more information, please review <a href="https://policies.google.com/privacy" target="_blank">Google's Privacy Policy</a>.</p>
+            
+            <h2>Security</h2>
+            <p>We take reasonable precautions to protect the information we collect. However, no internet transmission is completely secure. We cannot guarantee absolute security.</p>
+            
+            <h2>Changes to This Policy</h2>
+            <p>We may update this privacy policy periodically. Changes will be posted on this page. Your continued use of our website constitutes acceptance of any changes.</p>
+            
+            <h2>Contact Us</h2>
+            <p>If you have questions about our privacy practices or this policy, please contact us at:</p>
+            <ul>
+                <li><strong>Address:</strong> Voskopojë, Korçë, Albania</li>
+                <li><strong>Email:</strong> <a href="mailto:info@uraekovacit.com">info@uraekovacit.com</a></li>
+                <li><strong>Phone:</strong> Contact our reception for details</li>
+            </ul>
+            
+            <h2>Acknowledgment</h2>
+            <p>By using our website, you acknowledge that you have read and understood this Privacy Policy and agree to our practices regarding your information.</p>
         </div>
     </div>
 </body>
