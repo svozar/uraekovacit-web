@@ -202,6 +202,30 @@
         input, select, textarea {
              font-family: var(--font-body);
         }
+        /* Gallery overlay styles */
+        .gallery-overlay .gallery-image {
+            max-width: 90vw;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 0.5rem;
+            box-shadow: 0 20px 30px rgba(0,0,0,0.5);
+        }
+        .gallery-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            justify-content: center;
+            margin-top: 0.75rem;
+        }
+        .gallery-button {
+            background: rgba(255,255,255,0.9);
+            border: none;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-weight: 700;
+        }
+        .gallery-caption { color: var(--brand-text-light); margin-top: .5rem; }
     </style>
 </head>
 <body class="text-brand-text-dark"> 
@@ -271,27 +295,27 @@
             <h2 class="section-title" data-translate="rooms_title">Our Rooms</h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="card">
-                    <img src="https://placehold.co/600x400/d1d5db/374151?text=Comfort+Room" alt="Comfort Room" class="w-full h-64 object-cover" onerror="this.src='https://placehold.co/600x400/d1d5db/374151?text=Image+Not+Found'">
+                    <img src="https://placehold.co/800x500/cbd5e1/374151?text=Basic+Room+1" alt="Basic" class="w-full h-64 object-cover room-thumb" data-gallery="https://placehold.co/1200x800/cbd5e1/374151?text=Basic+Room+1,https://placehold.co/1200x800/bfcfe0/374151?text=Basic+Room+2" onerror="this.src='https://placehold.co/600x400/d1d5db/374151?text=Image+Not+Found'">
                     <div class="p-6">
-                        <h3 data-translate="room1_name">Comfort Room</h3>
-                        <p class="text-brand-text-dark mb-4" data-translate="room1_desc">A cozy room with all essential amenities for a relaxing stay.</p>
-                        <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium" data-translate="room_book_btn">Book Now →</a>
+                        <h3 data-translate="room_basic_name">Basic</h3>
+                        <p class="text-brand-text-dark mb-4" data-translate="room_basic_desc">A refined sanctuary with a queen-sized bed, ensuite bathroom, and thoughtfully curated amenities for a restful stay.</p>
+                        <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium">Book Now →</a>
                     </div>
                 </div>
                 <div class="card">
-                    <img src="https://placehold.co/600x400/e5e7eb/374151?text=Deluxe+Suite" alt="Deluxe Suite" class="w-full h-64 object-cover" onerror="this.src='https://placehold.co/600x400/e5e7eb/374151?text=Image+Not+Found'">
+                    <img src="https://placehold.co/800x500/e5e7eb/374151?text=Deluxe+1" alt="Deluxe" class="w-full h-64 object-cover room-thumb" data-gallery="https://placehold.co/1200x800/e5e7eb/374151?text=Deluxe+1,https://placehold.co/1200x800/f1e1d0/374151?text=Deluxe+2" onerror="this.src='https://placehold.co/600x400/e5e7eb/374151?text=Image+Not+Found'">
                     <div class="p-6">
-                        <h3 data-translate="room2_name">Deluxe Suite</h3>
-                        <p class="text-brand-text-dark mb-4" data-translate="room2_desc">Spacious suite with a private balcony and stunning views.</p>
-                        <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium" data-translate="room_book_btn">Book Now →</a>
+                        <h3 data-translate="room_deluxe_name">Deluxe</h3>
+                        <p class="text-brand-text-dark mb-4" data-translate="room_deluxe_desc">Spacious accommodation for up to four guests, featuring a jet-equipped jacuzzi, premium linens, and an elegant seating area for indulgent comfort.</p>
+                        <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium">Book Now →</a>
                     </div>
                 </div>
                 <div class="card">
-                    <img src="https://placehold.co/600x400/9ca3af/374151?text=Family+Apartment" alt="Family Apartment" class="w-full h-64 object-cover" onerror="this.src='https://placehold.co/600x400/9ca3af/374151?text=Image+Not+Found'">
+                    <img src="https://placehold.co/800x500/ffdbe0/4e2a1f?text=Romantic+1" alt="Romantic" class="w-full h-64 object-cover room-thumb" data-gallery="https://placehold.co/1200x800/ffdbe0/4e2a1f?text=Romantic+1,https://placehold.co/1200x800/ffe6f0/4e2a1f?text=Romantic+2" onerror="this.src='https://placehold.co/600x400/9ca3af/374151?text=Image+Not+Found'">
                     <div class="p-6">
-                        <h3 data-translate="room3_name">Family Apartment</h3>
-                        <p class="text-brand-text-dark mb-4" data-translate="room3_desc">Perfect for families, offering multiple beds and ample space.</p>
-                        <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium" data-translate="room_book_btn">Book Now →</a>
+                        <h3 data-translate="room_romantic_name">Romantic package</h3>
+                        <p class="text-brand-text-dark mb-4" data-translate="room_romantic_desc">An intimate retreat for 2–4 guests with a luxurious freestanding bathtub, ambient lighting, and curated touches for a memorable romantic escape.</p>
+                        <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium">Book Now →</a>
                     </div>
                 </div>
             </div>
@@ -458,6 +482,22 @@
         </div>
     </div>
 
+    <!-- Gallery overlay (used when clicking room thumbnails) -->
+    <div id="galleryOverlay" class="modal gallery-overlay" aria-hidden="true">
+        <div style="display:flex;align-items:center;justify-content:center;height:100%;padding:2rem;"> 
+            <button id="galleryClose" class="gallery-button" style="position:absolute;top:1rem;right:1rem;">Close ×</button>
+            <div id="galleryContent" style="text-align:center;max-width:1200px;width:100%;">
+                <img id="galleryImage" class="gallery-image" src="" alt="Gallery image" />
+                <div class="gallery-controls">
+                    <button id="galleryPrev" class="gallery-button">Prev</button>
+                    <span id="galleryCounter" class="text-brand-text-light"></span>
+                    <button id="galleryNext" class="gallery-button">Next</button>
+                </div>
+                <div class="gallery-caption text-sm opacity-90" id="galleryCaption"></div>
+            </div>
+        </div>
+    </div>
+
     <script>
         const translations = {
             en: {
@@ -486,6 +526,12 @@
                 room2_desc: "Spacious suite with a private balcony and stunning views.",
                 room3_name: "Family Apartment",
                 room3_desc: "Perfect for families, offering multiple beds and ample space.",
+                room_basic_name: "Basic",
+                room_basic_desc: "A refined sanctuary with a queen-sized bed, ensuite bathroom, and thoughtfully curated amenities for a restful stay.",
+                room_deluxe_name: "Deluxe",
+                room_deluxe_desc: "Spacious accommodation for up to four guests, featuring a jet-equipped jacuzzi, premium linens, and an elegant seating area for indulgent comfort.",
+                room_romantic_name: "Romantic package",
+                room_romantic_desc: "An intimate retreat for 2–4 guests with a luxurious freestanding bathtub, ambient lighting, and curated touches for a memorable romantic escape.",
                 room_book_btn: "Book Now →",
                 reservations_title: "Make a Reservation",
                 form_name: "Full Name",
@@ -562,6 +608,12 @@
                 room2_desc: "Suitë e bollshme me ballkon privat dhe pamje mahnitëse.",
                 room3_name: "Apartament Familjar",
                 room3_desc: "Ideale për familjet, ofron shtretër të shumtë dhe hapësirë të bollshme.",
+                room_basic_name: "Standard",
+                room_basic_desc: "Një strehë e rafinuar me krevat queen-size, banjë private dhe pajisje të përzgjedhura për një qëndrim të qetë.",
+                room_deluxe_name: "Deluxe",
+                room_deluxe_desc: "Hapësirë për deri në 4 persona, me xhakuzi me fuqi, çarçafë premium dhe zonë të shkëlqyer për rehati dhe festime.",
+                room_romantic_name: "Paketa Romantike",
+                room_romantic_desc: "Një arratisje intime për 2–4 persona me një vaskë luksoze, dritë të butë dhe detaje të kuruara për një eksperiencë romantike të paharrueshme.",
                 room_book_btn: "Rezervo Tani →",
                 reservations_title: "Bëni një Rezervim",
                 form_name: "Emri i Plotë",
@@ -638,6 +690,12 @@
                 room2_desc: "Geräumige Suite mit privatem Balkon und atemberaubender Aussicht.",
                 room3_name: "Familienapartment",
                 room3_desc: "Perfekt für Familien, bietet mehrere Betten und viel Platz.",
+                room_basic_name: "Standard",
+                room_basic_desc: "Ein eleganter Rückzugsort mit Queensize-Bett, eigenem Bad und ausgewählten Annehmlichkeiten für erholsamen Schlaf.",
+                room_deluxe_name: "Deluxe",
+                room_deluxe_desc: "Platz für bis zu 4 Personen, mit Jacuzzi (mit Düsen), hochwertigen Bettwaren und einem stilvollen Wohnbereich — ideal für Familien oder Feierlichkeiten.",
+                room_romantic_name: "Romantik-Paket",
+                room_romantic_desc: "Ein intimes Refugium für 2–4 Personen mit einer luxuriösen freistehenden Badewanne, stimmungsvoller Beleuchtung und liebevollen Details.",
                 room_book_btn: "Jetzt Buchen →",
                 reservations_title: "Eine Reservierung Machen",
                 form_name: "Vollständiger Name",
@@ -714,6 +772,12 @@
                 room2_desc: "Suite spacieuse avec balcon privé et vues imprenables.",
                 room3_name: "Appartement Familial",
                 room3_desc: "Parfait pour les familles, offrant plusieurs lits et beaucoup d'espace.",
+                room_basic_name: "Standard",
+                room_basic_desc: "Un sanctuaire raffiné avec lit queen-size, salle de bains attenante et équipements sélectionnés pour un séjour reposant.",
+                room_deluxe_name: "Deluxe",
+                room_deluxe_desc: "Logement spacieux pour 4 personnes maximum, avec jacuzzi à jets, linge de qualité et un coin salon élégant — idéal pour se célébrer en famille.",
+                room_romantic_name: "Forfait Romantique",
+                room_romantic_desc: "Une retraite intime pour 2–4 personnes, baignoire luxueuse indépendante, éclairage d'ambiance et attentions conçues pour un séjour romantique inoubliable.",
                 room_book_btn: "Réserver →",
                 reservations_title: "Faire une Réservation",
                 form_name: "Nom Complet",
@@ -790,6 +854,12 @@
                 room2_desc: "Ευρύχωρη σουίτα με ιδιωτικό μπαλκόνι και εκπληκτική θέα.",
                 room3_name: "Οικογενειακό Διαμέρισμα",
                 room3_desc: "Ιδανικό για οικογένειες, με πολλά κρεβάτια και άφθονο χώρο.",
+                room_basic_name: "Βασικό",
+                room_basic_desc: "Ένα κομψό καταφύγιο με queen-size κρεβάτι, ιδιωτικό μπάνιο και επιλεγμένες παροχές για ήρεμη διαμονή.",
+                room_deluxe_name: "Deluxe",
+                room_deluxe_desc: "Χώρος για έως 4 άτομα, με υδρομασάζ με πίδακες, πολυτελή κλινοσκεπάσματα και κομψό χώρο καθιστικού — ιδανικό για οικογένειες ή γιορτές.",
+                room_romantic_name: "Ρομαντικό Πακέτο",
+                room_romantic_desc: "Μια οικεία απόδραση για 2–4 άτομα με πολυτελή ελεύθερη μπανιέρα, ατμοσφαιρικό φωτισμό και προσεγμένες λεπτομέρειες για αξέχαστη ρομαντική εμπειρία.",
                 room_book_btn: "Κάντε κράτηση τώρα →",
                 reservations_title: "Κάντε μια Κράτηση",
                 form_name: "Πλήρες Όνομα",
@@ -996,6 +1066,68 @@
         // Ensure the initially active button in dropdown also has the active-lang class
         document.querySelector(`.lang-option[data-lang="${initialLang}"]`).classList.add('active-lang');
 
+        // Simple gallery overlay for room thumbnails
+        (function(){
+            const thumbs = document.querySelectorAll('.room-thumb');
+            const overlay = document.getElementById('galleryOverlay');
+            const imgEl = document.getElementById('galleryImage');
+            const prevBtn = document.getElementById('galleryPrev');
+            const nextBtn = document.getElementById('galleryNext');
+            const closeBtn = document.getElementById('galleryClose');
+            const counter = document.getElementById('galleryCounter');
+            const caption = document.getElementById('galleryCaption');
+
+            let gallery = [];
+            let index = 0;
+
+            function showImage(i){
+                if (!gallery.length) return;
+                index = (i + gallery.length) % gallery.length;
+                imgEl.src = gallery[index];
+                counter.textContent = `${index+1} / ${gallery.length}`;
+                caption.textContent = '';
+            }
+
+            function openGallery(images, start){
+                gallery = images.map(s=>s.trim()).filter(Boolean);
+                if (!gallery.length) return;
+                showImage(start||0);
+                overlay.style.display = 'block';
+                overlay.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeGallery(){
+                overlay.style.display = 'none';
+                overlay.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+            }
+
+            thumbs.forEach(t => {
+                t.style.cursor = 'pointer';
+                t.addEventListener('click', (e) => {
+                    const galleryData = t.getAttribute('data-gallery') || t.src || '';
+                    const images = galleryData.split(',').map(s=>s.trim()).filter(Boolean);
+                    if (images.length === 0 && t.src) images.push(t.src);
+                    openGallery(images, 0);
+                });
+            });
+
+            prevBtn.addEventListener('click', ()=> showImage(index-1));
+            nextBtn.addEventListener('click', ()=> showImage(index+1));
+            closeBtn.addEventListener('click', closeGallery);
+
+            overlay.addEventListener('click', (e)=>{
+                if (e.target === overlay) closeGallery();
+            });
+
+            document.addEventListener('keydown', (e)=>{
+                if (overlay.style.display !== 'block') return;
+                if (e.key === 'ArrowLeft') showImage(index-1);
+                if (e.key === 'ArrowRight') showImage(index+1);
+                if (e.key === 'Escape') closeGallery();
+            });
+        })();
 
     </script>
 </body>
