@@ -226,15 +226,111 @@
             font-weight: 700;
         }
         .gallery-caption { color: var(--brand-text-light); margin-top: .5rem; }
+        /* Consent Banner Styles */
+        .consent-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--brand-secondary);
+            color: var(--brand-text-light);
+            padding: 1.5rem;
+            z-index: 100;
+            display: none;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .consent-banner.show {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .consent-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        .consent-text {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .consent-text a {
+            color: var(--brand-primary);
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .consent-text a:hover {
+            text-decoration: none;
+        }
+        .consent-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+        .consent-btn {
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 0.375rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .consent-btn-accept {
+            background-color: var(--brand-primary);
+            color: var(--brand-text-light);
+        }
+        .consent-btn-accept:hover {
+            background-color: var(--brand-primary-hover);
+        }
+        .consent-btn-reject {
+            background-color: transparent;
+            color: var(--brand-text-light);
+            border: 1px solid var(--brand-text-light);
+        }
+        .consent-btn-reject:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        @media (max-width: 768px) {
+            .consent-buttons {
+                flex-direction: column;
+            }
+            .consent-btn {
+                width: 100%;
+            }
+        }
     </style>
 </head>
+<!-- Google Consent Mode -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'analytics_storage': 'denied',
+    'ad_storage': 'denied'
+  });
+
+  // Check for stored consent
+  function checkConsentStatus() {
+    const consent = localStorage.getItem('analytics-consent');
+    if (consent === 'accepted') {
+      grantConsent();
+    }
+  }
+
+  function grantConsent() {
+    gtag('consent', 'update', {
+      'analytics_storage': 'granted',
+      'ad_storage': 'granted'
+    });
+  }
+
+  checkConsentStatus();
+</script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TWLF5K1JD"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-2TWLF5K1JD');
 </script>
 <body class="text-brand-text-dark"> 
@@ -1194,6 +1290,62 @@
             });
         })();
 
+        // Consent Banner Initialization
+        function initConsentBanner() {
+            const consent = localStorage.getItem('analytics-consent');
+            const banner = document.getElementById('consentBanner');
+            const acceptBtn = document.getElementById('consentAccept');
+            const rejectBtn = document.getElementById('consentReject');
+            
+            if (!consent) {
+                banner.classList.add('show');
+            }
+
+            // Accept analytics
+            if (acceptBtn) {
+                acceptBtn.addEventListener('click', function() {
+                    localStorage.setItem('analytics-consent', 'accepted');
+                    gtag('consent', 'update', {
+                        'analytics_storage': 'granted',
+                        'ad_storage': 'granted'
+                    });
+                    banner.classList.remove('show');
+                });
+            }
+
+            // Reject analytics
+            if (rejectBtn) {
+                rejectBtn.addEventListener('click', function() {
+                    localStorage.setItem('analytics-consent', 'rejected');
+                    gtag('consent', 'update', {
+                        'analytics_storage': 'denied',
+                        'ad_storage': 'denied'
+                    });
+                    banner.classList.remove('show');
+                });
+            }
+        }
+
+        // Initialize banner on page load
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initConsentBanner);
+        } else {
+            initConsentBanner();
+        }
+
     </script>
+
+    <!-- Consent Banner -->
+    <div id="consentBanner" class="consent-banner">
+        <div class="consent-content">
+            <div class="consent-text">
+                <strong>Privacy & Analytics:</strong> We use Google Analytics to understand how you use our site and improve your experience. By continuing, you consent to our use of analytics. You can change your preferences anytime. <a href="#privacy">Learn more about our privacy practices</a>.
+            </div>
+            <div class="consent-buttons">
+                <button class="consent-btn consent-btn-reject" id="consentReject">Reject</button>
+                <button class="consent-btn consent-btn-accept" id="consentAccept">Accept Analytics</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
