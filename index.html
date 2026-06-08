@@ -56,7 +56,6 @@
         }
 
         .hero-bg {
-            background-image: url('img/hero-bridge.jpg'); 
             background-size: cover;
             background-position: center;
         }
@@ -442,8 +441,9 @@
         </div>
     </header>
 
-    <section id="hero" class="hero-bg h-screen flex items-center justify-center text-brand-text-light">
-        <div class="text-center hero-overlay p-10 rounded-lg w-full h-full flex flex-col justify-center items-center"> 
+    <section id="hero" class="relative h-screen flex items-center justify-center text-brand-text-light overflow-hidden">
+        <img src="img/hero-bridge.jpg" alt="Hero background" class="absolute inset-0 w-full h-full object-cover z-0" onerror="this.src='https://placehold.co/1920x1080/4E423D/FFFFFF?text=Welcome+to+Ura+e+Kovaçit';">
+        <div class="relative z-10 text-center hero-overlay p-10 w-full h-full flex flex-col justify-center items-center"> 
             <h1 class="text-5xl md:text-7xl font-bold mb-4" data-translate="hero_title">Welcome to Ura e Kovaçit</h1>
             <p class="text-xl md:text-2xl mb-8" data-translate="hero_subtitle">Your serene getaway in the heart of Voskopojë.</p>
             <a href="#reservations" class="bg-brand-primary hover:bg-brand-primary-hover text-brand-text-light font-bold py-3 px-8 rounded-lg text-lg transition duration-300" data-translate="hero_cta">Book Your Stay</a>
@@ -661,7 +661,11 @@
             </div>
             <p data-translate="footer_address_title">Ura e Kovaçit</p>
             <p class="text-sm" data-translate="footer_address_detail">Voskopojë, Korçë, Albania</p>
-            <p class="text-sm mt-4" data-translate="footer_copyright">© 2024 Ura e Kovaçit. All rights reserved.</p>
+            <div class="text-sm mt-4">
+                <span data-translate="footer_copyright">© 2026 Ura e Kovaçit. All rights reserved.</span>
+                <span class="mx-2">|</span>
+                <a href="#" id="footerPrivacyLink" class="underline hover:text-brand-primary" data-translate="footer_privacy">Privacy Policy</a>
+            </div>
         </div>
     </footer>
 
@@ -776,7 +780,8 @@
                 contact_email_label: "Email", 
                 footer_address_title: "Ura e Kovaçit",
                 footer_address_detail: "Voskopojë, Korçë, Albania",
-                footer_copyright: "© 2024 Ura e Kovaçit. All rights reserved.",
+                footer_copyright: "© 2026 Ura e Kovaçit. All rights reserved.",
+                footer_privacy: "Privacy Policy",
                 modal_title: "Booking Request Sent!",
                 modal_message: "Thank you for your interest. We will contact you shortly to confirm your reservation.",
                 modal_ok_btn: "OK",
@@ -865,7 +870,8 @@
                 contact_email_label: "Email", 
                 footer_address_title: "Ura e Kovaçit",
                 footer_address_detail: "Voskopojë, Korçë, Shqipëri",
-                footer_copyright: "© 2024 Ura e Kovaçit. Të gjitha të drejtat e rezervuara.",
+                footer_copyright: "© 2026 Ura e Kovaçit. Të gjitha të drejtat e rezervuara.",
+                footer_privacy: "Politika e Privatësisë",
                 modal_title: "Kërkesa për Rezervim u Dërgua!",
                 modal_message: "Faleminderit për interesimin tuaj. Do t'ju kontaktojmë së shpejti për të konfirmuar rezervimin tuaj.",
                 modal_ok_btn: "OK",
@@ -954,7 +960,8 @@
                 contact_email_label: "Email", 
                 footer_address_title: "Ura e Kovaçit",
                 footer_address_detail: "Voskopojë, Korçë, Albanien",
-                footer_copyright: "© 2024 Ura e Kovaçit. Alle Rechte vorbehalten.",
+                footer_copyright: "© 2026 Ura e Kovaçit. Alle Rechte vorbehalten.",
+                footer_privacy: "Datenschutzerklärung",
                 modal_title: "Buchungsanfrage Gesendet!",
                 modal_message: "Vielen Dank für Ihr Interesse. Wir werden Sie in Kürze kontaktieren, um Ihre Reservierung zu bestätigen.",
                 modal_ok_btn: "OK",
@@ -1043,7 +1050,8 @@
                 contact_email_label: "Email", 
                 footer_address_title: "Ura e Kovaçit",
                 footer_address_detail: "Voskopojë, Korçë, Albanie",
-                footer_copyright: "© 2024 Ura e Kovaçit. Tous droits réservés.",
+                footer_copyright: "© 2026 Ura e Kovaçit. Tous droits réservés.",
+                footer_privacy: "Politique de confidentialité",
                 modal_title: "Demande de Réservation Envoyée !",
                 modal_message: "Merci de votre intérêt. Nous vous contacterons sous peu pour confirmer votre réservation.",
                 modal_ok_btn: "OK",
@@ -1132,7 +1140,8 @@
                 contact_email_label: "Email", 
                 footer_address_title: "Ura e Kovaçit",
                 footer_address_detail: "Βοσκοποΐα, Κορυτσά, Αλβανία",
-                footer_copyright: "© 2024 Ura e Kovaçit. Όλα τα δικαιώματα διατηρούνται.",
+                footer_copyright: "© 2026 Ura e Kovaçit. Όλα τα δικαιώματα διατηρούνται.",
+                footer_privacy: "Πολιτική Απορρήτου",
                 modal_title: "Αίτημα Κράτησης Απεστάλη!",
                 modal_message: "Σας ευχαριστούμε για το ενδιαφέρον σας. Θα επικοινωνήσουμε σύντομα μαζί σας για να επιβεβαιώσουμε την κράτησή σας.",
                 modal_ok_btn: "Εντάξει",
@@ -1449,11 +1458,21 @@
         function initPrivacyModal() {
             const privacyModal = document.getElementById('privacyModal');
             const privacyLink = document.getElementById('privacyLink');
+            const footerPrivacyLink = document.getElementById('footerPrivacyLink');
             const privacyModalClose = document.getElementById('privacyModalClose');
 
             // Open modal when privacy link is clicked
             if (privacyLink) {
                 privacyLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    privacyModal.style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+
+            // Open modal when footer privacy link is clicked
+            if (footerPrivacyLink) {
+                footerPrivacyLink.addEventListener('click', function(e) {
                     e.preventDefault();
                     privacyModal.style.display = 'block';
                     document.body.style.overflow = 'hidden';
