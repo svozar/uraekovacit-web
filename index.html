@@ -929,8 +929,53 @@
         const closeModalButton = document.getElementById('closeModalButton');
         const modalOkButton = document.getElementById('modalOkButton');
 
+        const supportedLangs = Object.keys(translations);
 
-        function setLanguage(lang) {
+        function getUrlLanguage() {
+            const params = new URLSearchParams(window.location.search);
+            const lang = params.get('lang');
+            if (lang && translations[lang]) {
+                return lang;
+            }
+            const hash = window.location.hash.replace(/^#/, '');
+            if (hash.startsWith('lang=')) {
+                const parsed = hash.split('=')[1];
+                if (parsed && translations[parsed]) {
+                    return parsed;
+                }
+            }
+            return null;
+        }
+
+        function updateLanguageUrl(lang) {
+            const params = new URLSearchParams(window.location.search);
+            params.set('lang', lang);
+            const newUrl = `${window.location.pathname}?${params.toString()}${window.location.hash}`;
+            window.history.replaceState({}, '', newUrl);
+        }
+
+        function recordLanguageUsage(lang) {
+            const storageKey = 'languageUsage';
+            let usage = {};
+            try {
+                usage = JSON.parse(localStorage.getItem(storageKey) || '{}');
+            } catch (error) {
+                usage = {};
+            }
+            usage[lang] = (usage[lang] || 0) + 1;
+            usage.lastUsed = new Date().toISOString();
+            localStorage.setItem(storageKey, JSON.stringify(usage));
+            console.info('Language selected:', lang, usage);
+            if (window.gtag) {
+                window.gtag('event', 'language_select', { language: lang });
+            }
+            if (window.dataLayer) {
+                window.dataLayer.push({ event: 'language_select', language: lang });
+            }
+        }
+
+        function setLanguage(lang, options = {}) {
+            const { updateUrl = true, recordUsage = true } = options;
             if (!translations[lang]) {
                 console.error(`Language ${lang} not found in translations.`);
                 return;
@@ -960,6 +1005,13 @@
                     option.classList.remove('active-lang');
                 }
             });
+
+            if (updateUrl) {
+                updateLanguageUrl(lang);
+            }
+            if (recordUsage) {
+                recordLanguageUsage(lang);
+            }
         }
 
         // Language Dropdown Toggle
@@ -1061,9 +1113,10 @@
         }
 
         // Set initial language and active state in dropdown
-        const initialLang = 'en'; // Or detect from browser/storage
-        setLanguage(initialLang); 
-        // Ensure the initially active button in dropdown also has the active-lang class
+        const urlLang = getUrlLanguage();
+        const browserLang = (navigator.language || navigator.userLanguage || 'en').split('-')[0];
+        const initialLang = urlLang || (supportedLangs.includes(browserLang) ? browserLang : 'en');
+        setLanguage(initialLang, { updateUrl: true, recordUsage: true });
         document.querySelector(`.lang-option[data-lang="${initialLang}"]`).classList.add('active-lang');
 
         // Simple gallery overlay for room thumbnails
