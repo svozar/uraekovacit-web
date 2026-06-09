@@ -3,7 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ura e Kovaçit - Spa, Hotel & Restaurant</title>
+    <title>Ura e Kovaçit - Spa, Hotel & Restaurant in Voskopojë</title>
+    
+    <!-- SEO & Metadata -->
+    <meta name="description" content="Discover Ura e Kovaçit, a serene agrotourism hotel, spa, and traditional restaurant in Voskopojë, Albania. Book private villas, cozy lodging, and enjoy local farm-to-table cuisine, wellness spa treatments, and wine tasting in the Korçë region.">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://uraekovacit.com/">
+    <meta property="og:title" content="Ura e Kovaçit - Spa, Hotel & Restaurant in Voskopojë">
+    <meta property="og:description" content="Discover Ura e Kovaçit, a serene agrotourism hotel, spa, and traditional restaurant in Voskopojë, Albania. Book private villas, cozy lodging, and enjoy local farm-to-table cuisine, wellness spa treatments, and wine tasting in the Korçë region.">
+    <meta property="og:image" content="https://uraekovacit.com/img/hero-bridge.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://uraekovacit.com/">
+    <meta name="twitter:title" content="Ura e Kovaçit - Spa, Hotel & Restaurant in Voskopojë">
+    <meta name="twitter:description" content="Discover Ura e Kovaçit, a serene agrotourism hotel, spa, and traditional restaurant in Voskopojë, Albania. Book private villas, cozy lodging, and enjoy local farm-to-table cuisine, wellness spa treatments, and wine tasting in the Korçë region.">
+    <meta name="twitter:image" content="https://uraekovacit.com/img/hero-bridge.jpg">
+
+    <!-- Structured Data (JSON-LD) - Hotel / LodgingBusiness -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Hotel",
+      "name": "Ura e Kovaçit",
+      "description": "Discover Ura e Kovaçit, a serene agrotourism hotel, spa, and traditional restaurant in Voskopojë, Albania. Book private villas, cozy lodging, and enjoy local farm-to-table cuisine.",
+      "url": "https://uraekovacit.com/",
+      "logo": "https://uraekovacit.com/img/header-bridge.png",
+      "image": [
+        "https://uraekovacit.com/img/hero-bridge.jpg",
+        "https://uraekovacit.com/img/villas-med.jpg",
+        "https://uraekovacit.com/img/lodge-med.jpg",
+        "https://uraekovacit.com/img/property-med.jpg"
+      ],
+      "telephone": "+355689098589",
+      "email": "info@uraekovacit.com",
+      "priceRange": "$$ - $$$",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Ura e Kovaçeve, Rruga nacionale Km 1",
+        "addressLocality": "Voskopojë, Korçë",
+        "addressRegion": "Korçë County",
+        "postalCode": "7029",
+        "addressCountry": "AL"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 40.6322,
+        "longitude": 20.5894
+      },
+      "starRating": {
+        "@type": "Rating",
+        "ratingValue": "4",
+        "bestRating": "5"
+      },
+      "amenityFeature": [
+        {
+          "@type": "LocationFeatureSpecification",
+          "name": "Luxury Wellness Spa",
+          "value": true
+        },
+        {
+          "@type": "LocationFeatureSpecification",
+          "name": "Traditional Restaurant",
+          "value": true
+        },
+        {
+          "@type": "LocationFeatureSpecification",
+          "name": "Sauna & Steam Room",
+          "value": true
+        },
+        {
+          "@type": "LocationFeatureSpecification",
+          "name": "Wine Tasting",
+          "value": true
+        },
+        {
+          "@type": "LocationFeatureSpecification",
+          "name": "Hiking Adventures",
+          "value": true
+        },
+        {
+          "@type": "LocationFeatureSpecification",
+          "name": "Agrotourism Farm",
+          "value": true
+        },
+        {
+          "@type": "LocationFeatureSpecification",
+          "name": "Free Wi-Fi",
+          "value": true
+        }
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Rooms & Lodging Packages",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "HotelRoom",
+              "name": "Basic Room",
+              "description": "A refined sanctuary with a queen-sized bed, ensuite bathroom, and thoughtfully curated amenities for a restful stay.",
+              "bed": {
+                "@type": "BedDetails",
+                "numberOfBeds": 1,
+                "typeOfBed": "Queen"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "HotelRoom",
+              "name": "Deluxe Room",
+              "description": "Spacious accommodation for up to four guests, featuring a jet-equipped jacuzzi, premium linens, and an elegant seating area for indulgent comfort."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "HotelRoom",
+              "name": "Romantic Package",
+              "description": "An intimate retreat for 2–4 guests with a luxurious freestanding bathtub, ambient lighting, and curated touches for a memorable romantic escape."
+            }
+          }
+        ]
+      }
+    }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
@@ -99,7 +228,7 @@
     </header>
 
     <section id="hero" class="relative h-screen flex items-center justify-center text-brand-text-light overflow-hidden">
-        <img src="img/hero-bridge.jpg" alt="Hero background" class="absolute inset-0 w-full h-full object-cover z-0" onerror="this.src='https://placehold.co/1920x1080/4E423D/FFFFFF?text=Welcome+to+Ura+e+Kovaçit';">
+        <img src="img/hero-bridge.jpg" alt="Beautiful stone arch bridge and entrance of Ura e Kovaçit agrotourism resort in Voskopojë" class="absolute inset-0 w-full h-full object-cover z-0" onerror="this.src='https://placehold.co/1920x1080/4E423D/FFFFFF?text=Welcome+to+Ura+e+Kovaçit';">
         <div class="relative z-10 text-center hero-overlay p-10 w-full h-full flex flex-col justify-center items-center"> 
             <h1 class="text-5xl md:text-7xl font-bold mb-4" data-translate="hero_title">Welcome to Ura e Kovaçit</h1>
             <p class="text-xl md:text-2xl mb-8" data-translate="hero_subtitle">Your serene getaway in the heart of Voskopojë.</p>
@@ -112,21 +241,21 @@
             <h2 class="section-title" data-translate="venue_title">The Venue</h2>
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="card">
-                    <img src="img/villas-med.jpg" alt="The Villas" class="w-full h-64 object-cover" onerror="this.src='https://placehold.co/600x400/d4af7f/3d2b1f?text=Image+Not+Found'">
+                    <img src="img/villas-med.jpg" alt="Private wood and stone villas with scenic garden and mountain views at Ura e Kovaçit" class="w-full h-64 object-cover" onerror="this.src='https://placehold.co/600x400/d4af7f/3d2b1f?text=Image+Not+Found'">
                     <div class="p-6">
                         <h3 data-translate="venue_villas_name">The Villas</h3>
                         <p class="text-brand-text-dark" data-translate="venue_villas_desc">Private villas with garden views, spacious living areas, and peaceful outdoor terraces.</p>
                     </div>
                 </div>
                 <div class="card">
-                    <img src="img/lodge-med.jpg" alt="The Lodge" class="w-full h-64 object-cover" onerror="this.src='https://placehold.co/600x400/c0b8a7/5d4738?text=Image+Not+Found'">
+                    <img src="img/lodge-med.jpg" alt="Cozy rustic guesthouse lodge lobby with warm common spaces and a fireplace" class="w-full h-64 object-cover" onerror="this.src='https://placehold.co/600x400/c0b8a7/5d4738?text=Image+Not+Found'">
                     <div class="p-6">
                         <h3 data-translate="venue_lodge_name">The Lodge</h3>
                         <p class="text-brand-text-dark" data-translate="venue_lodge_desc">A cozy lodge with welcoming common spaces, a rustic fireplace, and easy access to village amenities.</p>
                     </div>
                 </div>
                 <div class="card">
-                    <img src="img/property-med.jpg" alt="The Property and Farm" class="w-full h-64 object-cover" onerror="this.src='https://placehold.co/600x400/86b57c/2f4e32?text=Image+Not+Found'">
+                    <img src="img/property-med.jpg" alt="Lush organic farm and surrounding green grounds of the Ura e Kovaçit estate" class="w-full h-64 object-cover" onerror="this.src='https://placehold.co/600x400/86b57c/2f4e32?text=Image+Not+Found'">
                     <div class="p-6">
                         <h3 data-translate="venue_property_name">The Property & Farm</h3>
                         <p class="text-brand-text-dark" data-translate="venue_property_desc">Surrounding grounds, orchard and farm areas that showcase the natural beauty and local agriculture.</p>
@@ -141,7 +270,7 @@
             <h2 class="section-title" data-translate="restaurant_title">Savor Authentic Flavors</h2>
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div>
-                    <img src="img/oven-med.jpg" alt="Delicious traditional food" class="rounded-lg shadow-xl w-full h-auto object-cover" onerror="this.src='https://placehold.co/600x450/E0A070/4E423D?text=Image+Not+Found'">
+                    <img src="img/oven-med.jpg" alt="Traditional wood-fired stone oven baking fresh local bread and authentic dishes at Ura e Kovaçit" class="rounded-lg shadow-xl w-full h-auto object-cover" onerror="this.src='https://placehold.co/600x450/E0A070/4E423D?text=Image+Not+Found'">
                 </div>
                 <div class="text-brand-text-dark">
                     <p class="text-lg mb-4" data-translate="restaurant_desc1">
@@ -166,7 +295,7 @@
             <h2 class="section-title" data-translate="rooms_title">Our Rooms</h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="card">
-                    <img src="https://placehold.co/800x500/cbd5e1/374151?text=Basic+Room+1" alt="Basic" class="w-full h-64 object-cover room-thumb" data-gallery="https://placehold.co/1200x800/cbd5e1/374151?text=Basic+Room+1,https://placehold.co/1200x800/bfcfe0/374151?text=Basic+Room+2" onerror="this.src='https://placehold.co/600x400/d1d5db/374151?text=Image+Not+Found'">
+                    <img src="https://placehold.co/800x500/cbd5e1/374151?text=Basic+Room+1" alt="Basic Room interior showing a cozy queen-sized bed, pristine linens, and ensuite bathroom" class="w-full h-64 object-cover room-thumb" data-gallery="https://placehold.co/1200x800/cbd5e1/374151?text=Basic+Room+1,https://placehold.co/1200x800/bfcfe0/374151?text=Basic+Room+2" onerror="this.src='https://placehold.co/600x400/d1d5db/374151?text=Image+Not+Found'">
                     <div class="p-6">
                         <h3 data-translate="room_basic_name">Basic</h3>
                         <p class="text-brand-text-dark mb-4" data-translate="room_basic_desc">A refined sanctuary with a queen-sized bed, ensuite bathroom, and thoughtfully curated amenities for a restful stay.</p>
@@ -174,7 +303,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <img src="https://placehold.co/800x500/e5e7eb/374151?text=Deluxe+1" alt="Deluxe" class="w-full h-64 object-cover room-thumb" data-gallery="https://placehold.co/1200x800/e5e7eb/374151?text=Deluxe+1,https://placehold.co/1200x800/f1e1d0/374151?text=Deluxe+2" onerror="this.src='https://placehold.co/600x400/e5e7eb/374151?text=Image+Not+Found'">
+                    <img src="https://placehold.co/800x500/e5e7eb/374151?text=Deluxe+1" alt="Deluxe Room featuring a spacious master suite with an indoor jet-equipped jacuzzi and premium seating" class="w-full h-64 object-cover room-thumb" data-gallery="https://placehold.co/1200x800/e5e7eb/374151?text=Deluxe+1,https://placehold.co/1200x800/f1e1d0/374151?text=Deluxe+2" onerror="this.src='https://placehold.co/600x400/e5e7eb/374151?text=Image+Not+Found'">
                     <div class="p-6">
                         <h3 data-translate="room_deluxe_name">Deluxe</h3>
                         <p class="text-brand-text-dark mb-4" data-translate="room_deluxe_desc">Spacious accommodation for up to four guests, featuring a jet-equipped jacuzzi, premium linens, and an elegant seating area for indulgent comfort.</p>
@@ -182,7 +311,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <img src="https://placehold.co/800x500/ffdbe0/4e2a1f?text=Romantic+1" alt="Romantic" class="w-full h-64 object-cover room-thumb" data-gallery="https://placehold.co/1200x800/ffdbe0/4e2a1f?text=Romantic+1,https://placehold.co/1200x800/ffe6f0/4e2a1f?text=Romantic+2" onerror="this.src='https://placehold.co/600x400/9ca3af/374151?text=Image+Not+Found'">
+                    <img src="https://placehold.co/800x500/ffdbe0/4e2a1f?text=Romantic+1" alt="Romantic Package suite layout highlighting a luxury freestanding bathtub and romantic ambient lighting" class="w-full h-64 object-cover room-thumb" data-gallery="https://placehold.co/1200x800/ffdbe0/4e2a1f?text=Romantic+1,https://placehold.co/1200x800/ffe6f0/4e2a1f?text=Romantic+2" onerror="this.src='https://placehold.co/600x400/9ca3af/374151?text=Image+Not+Found'">
                     <div class="p-6">
                         <h3 data-translate="room_romantic_name">Romantic package</h3>
                         <p class="text-brand-text-dark mb-4" data-translate="room_romantic_desc">An intimate retreat for 2–4 guests with a luxurious freestanding bathtub, ambient lighting, and curated touches for a memorable romantic escape.</p>
@@ -218,7 +347,7 @@
             <h2 class="section-title" data-translate="spa_title">Relax & Rejuvenate</h2>
             <div class="grid md:grid-cols-2 gap-8 items-center">
                 <div>
-                    <img src="img/spa-med.jpg" alt="Spa Ambiance" class="rounded-lg shadow-xl w-full h-auto object-cover" onerror="this.src='https://placehold.co/600x400/bbf7d0/166534?text=Image+Not+Found'">
+                    <img src="img/spa-med.jpg" alt="Tranquil luxury spa room equipped with a professional massage table and relaxing ambient lighting" class="rounded-lg shadow-xl w-full h-auto object-cover" onerror="this.src='https://placehold.co/600x400/bbf7d0/166534?text=Image+Not+Found'">
                 </div>
                 <div>
                     <p class="text-lg text-brand-text-dark mb-4" data-translate="spa_desc1">Indulge in a world of tranquility at our exclusive spa. We offer a range of treatments designed to soothe your body and mind.</p>
@@ -240,21 +369,21 @@
             <h2 class="section-title" data-translate="activities_title">Explore Voskopojë</h2>
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="card">
-                    <img src="img/wine-med.jpg" alt="Wine Tasting" class="w-full h-64 object-cover" onerror="this.src='https://placehold.co/600x400/722f37/ffffff?text=Image+Not+Found'">
+                    <img src="img/wine-med.jpg" alt="Exquisite wine tasting table with red wine glasses and locally sourced organic cheeses at Ura e Kovaçit" class="w-full h-64 object-cover" onerror="this.src='https://placehold.co/600x400/722f37/ffffff?text=Image+Not+Found'">
                     <div class="p-6">
                         <h3 data-translate="activity1_name">Wine Tasting</h3>
                         <p class="text-brand-text-dark" data-translate="activity1_desc">Savor exquisite local and regional wines, expertly paired with traditional Albanian cheeses and delicacies.</p>
                     </div>
                 </div>
                 <div class="card">
-                    <img src="img/hiking-med.jpg" alt="Hiking Trail" class="w-full h-64 object-cover" onerror="this.src='https://placehold.co/600x400/fdba74/7c2d12?text=Image+Not+Found'">
+                    <img src="img/hiking-med.jpg" alt="Scenic panoramic hiking trail in the lush green hills of the Voskopojë mountains" class="w-full h-64 object-cover" onerror="this.src='https://placehold.co/600x400/fdba74/7c2d12?text=Image+Not+Found'">
                     <div class="p-6">
                         <h3 data-translate="activity2_name">Hiking Adventures</h3>
                         <p class="text-brand-text-dark" data-translate="activity2_desc">Discover breathtaking trails and historical sites surrounding Voskopojë.</p>
                     </div>
                 </div>
                 <div class="card">
-                    <img src="https://placehold.co/600x400/86efac/14532d?text=Local+Produce" alt="Agrotourism Farm" class="w-full h-64 object-cover" onerror="this.src='https://placehold.co/600x400/86efac/14532d?text=Image+Not+Found'">
+                    <img src="https://placehold.co/600x400/86efac/14532d?text=Local+Produce" alt="Fresh organic apples and farm-fresh local produce harvested directly from the agrotourism gardens at Ura e Kovaçit" class="w-full h-64 object-cover" onerror="this.src='https://placehold.co/600x400/86efac/14532d?text=Image+Not+Found'">
                     <div class="p-6">
                         <h3 data-translate="activity3_name">Agrotourism Experience</h3>
                         <p class="text-brand-text-dark" data-translate="activity3_desc">Engage with local culture, visit farms, and taste traditional products.</p>
