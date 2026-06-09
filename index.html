@@ -103,29 +103,32 @@
             "@type": "Offer",
             "itemOffered": {
               "@type": "HotelRoom",
-              "name": "Basic Room",
-              "description": "A refined sanctuary with a queen-sized bed, ensuite bathroom, and thoughtfully curated amenities for a restful stay.",
-              "bed": {
-                "@type": "BedDetails",
-                "numberOfBeds": 1,
-                "typeOfBed": "Queen"
-              }
+              "name": "Standard Room (Twin / Double)",
+              "description": "Effortless comfort in its purest form. The Standard Room offers a serene retreat after a day spent exploring the surrounding landscapes. Choose between twin or double bedding, and enjoy a thoughtfully designed space that combines simplicity with understated elegance."
             }
           },
           {
             "@type": "Offer",
             "itemOffered": {
               "@type": "HotelRoom",
-              "name": "Deluxe Room",
-              "description": "Spacious accommodation for up to four guests, featuring a jet-equipped jacuzzi, premium linens, and an elegant seating area for indulgent comfort."
+              "name": "Superior Double Room",
+              "description": "Elevated comfort paired with captivating views. The Superior Double Room features a plush double bed and an inviting atmosphere designed for relaxation. Large windows frame the natural surroundings, creating a seamless connection between indoors and out."
             }
           },
           {
             "@type": "Offer",
             "itemOffered": {
               "@type": "HotelRoom",
-              "name": "Romantic Package",
-              "description": "An intimate retreat for 2–4 guests with a luxurious freestanding bathtub, ambient lighting, and curated touches for a memorable romantic escape."
+              "name": "Premium Double Room",
+              "description": "A refined escape for those who appreciate the finer details. The Premium Double Room is designed with romance and indulgence in mind, featuring a luxurious double bed, a private fireplace, and a bathtub or hot tub with scenic views. An intimate setting where comfort meets quiet sophistication."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "HotelRoom",
+              "name": "Duplex / Family Room",
+              "description": "Generous space designed for togetherness without compromise. These versatile accommodations range from elegant duplex layouts to expansive rooms with additional sleeping arrangements. Ideal for families and groups, selected rooms feature elevated touches such as fireplaces and private bathtubs or hot tubs, offering both comfort and a sense of exclusivity."
             }
           }
         ]
@@ -293,29 +296,45 @@
     <section id="rooms" class="py-16 bg-brand-bg-section"> 
         <div class="container mx-auto px-6">
             <h2 class="section-title" data-translate="rooms_title">Our Rooms</h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <div class="card">
-                    <img src="https://placehold.co/800x500/cbd5e1/374151?text=Basic+Room+1" alt="Basic Room interior showing a cozy queen-sized bed, pristine linens, and ensuite bathroom" class="w-full h-64 object-cover room-thumb" data-gallery="https://placehold.co/1200x800/cbd5e1/374151?text=Basic+Room+1,https://placehold.co/1200x800/bfcfe0/374151?text=Basic+Room+2" onerror="this.src='https://placehold.co/600x400/d1d5db/374151?text=Image+Not+Found'">
-                    <div class="p-6">
-                        <h3 data-translate="room_basic_name">Basic</h3>
-                        <p class="text-brand-text-dark mb-4" data-translate="room_basic_desc">A refined sanctuary with a queen-sized bed, ensuite bathroom, and thoughtfully curated amenities for a restful stay.</p>
-                        <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium">Book Now →</a>
+                    <img src="https://placehold.co/800x500/cbd5e1/374151?text=Standard+Room" alt="Standard Room cozy bedroom interior with choice of twin or double beds and elegant minimalist design" class="w-full h-64 object-cover room-thumb" data-gallery="https://placehold.co/1200x800/cbd5e1/374151?text=Standard+Room+1,https://placehold.co/1200x800/bfcfe0/374151?text=Standard+Room+2" onerror="this.src='https://placehold.co/600x400/d1d5db/374151?text=Image+Not+Found'">
+                    <div class="p-6 flex flex-col h-full justify-between">
+                        <div>
+                            <h3 data-translate="room_standard_name">Standard Room (Twin / Double)</h3>
+                            <p class="text-brand-text-dark mb-4" data-translate="room_standard_desc">Effortless comfort in its purest form. The Standard Room offers a serene retreat after a day spent exploring the surrounding landscapes. Choose between twin or double bedding, and enjoy a thoughtfully designed space that combines simplicity with understated elegance.</p>
+                        </div>
+                        <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium mt-auto">Book Now →</a>
                     </div>
                 </div>
                 <div class="card">
-                    <img src="https://placehold.co/800x500/e5e7eb/374151?text=Deluxe+1" alt="Deluxe Room featuring a spacious master suite with an indoor jet-equipped jacuzzi and premium seating" class="w-full h-64 object-cover room-thumb" data-gallery="https://placehold.co/1200x800/e5e7eb/374151?text=Deluxe+1,https://placehold.co/1200x800/f1e1d0/374151?text=Deluxe+2" onerror="this.src='https://placehold.co/600x400/e5e7eb/374151?text=Image+Not+Found'">
-                    <div class="p-6">
-                        <h3 data-translate="room_deluxe_name">Deluxe</h3>
-                        <p class="text-brand-text-dark mb-4" data-translate="room_deluxe_desc">Spacious accommodation for up to four guests, featuring a jet-equipped jacuzzi, premium linens, and an elegant seating area for indulgent comfort.</p>
-                        <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium">Book Now →</a>
+                    <img src="https://placehold.co/800x500/e5e7eb/374151?text=Superior+Room" alt="Superior Double Room featuring elevated luxury, a plush double bed, and large windows with scenic mountain views" class="w-full h-64 object-cover room-thumb" data-gallery="https://placehold.co/1200x800/e5e7eb/374151?text=Superior+Room+1,https://placehold.co/1200x800/f1e1d0/374151?text=Superior+Room+2" onerror="this.src='https://placehold.co/600x400/e5e7eb/374151?text=Image+Not+Found'">
+                    <div class="p-6 flex flex-col h-full justify-between">
+                        <div>
+                            <h3 data-translate="room_superior_name">Superior Double Room</h3>
+                            <p class="text-brand-text-dark mb-4" data-translate="room_superior_desc">Elevated comfort paired with captivating views. The Superior Double Room features a plush double bed and an inviting atmosphere designed for relaxation. Large windows frame the natural surroundings, creating a seamless connection between indoors and out.</p>
+                        </div>
+                        <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium mt-auto">Book Now →</a>
                     </div>
                 </div>
                 <div class="card">
-                    <img src="https://placehold.co/800x500/ffdbe0/4e2a1f?text=Romantic+1" alt="Romantic Package suite layout highlighting a luxury freestanding bathtub and romantic ambient lighting" class="w-full h-64 object-cover room-thumb" data-gallery="https://placehold.co/1200x800/ffdbe0/4e2a1f?text=Romantic+1,https://placehold.co/1200x800/ffe6f0/4e2a1f?text=Romantic+2" onerror="this.src='https://placehold.co/600x400/9ca3af/374151?text=Image+Not+Found'">
-                    <div class="p-6">
-                        <h3 data-translate="room_romantic_name">Romantic package</h3>
-                        <p class="text-brand-text-dark mb-4" data-translate="room_romantic_desc">An intimate retreat for 2–4 guests with a luxurious freestanding bathtub, ambient lighting, and curated touches for a memorable romantic escape.</p>
-                        <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium">Book Now →</a>
+                    <img src="https://placehold.co/800x500/ffdbe0/4e2a1f?text=Premium+Room" alt="Premium Double Room featuring romantic setting with cozy fireplace, freestanding bathtub, and scenic view" class="w-full h-64 object-cover room-thumb" data-gallery="https://placehold.co/1200x800/ffdbe0/4e2a1f?text=Premium+Room+1,https://placehold.co/1200x800/ffe6f0/4e2a1f?text=Premium+Room+2" onerror="this.src='https://placehold.co/600x400/9ca3af/374151?text=Image+Not+Found'">
+                    <div class="p-6 flex flex-col h-full justify-between">
+                        <div>
+                            <h3 data-translate="room_premium_name">Premium Double Room</h3>
+                            <p class="text-brand-text-dark mb-4" data-translate="room_premium_desc">A refined escape for those who appreciate the finer details. The Premium Double Room is designed with romance and indulgence in mind, featuring a luxurious double bed, a private fireplace, and a bathtub or hot tub with scenic views. An intimate setting where comfort meets quiet sophistication.</p>
+                        </div>
+                        <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium mt-auto">Book Now →</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://placehold.co/800x500/e2e8f0/1e293b?text=Duplex+Family+Room" alt="Spacious Duplex Family Room layout with generous seating area, custom stairs, and extra beds for families" class="w-full h-64 object-cover room-thumb" data-gallery="https://placehold.co/1200x800/cbd5e1/374151?text=Duplex+Room+1,https://placehold.co/1200x800/bfcfe0/374151?text=Duplex+Room+2" onerror="this.src='https://placehold.co/600x400/e2e8f0/1e293b?text=Image+Not+Found'">
+                    <div class="p-6 flex flex-col h-full justify-between">
+                        <div>
+                            <h3 data-translate="room_duplex_name">Duplex / Family Room</h3>
+                            <p class="text-brand-text-dark mb-4" data-translate="room_duplex_desc">Generous space designed for togetherness without compromise. These versatile accommodations range from elegant duplex layouts to expansive rooms with additional sleeping arrangements. Ideal for families and groups, selected rooms feature elevated touches such as fireplaces and private bathtubs or hot tubs, offering both comfort and a sense of exclusivity.</p>
+                        </div>
+                        <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium mt-auto">Book Now →</a>
                     </div>
                 </div>
             </div>
