@@ -225,6 +225,17 @@ input, select, textarea {
     font-weight: 700;
 }
 .gallery-caption { color: var(--brand-text-light); margin-top: .5rem; }
+
+#hb-search-widget .hb-sw-btn {
+    background-color: var(--brand-primary) !important;
+    color: var(--brand-text-light) !important;
+    border-radius: 0.5rem;
+    font-weight: 700;
+    transition: background-color 0.3s ease;
+}
+#hb-search-widget .hb-sw-btn:hover:not(:disabled) {
+    background-color: var(--brand-primary-hover) !important;
+}
 /* Consent Banner Styles */
 .consent-banner {
     position: fixed;
