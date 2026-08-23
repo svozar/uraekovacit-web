@@ -54,7 +54,7 @@ export const translations = {
         form_room_family: "Family Apartment",
         form_guests: "Number of Guests",
         form_submit_btn: "Request Booking",
-        reservations_contact_intro: "For reservations, please use our contact information below or send your booking request directly to:",
+        reservations_contact_intro: "Book a reservation now:",
         reservations_contact_details: "You can also reach us via phone or visit the contact section for more details.",
         reservations_contact_button: "View Contact Info",
         form_fill_all_fields: "Please fill all required fields.",
