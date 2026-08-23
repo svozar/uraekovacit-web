@@ -1,18 +1,25 @@
 import { translations } from './translations.js';
 
-const supportedLangs = Object.keys(translations);
+const supportedLangs = ['en', ...Object.keys(translations)];
+const englishText = new WeakMap();
+
+function captureEnglishText() {
+    document.querySelectorAll('[data-translate]').forEach(el => {
+        englishText.set(el, el.innerHTML);
+    });
+}
 
 function getUrlLanguage() {
     const params = new URLSearchParams(window.location.search);
     const lang = params.get('lang');
-    if (lang && translations[lang]) {
+    if (lang && supportedLangs.includes(lang)) {
         return lang;
     }
 
     const hash = window.location.hash.replace(/^#/, '');
     if (hash.startsWith('lang=')) {
         const parsed = hash.split('=')[1];
-        if (parsed && translations[parsed]) {
+        if (parsed && supportedLangs.includes(parsed)) {
             return parsed;
         }
     }
@@ -52,7 +59,7 @@ function recordLanguageUsage(lang) {
 function setLanguage(lang, options = {}) {
     const { updateUrl = true, recordUsage = true } = options;
 
-    if (!translations[lang]) {
+    if (!supportedLangs.includes(lang)) {
         console.error(`Language ${lang} not found in translations.`);
         return;
     }
@@ -62,7 +69,10 @@ function setLanguage(lang, options = {}) {
 
     translatableElements.forEach(el => {
         const key = el.getAttribute('data-translate');
-        if (translations[lang][key]) {
+
+        if (lang === 'en') {
+            el.innerHTML = englishText.get(el);
+        } else if (translations[lang][key]) {
             el.innerHTML = translations[lang][key];
         }
     });
@@ -410,6 +420,7 @@ function initializeApp() {
     initReservationForm();
     initGallery();
     initializeModals();
+    captureEnglishText();
 
     const urlLang = getUrlLanguage();
     const browserLang = (navigator.language || navigator.userLanguage || 'en').split('-')[0];
