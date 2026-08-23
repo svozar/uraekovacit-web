@@ -486,9 +486,11 @@
     <!-- Gallery overlay (used when clicking room thumbnails) -->
     <div id="galleryOverlay" class="modal gallery-overlay" aria-hidden="true">
         <div style="display:flex;align-items:center;justify-content:center;height:100%;padding:2rem;"> 
-            <button id="galleryClose" class="gallery-button" style="position:absolute;top:1rem;right:1rem;">Close ×</button>
             <div id="galleryContent" style="text-align:center;max-width:1200px;width:100%;">
-                <img id="galleryImage" class="gallery-image" src="" alt="Gallery image" />
+                <div class="gallery-image-wrap">
+                    <img id="galleryImage" class="gallery-image" src="" alt="Gallery image" />
+                    <button id="galleryClose" class="gallery-button gallery-close-button">Close ×</button>
+                </div>
                 <div class="gallery-controls">
                     <button id="galleryPrev" class="gallery-button">Prev</button>
                     <span id="galleryCounter" class="text-brand-text-light"></span>

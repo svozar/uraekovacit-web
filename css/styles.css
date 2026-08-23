@@ -199,6 +199,16 @@ input, select, textarea {
     border-radius: 0.5rem;
     box-shadow: 0 20px 30px rgba(0,0,0,0.5);
 }
+.gallery-image-wrap {
+    position: relative;
+    display: inline-block;
+    max-width: 90vw;
+}
+.gallery-close-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+}
 .gallery-controls {
     display: flex;
     gap: 1rem;
