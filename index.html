@@ -247,7 +247,7 @@
         <div class="relative z-10 text-center hero-overlay p-10 w-full h-full flex flex-col justify-center items-center"> 
             <h1 class="text-5xl md:text-7xl font-bold mb-4" data-translate="hero_title">Welcome to Ura e Kovaçit</h1>
             <p class="text-xl md:text-2xl mb-8" data-translate="hero_subtitle">Your serene getaway in the heart of Voskopojë.</p>
-            <a href="#reservations" class="bg-brand-primary hover:bg-brand-primary-hover text-brand-text-light font-bold py-3 px-8 rounded-lg text-lg transition duration-300" data-translate="hero_cta">Book Your Stay</a>
+            <a href="#reservations" class="bg-brand-primary hover:bg-brand-primary-hover text-brand-text-light font-bold py-3 px-8 rounded-lg text-lg transition duration-300" data-cta="hero_book" data-translate="hero_cta">Book Your Stay</a>
         </div>
     </section>
 
@@ -315,7 +315,7 @@
                              <span data-translate="restaurant_feature3">Cozy & Welcoming Ambiance</span>
                          </li>
                     </ul>
-                    <a href="docs/ura_e_kovacit_menu_2026.pdf" target="_blank" class="bg-brand-primary hover:bg-brand-primary-hover text-brand-text-light font-bold py-3 px-6 rounded-lg transition duration-300 inline-block" data-translate="restaurant_menu_cta">Discover Our Menu</a>
+                    <a href="docs/ura_e_kovacit_menu_2026.pdf" target="_blank" rel="noopener" class="bg-brand-primary hover:bg-brand-primary-hover text-brand-text-light font-bold py-3 px-6 rounded-lg transition duration-300 inline-block" data-cta="restaurant_menu" data-translate="restaurant_menu_cta">Discover Our Menu</a>
                 </div>
             </div>
         </div>
@@ -326,43 +326,43 @@
             <h2 class="section-title" data-translate="rooms_title">Our Rooms</h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <div class="card flex flex-col">
-                    <img src="img/standard-room-med.jpg" alt="Standard Room cozy bedroom interior with choice of twin or double beds and elegant minimalist design" class="w-full h-64 object-cover room-thumb" data-gallery="img/standard-room-med.jpg" onerror="this.src='https://placehold.co/600x400/d1d5db/374151?text=Image+Not+Found'">
+                    <img src="img/standard-room-med.jpg" alt="Standard Room cozy bedroom interior with choice of twin or double beds and elegant minimalist design" class="w-full h-64 object-cover room-thumb" data-gallery="img/standard-room-med.jpg" data-gallery-id="room_standard" onerror="this.src='https://placehold.co/600x400/d1d5db/374151?text=Image+Not+Found'">
                     <div class="p-6 flex flex-col flex-1 justify-between">
                         <div>
                             <h3 data-translate="room_standard_name">Standard Room (Twin / Double)</h3>
                             <p class="text-brand-text-dark mb-4" data-translate="room_standard_desc">Effortless comfort in its purest form. The Standard Room offers a serene retreat after a day spent exploring the surrounding landscapes. Choose between twin or double bedding, and enjoy a thoughtfully designed space that combines simplicity with understated elegance.</p>
                         </div>
-                        <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium mt-auto" data-translate="room_book_btn">Book Now →</a>
+                        <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium mt-auto" data-cta="room_standard" data-translate="room_book_btn">Book Now →</a>
                     </div>
                 </div>
                 <div class="card flex flex-col">
-                    <img src="img/superior-room-med.jpg" alt="Superior Double Room featuring elevated luxury, a plush double bed, and large windows with scenic mountain views" class="w-full h-64 object-cover room-thumb" data-gallery="img/superior-room-med.jpg, img/superior-room2-med.jpg" onerror="this.src='https://placehold.co/600x400/e5e7eb/374151?text=Image+Not+Found'">
+                    <img src="img/superior-room-med.jpg" alt="Superior Double Room featuring elevated luxury, a plush double bed, and large windows with scenic mountain views" class="w-full h-64 object-cover room-thumb" data-gallery="img/superior-room-med.jpg, img/superior-room2-med.jpg" data-gallery-id="room_superior" onerror="this.src='https://placehold.co/600x400/e5e7eb/374151?text=Image+Not+Found'">
                     <div class="p-6 flex flex-col flex-1 justify-between">
                         <div>
                             <h3 data-translate="room_superior_name">Superior Double Room</h3>
                             <p class="text-brand-text-dark mb-4" data-translate="room_superior_desc">Elevated comfort paired with captivating views. The Superior Double Room features a plush double bed and an inviting atmosphere designed for relaxation. Large windows frame the natural surroundings, creating a seamless connection between indoors and out.</p>
                         </div>
-                        <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium mt-auto" data-translate="room_book_btn">Book Now →</a>
+                        <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium mt-auto" data-cta="room_superior" data-translate="room_book_btn">Book Now →</a>
                     </div>
                 </div>
                 <div class="card flex flex-col">
-                    <img src="img/deluxe-room-med.jpg" alt="Deluxe Double Room featuring romantic setting with cozy fireplace, freestanding bathtub, and scenic view" class="w-full h-64 object-cover room-thumb" data-gallery="img/deluxe-room-med.jpg, img/deluxe-room2-med.jpg" onerror="this.src='https://placehold.co/600x400/9ca3af/374151?text=Image+Not+Found'">
+                    <img src="img/deluxe-room-med.jpg" alt="Deluxe Double Room featuring romantic setting with cozy fireplace, freestanding bathtub, and scenic view" class="w-full h-64 object-cover room-thumb" data-gallery="img/deluxe-room-med.jpg, img/deluxe-room2-med.jpg" data-gallery-id="room_deluxe" onerror="this.src='https://placehold.co/600x400/9ca3af/374151?text=Image+Not+Found'">
                     <div class="p-6 flex flex-col flex-1 justify-between">
                         <div>
                             <h3 data-translate="room_deluxe_name">Deluxe Double Room</h3>
                             <p class="text-brand-text-dark mb-4" data-translate="room_deluxe_desc">A refined escape for those who appreciate the finer details. The Deluxe Double Room is designed with romance and indulgence in mind, featuring a luxurious double bed, a private fireplace, and a bathtub or hot tub with scenic views. An intimate setting where comfort meets quiet sophistication.</p>
                         </div>
-                        <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium mt-auto" data-translate="room_book_btn">Book Now →</a>
+                        <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium mt-auto" data-cta="room_deluxe" data-translate="room_book_btn">Book Now →</a>
                     </div>
                 </div>
                 <div class="card flex flex-col">
-                    <img src="img/duplex-room-med.jpg" alt="Spacious Duplex Family Room layout with generous seating area, custom stairs, and extra beds for families" class="w-full h-64 object-cover room-thumb" data-gallery="img/duplex-room-med.jpg" onerror="this.src='https://placehold.co/600x400/e2e8f0/1e293b?text=Image+Not+Found'">
+                    <img src="img/duplex-room-med.jpg" alt="Spacious Duplex Family Room layout with generous seating area, custom stairs, and extra beds for families" class="w-full h-64 object-cover room-thumb" data-gallery="img/duplex-room-med.jpg" data-gallery-id="room_duplex" onerror="this.src='https://placehold.co/600x400/e2e8f0/1e293b?text=Image+Not+Found'">
                     <div class="p-6 flex flex-col flex-1 justify-between">
                         <div>
                             <h3 data-translate="room_duplex_name">Duplex / Family Room</h3>
                             <p class="text-brand-text-dark mb-4" data-translate="room_duplex_desc">Generous space designed for togetherness without compromise. These versatile accommodations range from elegant duplex layouts to expansive rooms with additional sleeping arrangements. Ideal for families and groups, selected rooms feature elevated touches such as fireplaces and private bathtubs or hot tubs, offering both comfort and a sense of exclusivity.</p>
                         </div>
-                        <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium mt-auto" data-translate="room_book_btn">Book Now →</a>
+                        <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium mt-auto" data-cta="room_duplex" data-translate="room_book_btn">Book Now →</a>
                     </div>
                 </div>
             </div>
@@ -383,7 +383,7 @@
                 <p class="text-lg text-brand-text-dark mb-6" data-translate="reservations_contact_details">
                     You can also reach us via phone or visit the contact section for more details.
                 </p>
-                <a href="#contact" class="inline-block bg-brand-primary hover:bg-brand-primary-hover text-brand-text-light font-bold py-3 px-8 rounded-lg text-lg transition duration-300" data-translate="reservations_contact_button">
+                <a href="#contact" class="inline-block bg-brand-primary hover:bg-brand-primary-hover text-brand-text-light font-bold py-3 px-8 rounded-lg text-lg transition duration-300" data-cta="reservations_contact" data-translate="reservations_contact_button">
                     View Contact Info
                 </a>
             </div>
@@ -406,7 +406,7 @@
                         <li data-translate="spa_service3">Sauna & Steam Room</li>
                         <li data-translate="spa_service4">Beauty Treatments</li>
                     </ul>
-                    <a href="#reservations" class="bg-brand-primary hover:bg-brand-primary-hover text-brand-text-light font-bold py-3 px-6 rounded-lg transition duration-300" data-translate="spa_book_btn">Book a Treatment</a>
+                    <a href="#reservations" class="bg-brand-primary hover:bg-brand-primary-hover text-brand-text-light font-bold py-3 px-6 rounded-lg transition duration-300" data-cta="spa_book" data-translate="spa_book_btn">Book a Treatment</a>
                 </div>
             </div>
         </div>

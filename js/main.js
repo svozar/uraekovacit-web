@@ -34,36 +34,49 @@ function updateLanguageUrl(lang) {
     window.history.replaceState({}, '', newUrl);
 }
 
-function recordLanguageUsage(lang) {
+function trackEvent(eventName, params = {}) {
+    if (typeof window.gtag === 'function') {
+        window.gtag('event', eventName, {
+            language: document.documentElement.lang || 'en',
+            ...params
+        });
+    }
+}
+
+function recordLanguageUsage(lang, previousLang = null, isManual = false) {
     const storageKey = 'languageUsage';
     let usage = {};
 
     try {
         usage = JSON.parse(localStorage.getItem(storageKey) || '{}');
+        usage[lang] = (usage[lang] || 0) + 1;
+        usage.lastUsed = new Date().toISOString();
+        localStorage.setItem(storageKey, JSON.stringify(usage));
     } catch (error) {
-        usage = {};
+        // Ignore storage quota / private browsing errors
     }
 
-    usage[lang] = (usage[lang] || 0) + 1;
-    usage.lastUsed = new Date().toISOString();
-    localStorage.setItem(storageKey, JSON.stringify(usage));
-
-    if (window.gtag) {
-        window.gtag('event', 'language_select', { language: lang });
+    if (typeof window.gtag === 'function') {
+        window.gtag('set', 'user_properties', { preferred_language: lang });
     }
-    if (window.dataLayer) {
-        window.dataLayer.push({ event: 'language_select', language: lang });
+
+    if (isManual && lang !== previousLang) {
+        trackEvent('language_select', {
+            language: lang,
+            previous_language: previousLang || 'en'
+        });
     }
 }
 
 function setLanguage(lang, options = {}) {
-    const { updateUrl = true, recordUsage = true } = options;
+    const { updateUrl = true, recordUsage = true, isManual = true } = options;
 
     if (!supportedLangs.includes(lang)) {
         console.error(`Language ${lang} not found in translations.`);
         return;
     }
 
+    const previousLang = document.documentElement.lang || 'en';
     document.documentElement.lang = lang;
     const translatableElements = document.querySelectorAll('[data-translate]');
 
@@ -94,7 +107,7 @@ function setLanguage(lang, options = {}) {
         updateLanguageUrl(lang);
     }
     if (recordUsage) {
-        recordLanguageUsage(lang);
+        recordLanguageUsage(lang, previousLang, isManual);
     }
 }
 
@@ -171,11 +184,27 @@ function initMobileMenu() {
 function initSmoothScrolling() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (event) {
-            event.preventDefault();
             const targetId = this.getAttribute('href');
+            if (!targetId || targetId === '#') {
+                return;
+            }
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
+                event.preventDefault();
                 targetElement.scrollIntoView({ behavior: 'smooth' });
+
+                const ctaId = this.getAttribute('data-cta');
+                if (ctaId) {
+                    trackEvent('cta_click', {
+                        cta_id: ctaId,
+                        target_section: targetId.slice(1)
+                    });
+                } else if (this.classList.contains('nav-link')) {
+                    trackEvent('nav_click', {
+                        target_section: targetId.slice(1),
+                        menu_type: this.classList.contains('mobile-nav-link') ? 'mobile' : 'desktop'
+                    });
+                }
             }
         });
     });
@@ -234,6 +263,11 @@ function initGallery() {
             if (!images.length && thumb.src) {
                 images.push(thumb.src);
             }
+            const galleryId = thumb.getAttribute('data-gallery-id') || thumb.getAttribute('src') || 'unknown';
+            trackEvent('room_gallery_open', {
+                gallery_id: galleryId,
+                photo_count: images.length
+            });
             openGallery(images, 0);
         });
     });
@@ -410,6 +444,126 @@ function initPrivacyModal() {
     });
 }
 
+function initAnalyticsTelemetry() {
+    // 1. Delegated click tracking for HotelBee search widget, contacts, menu PDF, and social links
+    document.addEventListener('click', event => {
+        const searchBtn = event.target.closest('#hb-search-widget .hb-sw-btn');
+        if (searchBtn && !searchBtn.disabled) {
+            const widget = document.getElementById('hb-search-widget');
+            let checkinDisplay = '';
+            let checkoutDisplay = '';
+            let adults = '';
+            let children = '';
+
+            if (widget) {
+                const dateBlocks = widget.querySelectorAll('.hb-sw-dates div[style*="font-weight: 600"]');
+                if (dateBlocks.length >= 2) {
+                    checkinDisplay = dateBlocks[0].textContent.trim();
+                    checkoutDisplay = dateBlocks[1].textContent.trim();
+                }
+                const guestBlocks = widget.querySelectorAll('.hb-sw-guest-content div[style*="font-weight: 600"]');
+                if (guestBlocks.length >= 2) {
+                    adults = guestBlocks[0].textContent.trim();
+                    children = guestBlocks[1].textContent.trim();
+                }
+            }
+
+            trackEvent('booking_search_click', {
+                checkin_display: checkinDisplay,
+                checkout_display: checkoutDisplay,
+                adults: Number(adults) || 2,
+                children: Number(children) || 0
+            });
+            return;
+        }
+
+        const link = event.target.closest('a[href]');
+        if (!link) {
+            return;
+        }
+
+        const href = link.getAttribute('href') || '';
+        const containerEl = link.closest('section[id], footer, header, [id]');
+        const locationId = link.getAttribute('data-contact-location')
+            || containerEl?.id
+            || containerEl?.tagName?.toLowerCase()
+            || 'page';
+
+        if (href.endsWith('.pdf')) {
+            trackEvent('menu_open', {
+                menu_file: href.split('/').pop() || href,
+                location: locationId
+            });
+            return;
+        }
+
+        let contactMethod = link.getAttribute('data-contact-method') || '';
+        if (!contactMethod) {
+            if (href.startsWith('tel:')) {
+                contactMethod = 'phone';
+            } else if (href.startsWith('mailto:')) {
+                contactMethod = 'email';
+            } else if (href.includes('wa.me/') || href.includes('whatsapp.com')) {
+                contactMethod = 'whatsapp';
+            } else if (href.includes('google.com/maps') || href.includes('maps.google.') || href.includes('maps.app.goo.gl')) {
+                contactMethod = 'maps';
+            }
+        }
+
+        if (contactMethod) {
+            trackEvent('contact_click', {
+                method: contactMethod,
+                location: locationId
+            });
+            return;
+        }
+
+        if (href.includes('instagram.com')) {
+            trackEvent('social_click', { platform: 'instagram', location: locationId });
+        } else if (href.includes('facebook.com')) {
+            trackEvent('social_click', { platform: 'facebook', location: locationId });
+        }
+    });
+
+    // 2. Section visibility tracking (fires once per session when >=45% visible for >=1.5s)
+    if ('IntersectionObserver' in window) {
+        const seenSections = new Set();
+        const dwellTimers = new Map();
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                const sectionId = entry.target.id;
+                if (!sectionId || sectionId === 'hero' || seenSections.has(sectionId)) {
+                    return;
+                }
+
+                if (entry.isIntersecting) {
+                    if (!dwellTimers.has(sectionId)) {
+                        const timerId = window.setTimeout(() => {
+                            dwellTimers.delete(sectionId);
+                            if (!seenSections.has(sectionId)) {
+                                seenSections.add(sectionId);
+                                trackEvent('section_view', { section_id: sectionId });
+                                observer.unobserve(entry.target);
+                            }
+                        }, 1500);
+                        dwellTimers.set(sectionId, timerId);
+                    }
+                } else if (dwellTimers.has(sectionId)) {
+                    window.clearTimeout(dwellTimers.get(sectionId));
+                    dwellTimers.delete(sectionId);
+                }
+            });
+        }, { rootMargin: '-25% 0px -25% 0px', threshold: 0.05 });
+
+        document.querySelectorAll('section[id]').forEach(section => {
+            if (section.id !== 'hero') {
+                observer.observe(section);
+            }
+        });
+    }
+}
+
 function initializeModals() {
     initConsentBanner();
     initPrivacyModal();
@@ -421,12 +575,17 @@ function initializeApp() {
     initSmoothScrolling();
     initGallery();
     initializeModals();
+    initAnalyticsTelemetry();
     captureEnglishText();
 
     const urlLang = getUrlLanguage();
     const browserLang = (navigator.language || navigator.userLanguage || 'en').split('-')[0];
     const initialLang = urlLang || (supportedLangs.includes(browserLang) ? browserLang : 'en');
-    setLanguage(initialLang, { updateUrl: true, recordUsage: true });
+    setLanguage(initialLang, {
+        updateUrl: Boolean(urlLang),
+        recordUsage: true,
+        isManual: false
+    });
 }
 
 if (document.readyState === 'loading') {
