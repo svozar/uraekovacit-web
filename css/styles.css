@@ -191,7 +191,38 @@ button, .button, input[type="submit"], input[type="button"] {
 input, select, textarea {
      font-family: var(--font-body);
 }
-/* Gallery overlay styles */
+/* Gallery thumbnail & overlay styles */
+.gallery-thumb-wrap {
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+.gallery-thumb-wrap img {
+    transition: transform 0.35s ease;
+}
+.gallery-thumb-wrap:hover img {
+    transform: scale(1.03);
+}
+.gallery-badge {
+    position: absolute;
+    bottom: 0.625rem;
+    right: 0.625rem;
+    background: rgba(46, 37, 33, 0.72);
+    backdrop-filter: blur(4px);
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.25rem 0.55rem;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    pointer-events: none;
+    transition: background-color 0.2s ease;
+}
+.gallery-thumb-wrap:hover .gallery-badge {
+    background: var(--brand-primary);
+}
 .gallery-overlay .gallery-image {
     max-width: 90vw;
     max-height: 80vh;
@@ -236,6 +267,62 @@ input, select, textarea {
 #hb-search-widget .hb-sw-btn:hover:not(:disabled) {
     background-color: var(--brand-primary-hover) !important;
 }
+
+/* Mobile Sticky Action Bar */
+.mobile-action-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(251, 245, 239, 0.96);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid rgba(141, 110, 99, 0.2);
+    padding: 0.625rem 1rem calc(0.625rem + env(safe-area-inset-bottom, 0px));
+    z-index: 90;
+    display: flex;
+    gap: 0.625rem;
+    box-shadow: 0 -4px 14px rgba(0, 0, 0, 0.08);
+    transform: translateY(110%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+@media (min-width: 768px) {
+    .mobile-action-bar {
+        display: none;
+    }
+}
+.mobile-action-bar.visible {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+.mobile-action-btn {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    padding: 0.65rem 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-align: center;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+.mobile-action-btn-primary {
+    background-color: var(--brand-primary);
+    color: var(--brand-text-light);
+}
+.mobile-action-btn-primary:hover {
+    background-color: var(--brand-primary-hover);
+}
+.mobile-action-btn-secondary {
+    background-color: white;
+    color: var(--brand-secondary);
+    border: 1.5px solid var(--brand-secondary);
+}
+
 /* Consent Banner Styles */
 .consent-banner {
     position: fixed;
@@ -244,45 +331,51 @@ input, select, textarea {
     right: 0;
     background-color: var(--brand-secondary);
     color: var(--brand-text-light);
-    padding: 1.5rem;
+    padding: 0.875rem 1.25rem;
     z-index: 100;
     display: none;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.15);
 }
 .consent-banner.show {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    display: block;
 }
 .consent-content {
     max-width: 1200px;
     margin: 0 auto;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
 }
 .consent-text {
-    font-size: 0.95rem;
-    line-height: 1.5;
+    font-size: 0.9rem;
+    line-height: 1.45;
 }
 .consent-text a {
     color: var(--brand-primary);
     text-decoration: underline;
     cursor: pointer;
+    margin-left: 0.25rem;
+    white-space: nowrap;
 }
 .consent-text a:hover {
     text-decoration: none;
 }
 .consent-buttons {
     display: flex;
-    gap: 1rem;
-    justify-content: flex-end;
+    gap: 0.625rem;
+    flex-shrink: 0;
 }
 .consent-btn {
-    padding: 0.5rem 1.5rem;
+    padding: 0.45rem 1.15rem;
     border: none;
     border-radius: 0.375rem;
+    font-size: 0.875rem;
     font-weight: 700;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
+    white-space: nowrap;
 }
 .consent-btn-accept {
     background-color: var(--brand-primary);
@@ -294,17 +387,30 @@ input, select, textarea {
 .consent-btn-reject {
     background-color: transparent;
     color: var(--brand-text-light);
-    border: 1px solid var(--brand-text-light);
+    border: 1px solid rgba(255, 255, 255, 0.7);
 }
 .consent-btn-reject:hover {
     background-color: rgba(255, 255, 255, 0.1);
 }
 @media (max-width: 768px) {
-    .consent-buttons {
+    .consent-banner {
+        padding: 0.75rem 1rem;
+    }
+    .consent-content {
         flex-direction: column;
+        align-items: stretch;
+        gap: 0.625rem;
+    }
+    .consent-text {
+        font-size: 0.825rem;
+    }
+    .consent-buttons {
+        flex-direction: row;
+        width: 100%;
     }
     .consent-btn {
-        width: 100%;
+        flex: 1;
+        text-align: center;
     }
 }
 
