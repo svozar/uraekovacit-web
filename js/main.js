@@ -2,6 +2,9 @@ import { translations } from './translations.js';
 
 const supportedLangs = ['en', ...Object.keys(translations)];
 const englishText = new WeakMap();
+const PREFERRED_LANG_STORAGE_KEY = 'preferredLanguage';
+const ALBANIAN_REGION_CODES = new Set(['AL', 'XK']);
+const ALBANIAN_TIMEZONES = new Set(['Europe/Tirane']);
 
 function captureEnglishText() {
     document.querySelectorAll('[data-translate]').forEach(el => {
@@ -11,20 +14,111 @@ function captureEnglishText() {
 
 function getUrlLanguage() {
     const params = new URLSearchParams(window.location.search);
-    const lang = params.get('lang');
+    const lang = params.get('lang')?.toLowerCase();
     if (lang && supportedLangs.includes(lang)) {
         return lang;
     }
 
     const hash = window.location.hash.replace(/^#/, '');
-    if (hash.startsWith('lang=')) {
-        const parsed = hash.split('=')[1];
+    if (hash.toLowerCase().startsWith('lang=')) {
+        const parsed = hash.split('=')[1]?.toLowerCase();
         if (parsed && supportedLangs.includes(parsed)) {
             return parsed;
         }
     }
 
     return null;
+}
+
+function parseLocaleTag(tag) {
+    if (typeof tag !== 'string' || !tag.trim()) {
+        return { base: '', region: '' };
+    }
+    const parts = tag.trim().replace(/_/g, '-').split('-');
+    const base = (parts[0] || '').toLowerCase();
+    const region = parts.slice(1).find(sub => /^[a-zA-Z]{2}$/.test(sub))?.toUpperCase() || '';
+    return { base, region };
+}
+
+function getSavedLanguagePreference() {
+    try {
+        const saved = localStorage.getItem(PREFERRED_LANG_STORAGE_KEY)?.toLowerCase();
+        if (saved && supportedLangs.includes(saved)) {
+            return saved;
+        }
+    } catch (error) {
+        // Ignore storage errors in private browsing modes
+    }
+    return null;
+}
+
+function getBrowserLocales() {
+    if (typeof navigator === 'undefined') {
+        return ['en'];
+    }
+    if (Array.isArray(navigator.languages) && navigator.languages.length > 0) {
+        return navigator.languages;
+    }
+    return [navigator.language || navigator.userLanguage || 'en'];
+}
+
+function getDeviceTimezone() {
+    try {
+        return Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+    } catch (error) {
+        return '';
+    }
+}
+
+export function detectPreferredLanguage({
+    urlLang = getUrlLanguage(),
+    savedLang = getSavedLanguagePreference(),
+    browserLocales = getBrowserLocales(),
+    timeZone = getDeviceTimezone()
+} = {}) {
+    if (urlLang && supportedLangs.includes(urlLang)) {
+        return urlLang;
+    }
+
+    if (savedLang && supportedLangs.includes(savedLang)) {
+        return savedLang;
+    }
+
+    const parsedLocales = browserLocales
+        .map(parseLocaleTag)
+        .filter(item => Boolean(item.base));
+
+    const hasAlbanianSignalInList = supportedLangs.includes('sq') && parsedLocales.some(
+        item => item.base === 'sq' || ALBANIAN_REGION_CODES.has(item.region)
+    );
+
+    const primaryBase = parsedLocales[0]?.base || 'en';
+
+    for (const { base, region } of parsedLocales) {
+        if (base !== 'en' && supportedLangs.includes(base)) {
+            return base;
+        }
+
+        if (supportedLangs.includes('sq') && ALBANIAN_REGION_CODES.has(region)) {
+            return 'sq';
+        }
+
+        if (base === 'en') {
+            if (hasAlbanianSignalInList) {
+                return 'sq';
+            }
+            if (primaryBase === 'en' && supportedLangs.includes('sq') && ALBANIAN_TIMEZONES.has(timeZone)) {
+                return 'sq';
+            }
+            return 'en';
+        }
+    }
+
+    if ((!parsedLocales.length || primaryBase === 'en') && supportedLangs.includes('sq') && ALBANIAN_TIMEZONES.has(timeZone)) {
+        return 'sq';
+    }
+
+    return 'en';
 }
 
 function updateLanguageUrl(lang) {
@@ -52,6 +146,9 @@ function recordLanguageUsage(lang, previousLang = null, isManual = false) {
         usage[lang] = (usage[lang] || 0) + 1;
         usage.lastUsed = new Date().toISOString();
         localStorage.setItem(storageKey, JSON.stringify(usage));
+        if (isManual) {
+            localStorage.setItem(PREFERRED_LANG_STORAGE_KEY, lang);
+        }
     } catch (error) {
         // Ignore storage quota / private browsing errors
     }
@@ -745,8 +842,7 @@ function initializeApp() {
     captureEnglishText();
 
     const urlLang = getUrlLanguage();
-    const browserLang = (navigator.language || navigator.userLanguage || 'en').split('-')[0];
-    const initialLang = urlLang || (supportedLangs.includes(browserLang) ? browserLang : 'en');
+    const initialLang = detectPreferredLanguage({ urlLang });
     setLanguage(initialLang, {
         updateUrl: Boolean(urlLang),
         recordUsage: true,
