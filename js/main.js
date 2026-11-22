@@ -181,61 +181,6 @@ function initSmoothScrolling() {
     });
 }
 
-function initReservationForm() {
-    const reservationForm = document.getElementById('reservationForm');
-    const reservationModal = document.getElementById('reservationModal');
-    const closeModalButton = document.getElementById('closeModalButton');
-    const modalOkButton = document.getElementById('modalOkButton');
-
-    if (!reservationForm || !reservationModal) {
-        return;
-    }
-
-    reservationForm.addEventListener('submit', event => {
-        event.preventDefault();
-
-        const name = document.getElementById('name').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const checkin = document.getElementById('checkin').value;
-        const checkout = document.getElementById('checkout').value;
-
-        const existingErrorMsg = reservationForm.querySelector('.error-message');
-        if (existingErrorMsg) {
-            existingErrorMsg.remove();
-        }
-
-        if (!name || !email || !checkin || !checkout) {
-            const submitButton = reservationForm.querySelector('button[type="submit"]');
-            const errorMsg = document.createElement('p');
-            errorMsg.classList.add('text-red-500', 'text-sm', 'mt-2', 'error-message');
-            errorMsg.textContent = translations[document.documentElement.lang]?.form_fill_all_fields || 'Please fill all required fields.';
-            submitButton?.parentNode.insertBefore(errorMsg, submitButton?.nextSibling || null);
-            return;
-        }
-
-        reservationModal.style.display = 'block';
-        reservationForm.reset();
-    });
-
-    if (closeModalButton) {
-        closeModalButton.addEventListener('click', () => {
-            reservationModal.style.display = 'none';
-        });
-    }
-
-    if (modalOkButton) {
-        modalOkButton.addEventListener('click', () => {
-            reservationModal.style.display = 'none';
-        });
-    }
-
-    window.addEventListener('click', event => {
-        if (event.target === reservationModal) {
-            reservationModal.style.display = 'none';
-        }
-    });
-}
-
 function initGallery() {
     const thumbs = Array.from(document.querySelectorAll('.room-thumb'));
     const overlay = document.getElementById('galleryOverlay');
@@ -417,7 +362,6 @@ function initializeApp() {
     initLanguageDropdown();
     initMobileMenu();
     initSmoothScrolling();
-    initReservationForm();
     initGallery();
     initializeModals();
     captureEnglishText();

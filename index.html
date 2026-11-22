@@ -139,41 +139,42 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Google Consent Mode -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('consent', 'default', {
+        'analytics_storage': 'denied',
+        'ad_storage': 'denied'
+      });
+
+      // Check for stored consent
+      function checkConsentStatus() {
+        const consent = localStorage.getItem('analytics-consent');
+        if (consent === 'accepted') {
+          grantConsent();
+        }
+      }
+
+      function grantConsent() {
+        gtag('consent', 'update', {
+          'analytics_storage': 'granted',
+          'ad_storage': 'granted'
+        });
+      }
+
+      checkConsentStatus();
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TWLF5K1JD"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-2TWLF5K1JD');
+    </script>
 </head>
-<!-- Google Consent Mode -->
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('consent', 'default', {
-    'analytics_storage': 'denied',
-    'ad_storage': 'denied'
-  });
-
-  // Check for stored consent
-  function checkConsentStatus() {
-    const consent = localStorage.getItem('analytics-consent');
-    if (consent === 'accepted') {
-      grantConsent();
-    }
-  }
-
-  function grantConsent() {
-    gtag('consent', 'update', {
-      'analytics_storage': 'granted',
-      'ad_storage': 'granted'
-    });
-  }
-
-  checkConsentStatus();
-</script>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-2TWLF5K1JD"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-2TWLF5K1JD');
-</script>
 <body class="text-brand-text-dark"> 
     <header class="bg-brand-bg-light shadow-md sticky top-0 z-50"> 
         <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
@@ -283,9 +284,25 @@
                         Enjoy a warm and inviting atmosphere, perfect for a memorable dining experience, whether it's a hearty breakfast, a leisurely lunch, or an intimate dinner.
                     </p>
                     <ul class="list-none space-y-2 mb-6 text-lg">
-                         <li><i class="fas fa-leaf contact-icon"></i> <span data-translate="restaurant_feature1">Fresh, Locally Sourced Ingredients</span></li>
-                         <li><i class="fas fa-concierge-bell contact-icon"></i> <span data-translate="restaurant_feature2">Authentic Voskopojë Recipes</span></li>
-                         <li><i class="fas fa-wine-glass contact-icon"></i> <span data-translate="restaurant_feature3">Cozy & Welcoming Ambiance</span></li>
+                         <li class="flex items-center">
+                             <svg class="contact-icon w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                                 <path stroke-linecap="round" stroke-linejoin="round" d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
+                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
+                             </svg>
+                             <span data-translate="restaurant_feature1">Fresh, Locally Sourced Ingredients</span>
+                         </li>
+                         <li class="flex items-center">
+                             <svg class="contact-icon w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 17h18M5 17a7 7 0 0 1 14 0M12 7v3m-2-3h4"></path>
+                             </svg>
+                             <span data-translate="restaurant_feature2">Authentic Voskopojë Recipes</span>
+                         </li>
+                         <li class="flex items-center">
+                             <svg class="contact-icon w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                                 <path stroke-linecap="round" stroke-linejoin="round" d="M8 22h8M12 15v7m-5-19h10l-1 7a4 4 0 0 1-8 0L7 3Z"></path>
+                             </svg>
+                             <span data-translate="restaurant_feature3">Cozy & Welcoming Ambiance</span>
+                         </li>
                     </ul>
                     <a href="docs/ura_e_kovacit_menu_2026.pdf" target="_blank" class="bg-brand-primary hover:bg-brand-primary-hover text-brand-text-light font-bold py-3 px-6 rounded-lg transition duration-300 inline-block" data-translate="restaurant_menu_cta">Discover Our Menu</a>
                 </div>
@@ -297,44 +314,44 @@
         <div class="container mx-auto px-6">
             <h2 class="section-title" data-translate="rooms_title">Our Rooms</h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="card">
+                <div class="card flex flex-col">
                     <img src="img/standard-room-med.jpg" alt="Standard Room cozy bedroom interior with choice of twin or double beds and elegant minimalist design" class="w-full h-64 object-cover room-thumb" data-gallery="img/standard-room-med.jpg" onerror="this.src='https://placehold.co/600x400/d1d5db/374151?text=Image+Not+Found'">
-                    <div class="p-6 flex flex-col h-full justify-between">
+                    <div class="p-6 flex flex-col flex-1 justify-between">
                         <div>
                             <h3 data-translate="room_standard_name">Standard Room (Twin / Double)</h3>
                             <p class="text-brand-text-dark mb-4" data-translate="room_standard_desc">Effortless comfort in its purest form. The Standard Room offers a serene retreat after a day spent exploring the surrounding landscapes. Choose between twin or double bedding, and enjoy a thoughtfully designed space that combines simplicity with understated elegance.</p>
                         </div>
-                        <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium mt-auto">Book Now →</a>
+                        <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium mt-auto" data-translate="room_book_btn">Book Now →</a>
                     </div>
                 </div>
-                <div class="card">
+                <div class="card flex flex-col">
                     <img src="img/superior-room-med.jpg" alt="Superior Double Room featuring elevated luxury, a plush double bed, and large windows with scenic mountain views" class="w-full h-64 object-cover room-thumb" data-gallery="img/superior-room-med.jpg, img/superior-room2-med.jpg" onerror="this.src='https://placehold.co/600x400/e5e7eb/374151?text=Image+Not+Found'">
-                    <div class="p-6 flex flex-col h-full justify-between">
+                    <div class="p-6 flex flex-col flex-1 justify-between">
                         <div>
                             <h3 data-translate="room_superior_name">Superior Double Room</h3>
                             <p class="text-brand-text-dark mb-4" data-translate="room_superior_desc">Elevated comfort paired with captivating views. The Superior Double Room features a plush double bed and an inviting atmosphere designed for relaxation. Large windows frame the natural surroundings, creating a seamless connection between indoors and out.</p>
                         </div>
-                        <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium mt-auto">Book Now →</a>
+                        <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium mt-auto" data-translate="room_book_btn">Book Now →</a>
                     </div>
                 </div>
-                <div class="card">
+                <div class="card flex flex-col">
                     <img src="img/deluxe-room-med.jpg" alt="Deluxe Double Room featuring romantic setting with cozy fireplace, freestanding bathtub, and scenic view" class="w-full h-64 object-cover room-thumb" data-gallery="img/deluxe-room-med.jpg, img/deluxe-room2-med.jpg" onerror="this.src='https://placehold.co/600x400/9ca3af/374151?text=Image+Not+Found'">
-                    <div class="p-6 flex flex-col h-full justify-between">
+                    <div class="p-6 flex flex-col flex-1 justify-between">
                         <div>
                             <h3 data-translate="room_deluxe_name">Deluxe Double Room</h3>
                             <p class="text-brand-text-dark mb-4" data-translate="room_deluxe_desc">A refined escape for those who appreciate the finer details. The Deluxe Double Room is designed with romance and indulgence in mind, featuring a luxurious double bed, a private fireplace, and a bathtub or hot tub with scenic views. An intimate setting where comfort meets quiet sophistication.</p>
                         </div>
-                        <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium mt-auto">Book Now →</a>
+                        <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium mt-auto" data-translate="room_book_btn">Book Now →</a>
                     </div>
                 </div>
-                <div class="card">
+                <div class="card flex flex-col">
                     <img src="img/duplex-room-med.jpg" alt="Spacious Duplex Family Room layout with generous seating area, custom stairs, and extra beds for families" class="w-full h-64 object-cover room-thumb" data-gallery="img/duplex-room-med.jpg" onerror="this.src='https://placehold.co/600x400/e2e8f0/1e293b?text=Image+Not+Found'">
-                    <div class="p-6 flex flex-col h-full justify-between">
+                    <div class="p-6 flex flex-col flex-1 justify-between">
                         <div>
                             <h3 data-translate="room_duplex_name">Duplex / Family Room</h3>
                             <p class="text-brand-text-dark mb-4" data-translate="room_duplex_desc">Generous space designed for togetherness without compromise. These versatile accommodations range from elegant duplex layouts to expansive rooms with additional sleeping arrangements. Ideal for families and groups, selected rooms feature elevated touches such as fireplaces and private bathtubs or hot tubs, offering both comfort and a sense of exclusivity.</p>
                         </div>
-                        <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium mt-auto">Book Now →</a>
+                        <a href="#reservations" class="text-brand-primary hover:text-brand-primary-hover font-medium mt-auto" data-translate="room_book_btn">Book Now →</a>
                     </div>
                 </div>
             </div>
@@ -358,6 +375,7 @@
                 <a href="#contact" class="inline-block bg-brand-primary hover:bg-brand-primary-hover text-brand-text-light font-bold py-3 px-8 rounded-lg text-lg transition duration-300" data-translate="reservations_contact_button">
                     View Contact Info
                 </a>
+            </div>
         </div>
     </section>
 
@@ -420,21 +438,29 @@
                     <h3 data-translate="contact_get_in_touch">Get in Touch</h3>
                     <div class="space-y-6">
                         <div class="flex items-start">
-                            <i class="fas fa-map-marker-alt contact-icon fa-fw text-2xl mt-1"></i>
+                            <svg class="contact-icon w-6 h-6 mt-1 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7-5.686-7-11a7 7 0 1 1 14 0c0 5.314-7 11-7 11Z"></path>
+                                <circle cx="12" cy="10" r="2.5"></circle>
+                            </svg>
                             <div>
                                 <h4 data-translate="contact_address_label">Address</h4>
-                                <p class="text-brand-text-dark">Ura e Kovaçeve, Korçë, Albania 7007</p>
+                                <p class="text-brand-text-dark">Ura e Kovaçeve, Rruga nacionale Km 1, Voskopojë 7029, Korçë, Albania</p>
                             </div>
                         </div>
                         <div class="flex items-start">
-                            <i class="fas fa-phone contact-icon fa-fw text-2xl mt-1"></i>
+                            <svg class="contact-icon w-6 h-6 mt-1 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"></path>
+                            </svg>
                             <div>
                                 <h4 data-translate="contact_phone_label">Phone</h4>
                                 <a href="tel:+355689098589" class="text-brand-text-dark hover:text-brand-primary transition duration-300">+355 68 909 8589</a>
                             </div>
                         </div>
                         <div class="flex items-start">
-                            <i class="fas fa-envelope contact-icon fa-fw text-2xl mt-1"></i>
+                            <svg class="contact-icon w-6 h-6 mt-1 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                            </svg>
                             <div>
                                 <h4 data-translate="contact_email_label">Email</h4>
                                 <a href="mailto:info@uraekovacit.com" class="text-brand-text-dark hover:text-brand-primary transition duration-300">info@uraekovacit.com</a>
@@ -456,12 +482,18 @@
 
     <footer class="bg-brand-secondary text-brand-bg-light py-12"> 
         <div class="container mx-auto px-6 text-center">
-            <div class="mb-6">
-                <a href="https://www.instagram.com/ura_e_kovacit_voskopoje/?igsh=NjN0c3g3N28xNHJn" target="_blank" rel="noopener noreferrer" class="text-brand-bg-light hover:text-brand-primary mx-2 text-2xl">
-                    <i class="fab fa-instagram"></i>
+            <div class="mb-6 flex items-center justify-center space-x-4">
+                <a href="https://www.instagram.com/ura_e_kovacit_voskopoje/?igsh=NjN0c3g3N28xNHJn" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="text-brand-bg-light hover:text-brand-primary transition duration-300 inline-flex items-center justify-center">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
                 </a>
-                <a href="https://www.facebook.com/people/Ura-e-Kovacit-Agrotourism/61575846942966/" target="_blank" rel="noopener noreferrer" class="text-brand-bg-light hover:text-brand-primary mx-2 text-2xl">
-                    <i class="fab fa-facebook"></i>
+                <a href="https://www.facebook.com/people/Ura-e-Kovacit-Agrotourism/61575846942966/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="text-brand-bg-light hover:text-brand-primary transition duration-300 inline-flex items-center justify-center">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                    </svg>
                 </a>
             </div>
             <p data-translate="footer_address_title">Ura e Kovaçit</p>
@@ -473,15 +505,6 @@
             </div>
         </div>
     </footer>
-
-    <div id="reservationModal" class="modal">
-        <div class="modal-content">
-            <span class="modal-close" id="closeModalButton">×</span>
-            <h3 data-translate="modal_title">Booking Request Sent!</h3>
-            <p class="text-brand-text-dark" data-translate="modal_message">Thank you for your interest. We will contact you shortly to confirm your reservation.</p>
-            <button id="modalOkButton" class="mt-6 bg-brand-primary hover:bg-brand-primary-hover text-brand-text-light font-bold py-2 px-6 rounded-lg" data-translate="modal_ok_btn">OK</button>
-        </div>
-    </div>
 
     <!-- Gallery overlay (used when clicking room thumbnails) -->
     <div id="galleryOverlay" class="modal gallery-overlay" aria-hidden="true">
