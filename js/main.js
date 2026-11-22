@@ -527,17 +527,15 @@ const EXTRA_OPT_IN_TIMEZONES = new Set([
     'Asia/Nicosia'
 ]);
 
-function shouldShowConsentBannerByRegion() {
-    try {
-        const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
-        if (EXTRA_OPT_IN_TIMEZONES.has(tz)) {
-            return true;
-        }
-        if (tz.startsWith('Europe/') && !NON_OPT_IN_EUROPEAN_TIMEZONES.has(tz)) {
-            return true;
-        }
-    } catch (error) {
+export function shouldShowConsentBannerByRegion(timeZone = getDeviceTimezone()) {
+    if (typeof timeZone !== 'string' || !timeZone) {
         return false;
+    }
+    if (EXTRA_OPT_IN_TIMEZONES.has(timeZone)) {
+        return true;
+    }
+    if (timeZone.startsWith('Europe/') && !NON_OPT_IN_EUROPEAN_TIMEZONES.has(timeZone)) {
+        return true;
     }
     return false;
 }
