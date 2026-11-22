@@ -17,7 +17,7 @@ export const translations = {
         nav_activities_mobile: "Aktivitetet",
         nav_restaurant_mobile: "Restoranti",
         nav_contact_mobile: "Kontakt",
-        hero_title: "Mirësevini në Urën e Kovaçit",
+        hero_title: "Mirësevini tek Ura e Kovaçit",
         hero_subtitle: "Arratija juaj e qetë në zemër të Voskopojës.",
         hero_cta: "Rezervoni Qëndrimin",
         rooms_title: "Dhomat Tona",
