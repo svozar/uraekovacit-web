@@ -68,34 +68,45 @@ function recordLanguageUsage(lang, previousLang = null, isManual = false) {
     }
 }
 
-const HOTELBEE_SUPPORTED_LANGS = new Set(['en', 'sq', 'de', 'fr']);
+const HOTELBEE_SUPPORTED_LANGS = new Set(['en', 'sq', 'de', 'fr', 'it']);
 let currentHotelBeeLang = null;
 
 const WHATSAPP_MESSAGES = {
     en: {
         general: 'Hello Ura e Kovaçit, I have a question about visiting.',
         restaurant: 'Hello Ura e Kovaçit, I would like to reserve a table at the restaurant.',
-        spa: 'Hello Ura e Kovaçit, I would like to inquire about booking a spa treatment.'
+        spa: 'Hello Ura e Kovaçit, I would like to inquire about booking a spa treatment.',
+        events: 'Hello Ura e Kovaçit, I would like to inquire about hosting a wedding, event, or retreat.'
     },
     sq: {
         general: 'Përshëndetje Ura e Kovaçit, kam një pyetje rreth vizitës.',
         restaurant: 'Përshëndetje Ura e Kovaçit, dëshiroj të rezervoj një tavolinë në restorant.',
-        spa: 'Përshëndetje Ura e Kovaçit, dëshiroj të rezervoj një trajtim në Spa.'
+        spa: 'Përshëndetje Ura e Kovaçit, dëshiroj të rezervoj një trajtim masazhi/wellness.',
+        events: 'Përshëndetje Ura e Kovaçit, dëshiroj informacion rreth organizimit të një dasme, eventi apo retreat-i.'
     },
     de: {
         general: 'Hallo Ura e Kovaçit, ich habe eine Frage zu einem Besuch.',
         restaurant: 'Hallo Ura e Kovaçit, ich möchte gerne einen Tisch im Restaurant reservieren.',
-        spa: 'Hallo Ura e Kovaçit, ich möchte gerne eine Spa-Behandlung buchen.'
+        spa: 'Hallo Ura e Kovaçit, ich möchte gerne eine Wellness- oder Massagebehandlung buchen.',
+        events: 'Hallo Ura e Kovaçit, ich möchte gerne eine Hochzeit, Veranstaltung oder ein Retreat anfragen.'
     },
     fr: {
         general: 'Bonjour Ura e Kovaçit, j’ai une question concernant une visite.',
         restaurant: 'Bonjour Ura e Kovaçit, je souhaiterais réserver une table au restaurant.',
-        spa: 'Bonjour Ura e Kovaçit, je souhaiterais réserver un soin au spa.'
+        spa: 'Bonjour Ura e Kovaçit, je souhaiterais réserver un massage ou soin bien-être.',
+        events: 'Bonjour Ura e Kovaçit, je souhaiterais des informations pour organiser un mariage, un événement ou une retraite.'
     },
     el: {
         general: 'Γεια σας Ura e Kovaçit, θα ήθελα πληροφορίες για επίσκεψη.',
         restaurant: 'Γεια σας Ura e Kovaçit, θα ήθελα να κάνω κράτηση τραπεζιού στο εστιατόριο.',
-        spa: 'Γεια σας Ura e Kovaçit, θα ήθελα να κλείσω μια θεραπεία σπα.'
+        spa: 'Γεια σας Ura e Kovaçit, θα ήθελα να κλείσω μια θεραπεία μασάζ ή ευεξίας.',
+        events: 'Γεια σας Ura e Kovaçit, θα ήθελα πληροφορίες για τη διοργάνωση γάμου, εκδήλωσης ή retreat.'
+    },
+    it: {
+        general: 'Buongiorno Ura e Kovaçit, ho una domanda su un soggiorno.',
+        restaurant: 'Buongiorno Ura e Kovaçit, vorrei prenotare un tavolo al ristorante.',
+        spa: 'Buongiorno Ura e Kovaçit, vorrei prenotare un massaggio o un trattamento benessere.',
+        events: 'Buongiorno Ura e Kovaçit, vorrei informazioni per organizzare un matrimonio, un evento o un ritiro.'
     }
 };
 
@@ -130,10 +141,10 @@ function mountHotelBeeWidget(lang) {
     script.async = true;
     script.dataset.target = 'hb-search-widget';
     script.dataset.lang = widgetLang;
-    script.dataset.buttonColor = '#e0a070';
-    script.dataset.primaryColor = '#e0a070';
-    script.dataset.font = 'Lato';
-    script.dataset.radius = '12';
+    script.dataset.buttonColor = '#9A6238';
+    script.dataset.primaryColor = '#9A6238';
+    script.dataset.font = 'Inter';
+    script.dataset.radius = '8';
     host.appendChild(script);
 }
 
@@ -673,6 +684,7 @@ function initMobileStickyBar() {
     const hero = document.getElementById('hero');
     const reservations = document.getElementById('reservations');
     const contact = document.getElementById('contact');
+    const footer = document.querySelector('footer');
     const consentBanner = document.getElementById('consentBanner');
 
     if (!bar || !hero || !('IntersectionObserver' in window)) {
@@ -682,10 +694,11 @@ function initMobileStickyBar() {
     let heroVisible = true;
     let reservationsVisible = false;
     let contactVisible = false;
+    let footerVisible = false;
 
     function syncVisibility() {
         const consentShowing = consentBanner?.classList.contains('show') || false;
-        const shouldShow = !heroVisible && !reservationsVisible && !contactVisible && !consentShowing;
+        const shouldShow = !heroVisible && !reservationsVisible && !contactVisible && !footerVisible && !consentShowing;
         bar.classList.toggle('visible', shouldShow);
     }
 
@@ -697,6 +710,8 @@ function initMobileStickyBar() {
                 reservationsVisible = entry.isIntersecting;
             } else if (entry.target === contact) {
                 contactVisible = entry.isIntersecting;
+            } else if (entry.target === footer) {
+                footerVisible = entry.isIntersecting;
             }
         });
         syncVisibility();
@@ -708,6 +723,9 @@ function initMobileStickyBar() {
     }
     if (contact) {
         observer.observe(contact);
+    }
+    if (footer) {
+        observer.observe(footer);
     }
 
     if (consentBanner && 'MutationObserver' in window) {
