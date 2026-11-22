@@ -191,7 +191,38 @@ button, .button, input[type="submit"], input[type="button"] {
 input, select, textarea {
      font-family: var(--font-body);
 }
-/* Gallery overlay styles */
+/* Gallery thumbnail & overlay styles */
+.gallery-thumb-wrap {
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+.gallery-thumb-wrap img {
+    transition: transform 0.35s ease;
+}
+.gallery-thumb-wrap:hover img {
+    transform: scale(1.03);
+}
+.gallery-badge {
+    position: absolute;
+    bottom: 0.625rem;
+    right: 0.625rem;
+    background: rgba(46, 37, 33, 0.72);
+    backdrop-filter: blur(4px);
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.25rem 0.55rem;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    pointer-events: none;
+    transition: background-color 0.2s ease;
+}
+.gallery-thumb-wrap:hover .gallery-badge {
+    background: var(--brand-primary);
+}
 .gallery-overlay .gallery-image {
     max-width: 90vw;
     max-height: 80vh;

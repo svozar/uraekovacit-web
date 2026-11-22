@@ -285,6 +285,7 @@ function initGallery() {
     const thumbs = Array.from(document.querySelectorAll('.room-thumb'));
     const overlay = document.getElementById('galleryOverlay');
     const imgEl = document.getElementById('galleryImage');
+    const controlsEl = overlay?.querySelector('.gallery-controls');
     const prevBtn = document.getElementById('galleryPrev');
     const nextBtn = document.getElementById('galleryNext');
     const closeBtn = document.getElementById('galleryClose');
@@ -297,6 +298,7 @@ function initGallery() {
 
     let gallery = [];
     let index = 0;
+    let activeTitle = '';
 
     function showImage(i) {
         if (!gallery.length) {
@@ -304,15 +306,21 @@ function initGallery() {
         }
         index = (i + gallery.length) % gallery.length;
         imgEl.src = gallery[index];
-        counter.textContent = `${index + 1} / ${gallery.length}`;
-        caption.textContent = '';
+        counter.textContent = gallery.length > 1 ? `${index + 1} / ${gallery.length}` : '';
+        if (controlsEl) {
+            controlsEl.style.display = gallery.length > 1 ? 'flex' : 'none';
+        }
+        if (caption) {
+            caption.textContent = activeTitle;
+        }
     }
 
-    function openGallery(images, start = 0) {
+    function openGallery(images, start = 0, title = '') {
         gallery = images.map(s => s.trim()).filter(Boolean);
         if (!gallery.length) {
             return;
         }
+        activeTitle = title;
 
         showImage(start);
         overlay.style.display = 'block';
@@ -328,18 +336,38 @@ function initGallery() {
 
     thumbs.forEach(thumb => {
         thumb.style.cursor = 'pointer';
+
+        const galleryData = thumb.getAttribute('data-gallery') || thumb.getAttribute('src') || '';
+        const initialImages = galleryData.split(',').map(s => s.trim()).filter(Boolean);
+
+        // Wrap thumbnail once to display subtle photo-count / expand indicator
+        if (thumb.parentElement && !thumb.parentElement.classList.contains('gallery-thumb-wrap')) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'gallery-thumb-wrap';
+            thumb.parentNode.insertBefore(wrapper, thumb);
+            wrapper.appendChild(thumb);
+
+            const badge = document.createElement('span');
+            badge.className = 'gallery-badge';
+            badge.setAttribute('aria-hidden', 'true');
+            const countLabel = initialImages.length > 1 ? `<span>1/${initialImages.length}</span>` : '';
+            badge.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>${countLabel}`;
+            wrapper.appendChild(badge);
+        }
+
         thumb.addEventListener('click', () => {
-            const galleryData = thumb.getAttribute('data-gallery') || thumb.src || '';
-            const images = galleryData.split(',').map(s => s.trim()).filter(Boolean);
+            const latestGalleryData = thumb.getAttribute('data-gallery') || thumb.src || '';
+            const images = latestGalleryData.split(',').map(s => s.trim()).filter(Boolean);
             if (!images.length && thumb.src) {
                 images.push(thumb.src);
             }
+            const cardHeading = thumb.closest('.card')?.querySelector('h3')?.textContent?.trim() || '';
             const galleryId = thumb.getAttribute('data-gallery-id') || thumb.getAttribute('src') || 'unknown';
             trackEvent('room_gallery_open', {
                 gallery_id: galleryId,
                 photo_count: images.length
             });
-            openGallery(images, 0);
+            openGallery(images, 0, cardHeading);
         });
     });
 
