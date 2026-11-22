@@ -68,6 +68,75 @@ function recordLanguageUsage(lang, previousLang = null, isManual = false) {
     }
 }
 
+const HOTELBEE_SUPPORTED_LANGS = new Set(['en', 'sq', 'de', 'fr']);
+let currentHotelBeeLang = null;
+
+const WHATSAPP_MESSAGES = {
+    en: {
+        general: 'Hello Ura e Kovaçit, I have a question about visiting.',
+        restaurant: 'Hello Ura e Kovaçit, I would like to reserve a table at the restaurant.',
+        spa: 'Hello Ura e Kovaçit, I would like to inquire about booking a spa treatment.'
+    },
+    sq: {
+        general: 'Përshëndetje Ura e Kovaçit, kam një pyetje rreth vizitës.',
+        restaurant: 'Përshëndetje Ura e Kovaçit, dëshiroj të rezervoj një tavolinë në restorant.',
+        spa: 'Përshëndetje Ura e Kovaçit, dëshiroj të rezervoj një trajtim në Spa.'
+    },
+    de: {
+        general: 'Hallo Ura e Kovaçit, ich habe eine Frage zu einem Besuch.',
+        restaurant: 'Hallo Ura e Kovaçit, ich möchte gerne einen Tisch im Restaurant reservieren.',
+        spa: 'Hallo Ura e Kovaçit, ich möchte gerne eine Spa-Behandlung buchen.'
+    },
+    fr: {
+        general: 'Bonjour Ura e Kovaçit, j’ai une question concernant une visite.',
+        restaurant: 'Bonjour Ura e Kovaçit, je souhaiterais réserver une table au restaurant.',
+        spa: 'Bonjour Ura e Kovaçit, je souhaiterais réserver un soin au spa.'
+    },
+    el: {
+        general: 'Γεια σας Ura e Kovaçit, θα ήθελα πληροφορίες για επίσκεψη.',
+        restaurant: 'Γεια σας Ura e Kovaçit, θα ήθελα να κάνω κράτηση τραπεζιού στο εστιατόριο.',
+        spa: 'Γεια σας Ura e Kovaçit, θα ήθελα να κλείσω μια θεραπεία σπα.'
+    }
+};
+
+function updateWhatsAppLinks(lang) {
+    const messages = WHATSAPP_MESSAGES[lang] || WHATSAPP_MESSAGES.en;
+    document.querySelectorAll('a[data-whatsapp-intent]').forEach(link => {
+        const intent = link.getAttribute('data-whatsapp-intent') || 'general';
+        const text = messages[intent] || messages.general;
+        link.href = `https://wa.me/355689098589?text=${encodeURIComponent(text)}`;
+    });
+}
+
+function mountHotelBeeWidget(lang) {
+    const host = document.getElementById('hb-search-widget-host');
+    if (!host) {
+        return;
+    }
+
+    const widgetLang = HOTELBEE_SUPPORTED_LANGS.has(lang) ? lang : 'en';
+    if (currentHotelBeeLang === widgetLang && host.querySelector('#hb-search-widget')?.childNodes.length) {
+        return;
+    }
+    currentHotelBeeLang = widgetLang;
+
+    host.innerHTML = '';
+    const targetDiv = document.createElement('div');
+    targetDiv.id = 'hb-search-widget';
+    host.appendChild(targetDiv);
+
+    const script = document.createElement('script');
+    script.src = 'https://uraekovacit.hotelbee.io/booking/embed/search.js';
+    script.async = true;
+    script.dataset.target = 'hb-search-widget';
+    script.dataset.lang = widgetLang;
+    script.dataset.buttonColor = '#e0a070';
+    script.dataset.primaryColor = '#e0a070';
+    script.dataset.font = 'Lato';
+    script.dataset.radius = '12';
+    host.appendChild(script);
+}
+
 function setLanguage(lang, options = {}) {
     const { updateUrl = true, recordUsage = true, isManual = true } = options;
 
@@ -109,6 +178,8 @@ function setLanguage(lang, options = {}) {
     if (recordUsage) {
         recordLanguageUsage(lang, previousLang, isManual);
     }
+    updateWhatsAppLinks(lang);
+    mountHotelBeeWidget(lang);
 }
 
 function closeLanguageMenu() {
@@ -569,12 +640,61 @@ function initializeModals() {
     initPrivacyModal();
 }
 
+function initMobileStickyBar() {
+    const bar = document.getElementById('mobileActionBar');
+    const hero = document.getElementById('hero');
+    const reservations = document.getElementById('reservations');
+    const contact = document.getElementById('contact');
+    const consentBanner = document.getElementById('consentBanner');
+
+    if (!bar || !hero || !('IntersectionObserver' in window)) {
+        return;
+    }
+
+    let heroVisible = true;
+    let reservationsVisible = false;
+    let contactVisible = false;
+
+    function syncVisibility() {
+        const consentShowing = consentBanner?.classList.contains('show') || false;
+        const shouldShow = !heroVisible && !reservationsVisible && !contactVisible && !consentShowing;
+        bar.classList.toggle('visible', shouldShow);
+    }
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.target === hero) {
+                heroVisible = entry.isIntersecting;
+            } else if (entry.target === reservations) {
+                reservationsVisible = entry.isIntersecting;
+            } else if (entry.target === contact) {
+                contactVisible = entry.isIntersecting;
+            }
+        });
+        syncVisibility();
+    }, { threshold: 0.15 });
+
+    observer.observe(hero);
+    if (reservations) {
+        observer.observe(reservations);
+    }
+    if (contact) {
+        observer.observe(contact);
+    }
+
+    if (consentBanner && 'MutationObserver' in window) {
+        const consentObserver = new MutationObserver(syncVisibility);
+        consentObserver.observe(consentBanner, { attributes: true, attributeFilter: ['class'] });
+    }
+}
+
 function initializeApp() {
     initLanguageDropdown();
     initMobileMenu();
     initSmoothScrolling();
     initGallery();
     initializeModals();
+    initMobileStickyBar();
     initAnalyticsTelemetry();
     captureEnglishText();
 

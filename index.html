@@ -315,7 +315,15 @@
                              <span data-translate="restaurant_feature3">Cozy & Welcoming Ambiance</span>
                          </li>
                     </ul>
-                    <a href="docs/ura_e_kovacit_menu_2026.pdf" target="_blank" rel="noopener" class="bg-brand-primary hover:bg-brand-primary-hover text-brand-text-light font-bold py-3 px-6 rounded-lg transition duration-300 inline-block" data-cta="restaurant_menu" data-translate="restaurant_menu_cta">Discover Our Menu</a>
+                    <div class="flex flex-wrap gap-4 items-center">
+                        <a href="docs/ura_e_kovacit_menu_2026.pdf" target="_blank" rel="noopener" class="bg-brand-primary hover:bg-brand-primary-hover text-brand-text-light font-bold py-3 px-6 rounded-lg transition duration-300 inline-block" data-cta="restaurant_menu" data-translate="restaurant_menu_cta">Discover Our Menu</a>
+                        <a href="https://wa.me/355689098589?text=Hello%20Ura%20e%20Kova%C3%A7it%2C%20I%20would%20like%20to%20reserve%20a%20table%20at%20the%20restaurant." target="_blank" rel="noopener noreferrer" class="border-2 border-brand-primary text-brand-secondary hover:bg-brand-primary hover:text-brand-text-light font-bold py-2.5 px-6 rounded-lg transition duration-300 inline-flex items-center gap-2" data-whatsapp-intent="restaurant" data-contact-method="whatsapp" data-contact-location="restaurant">
+                            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                            </svg>
+                            <span data-translate="restaurant_reserve_cta">Reserve a Table</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -373,12 +381,14 @@
         <div class="container mx-auto px-6">
             <h2 class="section-title" data-translate="reservations_title">Make a Reservation</h2>
             <div class="w-full max-w-4xl mx-auto bg-brand-bg-section p-8 rounded-lg shadow-lg text-center">
-                <div id="hb-search-widget"></div>
-                    <script
-                    src="https://uraekovacit.hotelbee.io/booking/embed/search.js"
-                    data-lang="en"
-                    data-button-color="#e0a070"
-                    ></script>
+                <div id="hb-search-widget-host">
+                    <div id="hb-search-widget"></div>
+                </div>
+                <noscript>
+                    <p class="mb-4">
+                        <a href="https://uraekovacit.hotelbee.io/booking/booking" target="_blank" rel="noopener noreferrer" class="underline text-brand-primary font-bold">Check Availability on HotelBee</a>
+                    </p>
+                </noscript>
                 <br>
                 <p class="text-lg text-brand-text-dark mb-6" data-translate="reservations_contact_details">
                     You can also reach us via phone or visit the contact section for more details.
@@ -406,7 +416,15 @@
                         <li data-translate="spa_service3">Sauna & Steam Room</li>
                         <li data-translate="spa_service4">Beauty Treatments</li>
                     </ul>
-                    <a href="#reservations" class="bg-brand-primary hover:bg-brand-primary-hover text-brand-text-light font-bold py-3 px-6 rounded-lg transition duration-300" data-cta="spa_book" data-translate="spa_book_btn">Book a Treatment</a>
+                    <div class="flex flex-wrap gap-4 items-center">
+                        <a href="https://wa.me/355689098589?text=Hello%20Ura%20e%20Kova%C3%A7it%2C%20I%20would%20like%20to%20inquire%20about%20booking%20a%20spa%20treatment." target="_blank" rel="noopener noreferrer" class="bg-brand-primary hover:bg-brand-primary-hover text-brand-text-light font-bold py-3 px-6 rounded-lg transition duration-300 inline-flex items-center gap-2" data-whatsapp-intent="spa" data-contact-method="whatsapp" data-contact-location="spa">
+                            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                            </svg>
+                            <span data-translate="spa_book_btn">Book a Treatment</span>
+                        </a>
+                        <a href="#contact" class="text-brand-secondary hover:text-brand-primary font-bold underline transition duration-300" data-cta="spa_contact" data-translate="spa_contact_fallback">Or Contact Us</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -456,6 +474,7 @@
                             <div>
                                 <h4 data-translate="contact_address_label">Address</h4>
                                 <p class="text-brand-text-dark">Ura e Kovaçeve, Rruga nacionale Km 1, Voskopojë 7029, Korçë, Albania</p>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Ura+e+Kova%C3%A7it+Agrotourism%2C+Rruga+nacionale+Km+1%2C+Voskopoj%C3%AB+7029%2C+Albania" target="_blank" rel="noopener noreferrer" class="text-brand-primary hover:text-brand-primary-hover text-sm font-bold inline-block mt-1 transition duration-300" data-contact-method="maps" data-contact-location="contact" data-translate="contact_directions_cta">Get Directions →</a>
                             </div>
                         </div>
                         <div class="flex items-start">
@@ -464,7 +483,16 @@
                             </svg>
                             <div>
                                 <h4 data-translate="contact_phone_label">Phone</h4>
-                                <a href="tel:+355689098589" class="text-brand-text-dark hover:text-brand-primary transition duration-300">+355 68 909 8589</a>
+                                <a href="tel:+355689098589" class="text-brand-text-dark hover:text-brand-primary transition duration-300" data-contact-method="phone" data-contact-location="contact">+355 68 909 8589</a>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <svg class="contact-icon w-6 h-6 mt-1 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                            </svg>
+                            <div>
+                                <h4 data-translate="contact_whatsapp_label">WhatsApp</h4>
+                                <a href="https://wa.me/355689098589?text=Hello%20Ura%20e%20Kova%C3%A7it%2C%20I%20have%20a%20question%20about%20visiting." target="_blank" rel="noopener noreferrer" class="text-brand-text-dark hover:text-brand-primary transition duration-300" data-whatsapp-intent="general" data-contact-method="whatsapp" data-contact-location="contact" data-translate="contact_whatsapp_cta">Chat on WhatsApp (+355 68 909 8589)</a>
                             </div>
                         </div>
                         <div class="flex items-start">
@@ -474,7 +502,7 @@
                             </svg>
                             <div>
                                 <h4 data-translate="contact_email_label">Email</h4>
-                                <a href="mailto:info@uraekovacit.com" class="text-brand-text-dark hover:text-brand-primary transition duration-300">info@uraekovacit.com</a>
+                                <a href="mailto:info@uraekovacit.com" class="text-brand-text-dark hover:text-brand-primary transition duration-300" data-contact-method="email" data-contact-location="contact">info@uraekovacit.com</a>
                             </div>
                         </div>
                     </div>
@@ -536,6 +564,17 @@
     </div>
 
     <script type="module" src="js/main.js"></script>
+
+    <!-- Mobile Sticky Action Bar -->
+    <div id="mobileActionBar" class="mobile-action-bar md:hidden" aria-label="Quick booking actions">
+        <a href="#reservations" class="mobile-action-btn mobile-action-btn-primary" data-cta="sticky_book" data-translate="sticky_book_cta">Book Your Stay</a>
+        <a href="https://wa.me/355689098589?text=Hello%20Ura%20e%20Kova%C3%A7it%2C%20I%20have%20a%20question%20about%20visiting." target="_blank" rel="noopener noreferrer" class="mobile-action-btn mobile-action-btn-secondary" data-whatsapp-intent="general" data-contact-method="whatsapp" data-contact-location="sticky_bar">
+            <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+            </svg>
+            <span data-translate="sticky_whatsapp_cta">WhatsApp</span>
+        </a>
+    </div>
 
     <!-- Consent Banner -->
     <div id="consentBanner" class="consent-banner" role="region" aria-label="Privacy and Analytics Consent">
