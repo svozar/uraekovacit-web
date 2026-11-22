@@ -140,31 +140,42 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 
-    <!-- Google Consent Mode -->
+    <!-- Google Consent Mode v2 (Region-Scoped) -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+
+      // Global default (US, Albania, and rest of world): analytics enabled, ad tracking disabled
       gtag('consent', 'default', {
-        'analytics_storage': 'denied',
-        'ad_storage': 'denied'
+        'analytics_storage': 'granted',
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied'
       });
 
-      // Check for stored consent
-      function checkConsentStatus() {
-        const consent = localStorage.getItem('analytics-consent');
-        if (consent === 'accepted') {
-          grantConsent();
+      // EEA, UK & Switzerland: strict opt-in until explicit user choice
+      gtag('consent', 'default', {
+        'region': [
+          'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IS',
+          'IE', 'IT', 'LV', 'LI', 'LT', 'LU', 'MT', 'NL', 'NO', 'PL', 'PT', 'RO', 'SK', 'SI',
+          'ES', 'SE', 'GB', 'CH'
+        ],
+        'analytics_storage': 'denied',
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'wait_for_update': 500
+      });
+
+      // Apply stored user preference if previously chosen
+      try {
+        const storedConsent = localStorage.getItem('analytics-consent');
+        if (storedConsent === 'accepted') {
+          gtag('consent', 'update', { 'analytics_storage': 'granted' });
+        } else if (storedConsent === 'rejected') {
+          gtag('consent', 'update', { 'analytics_storage': 'denied' });
         }
-      }
-
-      function grantConsent() {
-        gtag('consent', 'update', {
-          'analytics_storage': 'granted',
-          'ad_storage': 'granted'
-        });
-      }
-
-      checkConsentStatus();
+      } catch (e) {}
     </script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TWLF5K1JD"></script>
@@ -527,14 +538,15 @@
     <script type="module" src="js/main.js"></script>
 
     <!-- Consent Banner -->
-    <div id="consentBanner" class="consent-banner">
+    <div id="consentBanner" class="consent-banner" role="region" aria-label="Privacy and Analytics Consent">
         <div class="consent-content">
             <div class="consent-text">
-                <strong>Privacy & Analytics:</strong> We use Google Analytics to understand how you use our site and improve your experience. By continuing, you consent to our use of analytics. You can change your preferences anytime. <a id="privacyLink" style="cursor: pointer;">Learn more about our privacy practices</a>.
+                <span data-translate="consent_message">We use analytics cookies to understand how visitors use our site and improve your experience.</span>
+                <a id="privacyLink" style="cursor: pointer;" data-translate="consent_privacy_link">Privacy Policy</a>
             </div>
             <div class="consent-buttons">
-                <button class="consent-btn consent-btn-reject" id="consentReject">Reject</button>
-                <button class="consent-btn consent-btn-accept" id="consentAccept">Accept Analytics</button>
+                <button class="consent-btn consent-btn-reject" id="consentReject" data-translate="consent_reject">Decline</button>
+                <button class="consent-btn consent-btn-accept" id="consentAccept" data-translate="consent_accept">Accept</button>
             </div>
         </div>
     </div>
@@ -574,11 +586,14 @@
             <h2>Your Choices</h2>
             <p>You can control your privacy preferences by:</p>
             <ul>
-                <li><strong>Opting Out:</strong> You can reject analytics tracking by selecting "Reject" when prompted with our consent banner.</li>
+                <li><strong>Opting Out:</strong> You can decline analytics tracking at any time using the preferences button below or when prompted with our consent banner.</li>
                 <li><strong>Browser Settings:</strong> You can disable cookies in your browser settings or use private/incognito mode.</li>
-                <li><strong>Google Opt-out:</strong> Install the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank">Google Analytics Opt-Out Browser Add-on</a> to prevent Google from collecting your data.</li>
-                <li><strong>Changing Preferences:</strong> You can update your consent preferences at any time. Clear your browser cache and reload the page to reset the consent banner.</li>
+                <li><strong>Google Opt-out:</strong> Install the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">Google Analytics Opt-Out Browser Add-on</a> to prevent Google from collecting your data.</li>
+                <li><strong>Changing Preferences:</strong> Update your analytics consent choice on this device anytime below.</li>
             </ul>
+            <p>
+                <button type="button" id="manageConsentBtn" class="bg-brand-primary hover:bg-brand-primary-hover text-brand-text-light font-bold py-2 px-5 rounded-lg text-sm transition duration-300" data-translate="privacy_manage_btn">Manage Analytics Preferences</button>
+            </p>
             
             <h2>Data Retention</h2>
             <p>Google Analytics typically retains your data for 14 months from the date of collection. Your consent preference (accepted or rejected) is stored locally on your device for one year.</p>

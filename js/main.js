@@ -264,8 +264,68 @@ function initGallery() {
     });
 }
 
+const NON_OPT_IN_EUROPEAN_TIMEZONES = new Set([
+    'Europe/Tirane',
+    'Europe/Belgrade',
+    'Europe/Podgorica',
+    'Europe/Sarajevo',
+    'Europe/Skopje',
+    'Europe/Istanbul',
+    'Europe/Kyiv',
+    'Europe/Kiev',
+    'Europe/Chisinau',
+    'Europe/Minsk',
+    'Europe/Moscow'
+]);
+
+const EXTRA_OPT_IN_TIMEZONES = new Set([
+    'Atlantic/Reykjavik',
+    'Atlantic/Canary',
+    'Atlantic/Faroe',
+    'Atlantic/Madeira',
+    'Asia/Nicosia'
+]);
+
+function shouldShowConsentBannerByRegion() {
+    try {
+        const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+        if (EXTRA_OPT_IN_TIMEZONES.has(tz)) {
+            return true;
+        }
+        if (tz.startsWith('Europe/') && !NON_OPT_IN_EUROPEAN_TIMEZONES.has(tz)) {
+            return true;
+        }
+    } catch (error) {
+        return false;
+    }
+    return false;
+}
+
+function updateAnalyticsConsent(granted) {
+    const status = granted ? 'accepted' : 'rejected';
+    try {
+        localStorage.setItem('analytics-consent', status);
+    } catch (error) {
+        // Ignore storage errors in private browsing modes
+    }
+    if (window.gtag) {
+        window.gtag('consent', 'update', {
+            analytics_storage: granted ? 'granted' : 'denied',
+            ad_storage: 'denied',
+            ad_user_data: 'denied',
+            ad_personalization: 'denied'
+        });
+    }
+}
+
 function initConsentBanner() {
-    const consent = localStorage.getItem('analytics-consent');
+    let consent = null;
+    try {
+        consent = localStorage.getItem('analytics-consent');
+    } catch (error) {
+        consent = null;
+    }
+
     const banner = document.getElementById('consentBanner');
     const acceptBtn = document.getElementById('consentAccept');
     const rejectBtn = document.getElementById('consentReject');
@@ -274,32 +334,20 @@ function initConsentBanner() {
         return;
     }
 
-    if (!consent) {
+    if (!consent && shouldShowConsentBannerByRegion()) {
         banner.classList.add('show');
     }
 
     if (acceptBtn) {
         acceptBtn.addEventListener('click', () => {
-            localStorage.setItem('analytics-consent', 'accepted');
-            if (window.gtag) {
-                window.gtag('consent', 'update', {
-                    analytics_storage: 'granted',
-                    ad_storage: 'granted'
-                });
-            }
+            updateAnalyticsConsent(true);
             banner.classList.remove('show');
         });
     }
 
     if (rejectBtn) {
         rejectBtn.addEventListener('click', () => {
-            localStorage.setItem('analytics-consent', 'rejected');
-            if (window.gtag) {
-                window.gtag('consent', 'update', {
-                    analytics_storage: 'denied',
-                    ad_storage: 'denied'
-                });
-            }
+            updateAnalyticsConsent(false);
             banner.classList.remove('show');
         });
     }
@@ -310,9 +358,16 @@ function initPrivacyModal() {
     const privacyLink = document.getElementById('privacyLink');
     const footerPrivacyLink = document.getElementById('footerPrivacyLink');
     const privacyModalClose = document.getElementById('privacyModalClose');
+    const manageConsentBtn = document.getElementById('manageConsentBtn');
+    const consentBanner = document.getElementById('consentBanner');
 
     if (!privacyModal) {
         return;
+    }
+
+    function closePrivacyModal() {
+        privacyModal.style.display = 'none';
+        document.body.style.overflow = '';
     }
 
     if (privacyLink) {
@@ -331,24 +386,26 @@ function initPrivacyModal() {
         });
     }
 
-    if (privacyModalClose) {
-        privacyModalClose.addEventListener('click', () => {
-            privacyModal.style.display = 'none';
-            document.body.style.overflow = '';
+    if (manageConsentBtn && consentBanner) {
+        manageConsentBtn.addEventListener('click', () => {
+            closePrivacyModal();
+            consentBanner.classList.add('show');
         });
+    }
+
+    if (privacyModalClose) {
+        privacyModalClose.addEventListener('click', closePrivacyModal);
     }
 
     privacyModal.addEventListener('click', event => {
         if (event.target === privacyModal) {
-            privacyModal.style.display = 'none';
-            document.body.style.overflow = '';
+            closePrivacyModal();
         }
     });
 
     document.addEventListener('keydown', event => {
         if (event.key === 'Escape' && privacyModal.style.display === 'block') {
-            privacyModal.style.display = 'none';
-            document.body.style.overflow = '';
+            closePrivacyModal();
         }
     });
 }
