@@ -126,6 +126,14 @@ After publishing, check the live website in a private/incognito browser window a
 
 If a published change is wrong, do not delete random files. Open the changed file's history on GitHub, find the last working version, and restore the specific change. Ask the person responsible for the repository for help if you are unsure.
 
+## Automated Checks
+
+To run the zero-dependency unit and integrity test suite locally (verifying HTML tag balance, local assets, JSON-LD schema, `CNAME`, all 6 language dictionaries, Consent Mode v2, and language auto-selection):
+
+```bash
+python3 tests/run_tests.py -v
+```
+
 ## Important Rules
 
 - Do not edit or delete `CNAME`.
