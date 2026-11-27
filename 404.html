@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>Page Not Found · Ura e Kovaçit</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--brand-bg-light);
+            color: var(--brand-text-dark);
+            font-family: var(--font-body);
+        }
+        .not-found-nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0.875rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+        .brand-link {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            gap: 0.65rem;
+        }
+        .not-found-main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3.5rem 1.5rem;
+        }
+        .not-found-card {
+            max-width: 36rem;
+            width: 100%;
+            text-align: center;
+            background: #FFFFFF;
+            border: 1px solid rgba(216, 203, 184, 0.7);
+            border-radius: 0.875rem;
+            padding: 3rem 2rem;
+            box-shadow: 0 12px 28px -8px rgba(42, 42, 42, 0.08);
+        }
+        .not-found-title {
+            font-family: var(--font-heading);
+            font-size: clamp(2.1rem, 4vw, 2.85rem);
+            font-weight: 600;
+            line-height: 1.15;
+            color: var(--brand-forest);
+            margin-bottom: 0.35rem;
+        }
+        .not-found-subtitle-sq {
+            font-family: var(--font-heading);
+            font-style: italic;
+            font-size: 1.2rem;
+            color: var(--brand-accent-text);
+            margin-bottom: 1.25rem;
+        }
+        .not-found-copy {
+            color: var(--brand-text-muted);
+            font-size: 1rem;
+            line-height: 1.65;
+            margin-bottom: 2rem;
+        }
+        .not-found-cta {
+            display: inline-block;
+            background-color: var(--brand-primary);
+            color: #FFFFFF;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 0.85rem 1.85rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s ease;
+        }
+        .not-found-cta:hover {
+            background-color: var(--brand-primary-hover);
+        }
+        .not-found-links {
+            margin-top: 1.75rem;
+            padding-top: 1.35rem;
+            border-top: 1px solid rgba(216, 203, 184, 0.6);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem 1.25rem;
+            font-size: 0.9rem;
+        }
+        .not-found-links a {
+            color: var(--brand-forest);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .not-found-links a:hover {
+            color: var(--brand-primary);
+            text-decoration: underline;
+        }
+        .not-found-footer {
+            background-color: var(--brand-forest);
+            color: var(--brand-text-light);
+            text-align: center;
+            padding: 1.25rem 1.5rem;
+            font-size: 0.85rem;
+            opacity: 0.95;
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <nav class="not-found-nav">
+            <a href="/" class="brand-link">
+                <img src="/img/header-bridge-light.png" width="456" height="237" alt="Ura e Kovaçit Logo" class="header-logo">
+                <span class="header-brand-name">Ura e Kovaçit</span>
+            </a>
+        </nav>
+    </header>
+
+    <main class="not-found-main">
+        <div class="not-found-card">
+            <span class="section-eyebrow">404 · Voskopojë, Albania</span>
+            <h1 class="not-found-title">Page Not Found</h1>
+            <p class="not-found-subtitle-sq">Faqja nuk u gjet</p>
+            <p class="not-found-copy">
+                This link may point to an older version of our website. Everything about our stone villas, rooms, farm-to-table restaurant, wellness treatments, and reservations is right on our main page.
+            </p>
+            <a href="/" class="not-found-cta">Explore Ura e Kovaçit →</a>
+            <div class="not-found-links" aria-label="Quick section links">
+                <a href="/#rooms">Rooms &amp; Suites</a>
+                <a href="/#restaurant">Restaurant</a>
+                <a href="/#spa">Wellness</a>
+                <a href="/#reservations">Reservations</a>
+                <a href="/#contact">Contact</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="not-found-footer">
+        Ura e Kovaçit · Voskopojë, Korçë, Albania · +355 68 909 8589
+    </footer>
+</body>
+</html>
