@@ -296,6 +296,60 @@ class TestProductionGuardrails(unittest.TestCase):
         self.assertTrue((REPO_ROOT / "img" / "index.html").exists())
         self.assertTrue((REPO_ROOT / "docs" / "index.html").exists())
 
+    def test_canonical_url_present_in_head(self) -> None:
+        dom = parse_index_html()
+        canonicals = [
+            el["attrs"].get("href")
+            for el in dom.elements
+            if el["tag"] == "link" and el["attrs"].get("rel") == "canonical"
+        ]
+        self.assertEqual(
+            canonicals,
+            ["https://uraekovacit.com/"],
+            "index.html <head> must declare exactly one canonical URL https://uraekovacit.com/",
+        )
+
+    def test_custom_404_page_seo_and_root_relative_paths(self) -> None:
+        not_found_path = REPO_ROOT / "404.html"
+        self.assertTrue(not_found_path.is_file(), "404.html missing")
+        raw_404 = not_found_path.read_text(encoding="utf-8")
+
+        inspector = DOMInspector()
+        inspector.feed(raw_404)
+        for tag, line, _ in inspector.stack:
+            inspector.errors.append(f"404.html line {line}: unclosed <{tag}>")
+        self.assertEqual(inspector.errors, [], "\n".join(inspector.errors))
+
+        # Must carry noindex and NEVER auto-redirect (which triggers Search Console Soft 404s)
+        robots_metas = [
+            el["attrs"].get("content", "")
+            for el in inspector.elements
+            if el["tag"] == "meta" and (el["attrs"].get("name") or "").lower() == "robots"
+        ]
+        self.assertTrue(
+            any("noindex" in r.lower() for r in robots_metas),
+            "404.html must include <meta name='robots' content='noindex'>",
+        )
+        self.assertNotIn("http-equiv=\"refresh\"", raw_404.lower())
+        self.assertNotRegex(raw_404, r"location\.(?:replace|assign|href)\s*=")
+
+        # Local assets in 404.html must use root-relative /... paths so nested 404 URLs work
+        for el in inspector.elements:
+            for attr_name in ("src", "href"):
+                val = el["attrs"].get(attr_name)
+                if not val or val.startswith(("http://", "https://", "mailto:", "tel:")):
+                    continue
+                self.assertTrue(
+                    val.startswith("/"),
+                    f"404.html {attr_name}='{val}' must be root-relative ('/...') for nested 404 paths",
+                )
+                clean_rel = val.lstrip("/").split("#")[0].split("?")[0]
+                if clean_rel:
+                    self.assertTrue(
+                        (REPO_ROOT / clean_rel).is_file(),
+                        f"404.html references missing local file: {val}",
+                    )
+
 
 class TestHtmlAndAssets(unittest.TestCase):
     @classmethod
